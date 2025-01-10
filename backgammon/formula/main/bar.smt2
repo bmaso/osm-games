@@ -16,7 +16,16 @@
 ))
 
 ;;;;
-;; A `Bar` is valid so long as both the number of `Red` and `Black` pieces is non-negative.
+;; Convenience constant for a `Bar` with no pieces in it
+
+(define-const empty-bar Bar
+  (bar
+    0         ; red-count
+    0)        ; black-count
+)
+
+;;;;
+;; A bar is valid so long as both the number of `Red` and `Black` pieces is non-negative.
 
 (declare-fun bar.validation (Bar) Bool)
 (assert (! (forall ((b Bar))

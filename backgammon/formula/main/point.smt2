@@ -16,10 +16,18 @@
 ))
 
 ;;;;
+;; Convenience constant `empty-point` represents a point with no checkers on it.
+(define-const empty-point Point
+  (point
+    Neutral          ; color
+    0)               ; count
+)
+
+;;;;
 ;; A _valid_ point has these constraints:
-;; - Has the color `Neutral` when the count is 0
-;; - Has the color `Red` or `Black` (ie _not_ `Neutral`) when the count is > 0
-;; - Does not have a negative count value
+;; - it has the color `Neutral` when the count is 0
+;; - it has the color `Red` or `Black` (ie _not_ `Neutral`) when the count is > 0
+;; - it does not have a negative count value
 
 (declare-fun point.validation (Point) Bool)
 (assert (! (forall ((p Point))
@@ -31,5 +39,12 @@
       (>= (count p) 0))
     (point.validation p))
 ) :named point.validation ))
+
+;;;;
+;; A re-usable convenience constant for an empty `Point`
+
+(define-const empty-point Point
+  (point Neutral 0)
+)
 
 #endif
