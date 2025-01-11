@@ -27,8 +27,9 @@
 ))
 
 ;;;;
-;; The empty board state. Note this is the _only_ valid game state where the `next_player` is `Neutral`. A special
-;; operation to pick the first player is the only valid operation that can be applied to this game state.
+;; The empty board state. This is the state _prior_ to game play, before the first player has been chosen. This is the _only_ valid
+;; game state where the `next_player` is `Neutral`. A special operation to pick the first player is the only valid operation that can
+;; be applied to this game state.
 
 (declare-const new-board-empty-points (Array Int Point))
 (assert
@@ -105,7 +106,8 @@
 )
 
 ;;;;
-;; Convenience function to generate a new game with `first_player` color going first, and the doubling value at 0.
+;; Convenience function to generate a new game with `first_player` color going first. This is always the first state to which player
+;; turn operations can be applied (dice roll and doubling) in a valid game process.
 
 (define-fun new-game ((first_player Color)) Board
   (board
@@ -124,7 +126,7 @@
 
 ;;;;
 ;; Assertion that a board's points array only has 24 indexed values. Note that the `forall` test's unbound variables match the
-;; parameters of the `board-point` accessor function below, which I suspect will make it easier for an SMT solver to instantiate this
+;; parameters of the `board-point` accessor function above, which I suspect will make it easier for an SMT solver to instantiate this
 ;; quantifier where it is going to be applied most often.
 
 (assert (! (forall ((b Board) (n Int))
@@ -146,6 +148,9 @@
 ;;   - that is: IF the `next_player` field is `Neutral`, THEN the doubling value is 0
 ;; - there are no more than 15 red checkers and there are no more than 15 black checkers on the board (ie, summed across all
 ;;   points and the bar)
+;; - there must be at least 1 checker on the board blonging to the player whose turn it is
+;;   - even at the end of the game, when it is technically the loser's turn, this is true -- the loser has at least one
+;;     checker on the board
 
 
 (declare-fun board.validation.members-valid (Board) Bool)
@@ -287,12 +292,49 @@
    (board.validation.no-more-than-15-checkers-per-player b))
 ) :named board.validation.no-more-than-15-checkers-per-player ))
 
+(declare-fun board.validation.current-player-has-at-least-one-checker (Board) Bool)
+(assert (! (forall ((b Board))
+  (=
+    (=>
+      (not (= Neutral (next_player b)))
+      (>
+        (+
+         (ite (= (color (board-point b 1)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 2)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 3)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 4)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 5)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 6)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 7)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 8)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 9)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 10)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 11)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 12)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 13)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 14)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 15)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 16)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 17)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 18)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 19)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 20)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 21)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 22)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 23)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 24)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (next_player b) Red) (red-count (bar b)) (black-count (bar b))))
+        0))
+    (board.validation.current-player-has-at-least-one-checker b))
+) :named board.validation.current-player-has-at-least-one-checker ))
+
 (define-fun board.validation ((b Board)) Bool
   (and
     (board.validation.members-valid b)
     (board.validation.red-or-black-turn-consistent-with-game-commencement b)
     (board.validation.doubling-value-consistent-with-game-commencement b)
-    (board.validation.no-more-than-15-checkers-per-player b))
+    (board.validation.no-more-than-15-checkers-per-player b)
+    (board.validation.current-player-has-at-least-one-checker b))
 )
 
 #endif
