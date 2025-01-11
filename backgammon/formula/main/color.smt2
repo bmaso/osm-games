@@ -10,7 +10,7 @@
 
 (declare-datatype Color (
   Red
-  Back
+  Black
   Neutral
 ))
 

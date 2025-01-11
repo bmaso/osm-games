@@ -40,11 +40,4 @@
     (point.validation p))
 ) :named point.validation ))
 
-;;;;
-;; A re-usable convenience constant for an empty `Point`
-
-(define-const empty-point Point
-  (point Neutral 0)
-)
-
 #endif
