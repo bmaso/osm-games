@@ -12,11 +12,13 @@
 ;;     but would be incredibly verbose in the validation rules -- there would need to be assertions for each (dice role, point)
 ;;     combination -- at least 18 * 24; this would obligate me to use macros to generate large numbers of assertions, and that just seems
 ;;     like the wrong way to go
-;;   - there are _exactly_ 24 members of the array; an assertion is declared on _all_ `Board` values ensuring there are no `Point`
-;;     values associated with indexes outside the 1-24 range
+;;   - there are _exactly_ 24 members of the array; all rules _only_ reference points within this range, so the SMT solver
+;;     isn't lead to even explore point values for other board index values
 ;; - a `Bar` value
 ;; - a `Color` representing which player goes _next_
-;; - a `doublingValue` integer value, representing the log base-2 value of the doubling cube
+;; - a `doubling_value` integer value, representing the log base-2 value of the doubling cube
+
+;; TODO add state members for cube ownership, and for doubling and beavering/raccooning state
 
 (declare-datatype Board (
   (board
@@ -57,8 +59,7 @@
     (= (select new-board-empty-points 21) empty-point)
     (= (select new-board-empty-points 22) empty-point)
     (= (select new-board-empty-points 23) empty-point)
-    (= (select new-board-empty-points 24) empty-point)
-  )
+    (= (select new-board-empty-points 24) empty-point))
 )
 
 (define-const new-empty-board (Board)
@@ -78,31 +79,29 @@
 (declare-const new-game-points (Array Int Point))
 (assert
   (and
-    (= (select new-board-empty-points 1) (point Red 2))
-    (= (select new-board-empty-points 2) empty-point)
-    (= (select new-board-empty-points 3) empty-point)
-    (= (select new-board-empty-points 4) empty-point)
-    (= (select new-board-empty-points 5) empty-point)
-    (= (select new-board-empty-points 6) (point Black 5))
-    (= (select new-board-empty-points 7) empty-point)
-    (= (select new-board-empty-points 8) (point Black 3))
-    (= (select new-board-empty-points 9) empty-point)
-    (= (select new-board-empty-points 10) empty-point)
-    (= (select new-board-empty-points 11) empty-point)
-    (= (select new-board-empty-points 12) (point Red 5))
-    (= (select new-board-empty-points 13) (point Black 5))
-    (= (select new-board-empty-points 14) empty-point)
-    (= (select new-board-empty-points 15) empty-point)
-    (= (select new-board-empty-points 16) empty-point)
-    (= (select new-board-empty-points 17) (point Red 3))
-    (= (select new-board-empty-points 18) empty-point)
-    (= (select new-board-empty-points 19) (point Red 5))
-    (= (select new-board-empty-points 20) empty-point)
-    (= (select new-board-empty-points 21) empty-point)
-    (= (select new-board-empty-points 22) empty-point)
-    (= (select new-board-empty-points 23) empty-point)
-    (= (select new-board-empty-points 24) (point Black 2))
-  )
+    (= (select new-game-points 1) (point Red 2))
+    (= (select new-game-points 2) empty-point)
+    (= (select new-game-points 3) empty-point)
+    (= (select new-game-points 4) empty-point)
+    (= (select new-game-points 5) empty-point)
+    (= (select new-game-points 6) (point Black 5))
+    (= (select new-game-points 7) empty-point)
+    (= (select new-game-points 8) (point Black 3))
+    (= (select new-game-points 9) empty-point)
+    (= (select new-game-points 11) empty-point)
+    (= (select new-game-points 12) (point Red 5))
+    (= (select new-game-points 13) (point Black 5))
+    (= (select new-game-points 14) empty-point)
+    (= (select new-game-points 15) empty-point)
+    (= (select new-game-points 16) empty-point)
+    (= (select new-game-points 17) (point Red 3))
+    (= (select new-game-points 18) empty-point)
+    (= (select new-game-points 19) (point Red 5))
+    (= (select new-game-points 20) empty-point)
+    (= (select new-game-points 21) empty-point)
+    (= (select new-game-points 22) empty-point)
+    (= (select new-game-points 23) empty-point)
+    (= (select new-game-points 24) (point Black 2)))
 )
 
 ;;;;
@@ -118,24 +117,14 @@
 )
 
 ;;;;
-;; Convenience accessor function to retrieve reference to the N-th point in a board
+;; Convenience accessor function to retrieve reference to the N-th point in a board. Points outside the range 1-24 are always
+;; the empty point. Always use this function to access board points in validation rules.
 
-(define-fun board-point ((b Board) (n Int)) Point
-  (select (points b) n)
+(define-fun board-point ((b Board) (i Int)) Point
+  (ite (or (>= i 1) (<= i 24))
+    (select (points b) i)
+    empty-point)
 )
-
-;;;;
-;; Assertion that a board's points array only has 24 indexed values. Note that the `forall` test's unbound variables match the
-;; parameters of the `board-point` accessor function above, which I suspect will make it easier for an SMT solver to instantiate this
-;; quantifier where it is going to be applied most often.
-
-(assert (! (forall ((b Board) (n Int))
-  (=>
-    (or
-      (< n 1)
-      (> n 24))
-    (not (exists ((p Point)) (= p (board-point b n)))))
-) :named board.invariate.there-are-only-24-board-points))
 
 ;;;;;;;;;;
 ;; A _valid_ board has these constraints:
@@ -151,7 +140,6 @@
 ;; - there must be at least 1 checker on the board blonging to the player whose turn it is
 ;;   - even at the end of the game, when it is technically the loser's turn, this is true -- the loser has at least one
 ;;     checker on the board
-
 
 (declare-fun board.validation.members-valid (Board) Bool)
 (assert (! (forall ((b Board))
@@ -183,7 +171,7 @@
       (point.validation (board-point b 24))
       (bar.validation (bar b)))
     (board.validation.members-valid b))
-) :named boad.validation.members-valid ))
+) :named board.validation.members-valid ))
 
 (declare-fun board.validation.red-or-black-turn-consistent-with-game-commencement (Board) Bool)
 (assert (! (forall ((b Board))
@@ -236,57 +224,57 @@
      (<=
        (+
          (ite (= (color (board-point b 1)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 2)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 3)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 4)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 5)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 6)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 7)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 8)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 9)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 10)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 11)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 12)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 13)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 14)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 15)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 16)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 17)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 18)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 19)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 20)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 21)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 22)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 23)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 24)) Red) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 2)) Red) (count (board-point b 2)) 0)
+         (ite (= (color (board-point b 3)) Red) (count (board-point b 3)) 0)
+         (ite (= (color (board-point b 4)) Red) (count (board-point b 4)) 0)
+         (ite (= (color (board-point b 5)) Red) (count (board-point b 5)) 0)
+         (ite (= (color (board-point b 6)) Red) (count (board-point b 6)) 0)
+         (ite (= (color (board-point b 7)) Red) (count (board-point b 7)) 0)
+         (ite (= (color (board-point b 8)) Red) (count (board-point b 8)) 0)
+         (ite (= (color (board-point b 9)) Red) (count (board-point b 9)) 0)
+         (ite (= (color (board-point b 10)) Red) (count (board-point b 10)) 0)
+         (ite (= (color (board-point b 11)) Red) (count (board-point b 11)) 0)
+         (ite (= (color (board-point b 12)) Red) (count (board-point b 12)) 0)
+         (ite (= (color (board-point b 13)) Red) (count (board-point b 13)) 0)
+         (ite (= (color (board-point b 14)) Red) (count (board-point b 14)) 0)
+         (ite (= (color (board-point b 15)) Red) (count (board-point b 15)) 0)
+         (ite (= (color (board-point b 16)) Red) (count (board-point b 16)) 0)
+         (ite (= (color (board-point b 17)) Red) (count (board-point b 17)) 0)
+         (ite (= (color (board-point b 18)) Red) (count (board-point b 18)) 0)
+         (ite (= (color (board-point b 19)) Red) (count (board-point b 19)) 0)
+         (ite (= (color (board-point b 20)) Red) (count (board-point b 20)) 0)
+         (ite (= (color (board-point b 21)) Red) (count (board-point b 21)) 0)
+         (ite (= (color (board-point b 22)) Red) (count (board-point b 22)) 0)
+         (ite (= (color (board-point b 23)) Red) (count (board-point b 23)) 0)
+         (ite (= (color (board-point b 24)) Red) (count (board-point b 24)) 0)
          (red-count (bar b)))
        15)
      (<=
        (+
          (ite (= (color (board-point b 1)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 2)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 3)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 4)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 5)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 6)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 7)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 8)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 9)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 10)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 11)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 12)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 13)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 14)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 15)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 16)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 17)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 18)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 19)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 20)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 21)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 22)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 23)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 24)) Black) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 2)) Black) (count (board-point b 2)) 0)
+         (ite (= (color (board-point b 3)) Black) (count (board-point b 3)) 0)
+         (ite (= (color (board-point b 4)) Black) (count (board-point b 4)) 0)
+         (ite (= (color (board-point b 5)) Black) (count (board-point b 5)) 0)
+         (ite (= (color (board-point b 6)) Black) (count (board-point b 6)) 0)
+         (ite (= (color (board-point b 7)) Black) (count (board-point b 7)) 0)
+         (ite (= (color (board-point b 8)) Black) (count (board-point b 8)) 0)
+         (ite (= (color (board-point b 9)) Black) (count (board-point b 9)) 0)
+         (ite (= (color (board-point b 10)) Black) (count (board-point b 10)) 0)
+         (ite (= (color (board-point b 11)) Black) (count (board-point b 11)) 0)
+         (ite (= (color (board-point b 12)) Black) (count (board-point b 12)) 0)
+         (ite (= (color (board-point b 13)) Black) (count (board-point b 13)) 0)
+         (ite (= (color (board-point b 14)) Black) (count (board-point b 14)) 0)
+         (ite (= (color (board-point b 15)) Black) (count (board-point b 15)) 0)
+         (ite (= (color (board-point b 16)) Black) (count (board-point b 16)) 0)
+         (ite (= (color (board-point b 17)) Black) (count (board-point b 17)) 0)
+         (ite (= (color (board-point b 18)) Black) (count (board-point b 18)) 0)
+         (ite (= (color (board-point b 19)) Black) (count (board-point b 19)) 0)
+         (ite (= (color (board-point b 20)) Black) (count (board-point b 20)) 0)
+         (ite (= (color (board-point b 21)) Black) (count (board-point b 21)) 0)
+         (ite (= (color (board-point b 22)) Black) (count (board-point b 22)) 0)
+         (ite (= (color (board-point b 23)) Black) (count (board-point b 23)) 0)
+         (ite (= (color (board-point b 24)) Black) (count (board-point b 24)) 0)
          (black-count (bar b)))
        15))
    (board.validation.no-more-than-15-checkers-per-player b))
@@ -300,29 +288,29 @@
       (>
         (+
          (ite (= (color (board-point b 1)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 2)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 3)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 4)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 5)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 6)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 7)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 8)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 9)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 10)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 11)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 12)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 13)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 14)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 15)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 16)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 17)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 18)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 19)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 20)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 21)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 22)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 23)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 24)) (next_player b)) (count (board-point b 1)) 0)
+         (ite (= (color (board-point b 2)) (next_player b)) (count (board-point b 2)) 0)
+         (ite (= (color (board-point b 3)) (next_player b)) (count (board-point b 3)) 0)
+         (ite (= (color (board-point b 4)) (next_player b)) (count (board-point b 4)) 0)
+         (ite (= (color (board-point b 5)) (next_player b)) (count (board-point b 5)) 0)
+         (ite (= (color (board-point b 6)) (next_player b)) (count (board-point b 6)) 0)
+         (ite (= (color (board-point b 7)) (next_player b)) (count (board-point b 7)) 0)
+         (ite (= (color (board-point b 8)) (next_player b)) (count (board-point b 8)) 0)
+         (ite (= (color (board-point b 9)) (next_player b)) (count (board-point b 9)) 0)
+         (ite (= (color (board-point b 10)) (next_player b)) (count (board-point b 10)) 0)
+         (ite (= (color (board-point b 11)) (next_player b)) (count (board-point b 11)) 0)
+         (ite (= (color (board-point b 12)) (next_player b)) (count (board-point b 12)) 0)
+         (ite (= (color (board-point b 13)) (next_player b)) (count (board-point b 13)) 0)
+         (ite (= (color (board-point b 14)) (next_player b)) (count (board-point b 14)) 0)
+         (ite (= (color (board-point b 15)) (next_player b)) (count (board-point b 15)) 0)
+         (ite (= (color (board-point b 16)) (next_player b)) (count (board-point b 16)) 0)
+         (ite (= (color (board-point b 17)) (next_player b)) (count (board-point b 17)) 0)
+         (ite (= (color (board-point b 18)) (next_player b)) (count (board-point b 18)) 0)
+         (ite (= (color (board-point b 19)) (next_player b)) (count (board-point b 19)) 0)
+         (ite (= (color (board-point b 20)) (next_player b)) (count (board-point b 20)) 0)
+         (ite (= (color (board-point b 21)) (next_player b)) (count (board-point b 21)) 0)
+         (ite (= (color (board-point b 22)) (next_player b)) (count (board-point b 22)) 0)
+         (ite (= (color (board-point b 23)) (next_player b)) (count (board-point b 23)) 0)
+         (ite (= (color (board-point b 24)) (next_player b)) (count (board-point b 24)) 0)
          (ite (= (next_player b) Red) (red-count (bar b)) (black-count (bar b))))
         0))
     (board.validation.current-player-has-at-least-one-checker b))
