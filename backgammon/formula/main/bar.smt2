@@ -31,8 +31,8 @@
 (assert (! (forall ((b Bar))
   (=
     (and
-      (> (red-count b) 0)
-      (> (black-count b) 0))
+      (>= (red-count b) 0)
+      (>= (black-count b) 0))
     (bar.validation b))
 ) :named bar.validation ))
 

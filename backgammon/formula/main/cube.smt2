@@ -1,5 +1,8 @@
 #include "color.smt2"
 
+#ifndef BACKGAMMON_DOMAIN_CUBE
+#define BACKGAMMON_DOMAIN_CUBE
+
 ;; || __FILE__ || __LINE__ ||
 
 ;;;;;;;;;;
@@ -44,7 +47,7 @@
   Beaver
 ))
 
-(declare-datatype Cube (
+(declare-datatype DoublingCube (
   (cube
     (doubling_value Int)
     (owner Color)
@@ -54,7 +57,7 @@
 ;;;;
 ;; The initial cube state at the beginning of the game process
 
-(define-const new-game-cube Cube
+(define-const new-game-cube DoublingCube
   (cube
     0         ; doubling_value
     Neutral   ; owner
@@ -66,15 +69,15 @@
 ;; - the doubling value is >= 0
 ;; - IF the cube is unowned, the cube state must be `Active`
 
-(declare-fun cube.validation.doubling-value-nonnegative (Cube) Bool)
-(assert (! (forall ((c Cube))
+(declare-fun cube.validation.doubling-value-nonnegative (DoublingCube) Bool)
+(assert (! (forall ((c DoublingCube))
   (=
     (>= (doubling_value c) 0)
     (cube.validation.doubling-value-nonnegative c))
 ) :named cube.validation.doubling-value-nonnegative ))
 
-(declare-fun cube.validation.unowned-cube-is-active (Cube) Bool)
-(assert (! (forall ((c Cube))
+(declare-fun cube.validation.unowned-cube-is-active (DoublingCube) Bool)
+(assert (! (forall ((c DoublingCube))
   (=
     (=>
       (= Neutral (owner c))
@@ -82,8 +85,10 @@
     (cube.validation.unowned-cube-is-active c))
 ) :named cube.validation.unowned-cube-is-active ))
 
-(define-fun cube.validation ((c Cube)) Bool
+(define-fun cube.validation ((c DoublingCube)) Bool
   (and
     (cube.validation.doubling-value-nonnegative c)
     (cube.validation.unowned-cube-is-active c))
 )
+
+#endif

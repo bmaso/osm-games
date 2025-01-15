@@ -1,5 +1,6 @@
 #include "color.smt2"
 #include "point.smt2"
+#include "cube.smt2"
 #include "bar.smt2"
 
 #ifndef BACKGAMMON_DOMAIN_BOARD
@@ -16,16 +17,14 @@
 ;;     isn't lead to even explore point values for other board index values
 ;; - a `Bar` value
 ;; - a `Color` representing which player goes _next_
-;; - a `doubling_value` integer value, representing the log base-2 value of the doubling cube
-
-;; TODO add state members for cube ownership, and for doubling and beavering/raccooning state
+;; - a `CubeState` value, representing the doubling cube
 
 (declare-datatype Board (
   (board
     (points (Array Int Point))
     (bar Bar)
     (next_player Color)
-    (doubling_value Int))
+    (cube DoublingCube))
 ))
 
 ;;;;
@@ -67,7 +66,7 @@
     new-board-empty-points
     empty-bar
     Neutral
-    0)
+    new-game-cube)
 )
 
 ;;;;
@@ -113,7 +112,7 @@
     new-game-points
     empty-bar
     first_player
-    0)
+    new-game-cube)
 )
 
 ;;;;
@@ -130,14 +129,14 @@
 ;; A _valid_ board has these constraints:
 ;; - all points 1-24 are valid
 ;; - the bar field is valid
+;; - the cube field is valid
 ;; - it must be _somebody's_ turn once play gets under way
 ;;   - that is: the `next_player` field is `Neutral` IFF there are no checkers on any point nor on the bar
-;; - the doubling value is not negative
-;; - the double value must be 0 at the beginning of the game
-;;   - that is: IF the `next_player` field is `Neutral`, THEN the doubling value is 0
+;; - the cube value must be equal to the `new-game-cube` value at the beginning of the game
+;;   - that is: IF the `next_player` field is `Neutral`, THEN the cube value is equal to `new-game-cube`
 ;; - there are no more than 15 red checkers and there are no more than 15 black checkers on the board (ie, summed across all
 ;;   points and the bar)
-;; - there must be at least 1 checker on the board blonging to the player whose turn it is
+;; - there must be at least 1 checker on the board belonging to the player whose turn it is
 ;;   - even at the end of the game, when it is technically the loser's turn, this is true -- the loser has at least one
 ;;     checker on the board
 
@@ -169,7 +168,8 @@
       (point.validation (board-point b 22))
       (point.validation (board-point b 23))
       (point.validation (board-point b 24))
-      (bar.validation (bar b)))
+      (bar.validation (bar b))
+      (cube.validation (cube b)))
     (board.validation.members-valid b))
 ) :named board.validation.members-valid ))
 
@@ -203,19 +203,11 @@
         (= (count (board-point b 23)) 0)
         (= (count (board-point b 24)) 0)
         (= (red-count (bar b)) 0)
-        (= (black-count (bar b)) 0))
+        (= (black-count (bar b)) 0)
+        (= (cube b) new-game-cube))
       (= (next_player b) Neutral))
   (board.validation.red-or-black-turn-consistent-with-game-commencement b))
 ) :named board.validation.red-or-black-turn-consistent-with-game-commencement))
-
-(declare-fun board.validation.doubling-value-consistent-with-game-commencement (Board) Bool)
-(assert (! (forall ((b Board))
-  (=
-    (=>
-      (= (next_player b) Neutral)
-      (= (doubling_value b) 0))
-    (board.validation.doubling-value-consistent-with-game-commencement b))
-) :named board.validation.doubling-value-consistent-with-game-commencement ))
 
 (declare-fun board.validation.no-more-than-15-checkers-per-player (Board) Bool)
 (assert (! (forall ((b Board))
@@ -320,7 +312,6 @@
   (and
     (board.validation.members-valid b)
     (board.validation.red-or-black-turn-consistent-with-game-commencement b)
-    (board.validation.doubling-value-consistent-with-game-commencement b)
     (board.validation.no-more-than-15-checkers-per-player b)
     (board.validation.current-player-has-at-least-one-checker b))
 )

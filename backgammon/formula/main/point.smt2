@@ -32,9 +32,14 @@
 (declare-fun point.validation (Point) Bool)
 (assert (! (forall ((p Point))
   (=
-    (=
-      (= (color p) Neutral)
-      (= (count p) 0))
+    (and
+      (=
+        (= (color p) Neutral)
+        (= (count p) 0))
+      (=>
+        (not (= (color p) Neutral))
+        (> (count p) 0))
+      (>= (count p) 0))
     (point.validation p))
 ) :named point.validation ))
 
