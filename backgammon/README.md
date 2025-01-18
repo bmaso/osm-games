@@ -52,8 +52,27 @@ The WBGF rules follow the description of the game rules clearly described in [Wi
    actual game play.
 
 1. _"Incorrect match length" rule._ Interpretation of the WBGF "Incorrect match length" rule as stated in the official rules is an
-indecidable proposition (in the Godel sense), as there is no reference to what "match length" is or what a "correct" match length would
-be throughout the entire rule corpus. This module makes no attempt to impose an iterpretation.
+   indecidable proposition (in the Godel sense), as there is no reference to what "match length" is or what a "correct" match length would
+   be throughout the entire rule corpus. This module makes no attempt to impose an iterpretation.
+
+1. _Dice Rolls_ and _Checker Movements._ The WBGF rules concerning die rolls and checker moves have a lot of corner conditions and special
+   cases. Checker on the bar must re-enter the baord before checkers on the board can be moved. If a die roll cannot be applied, the die roll
+   is forfeit. If both die rolls _can_ be played, the player is obligated to play both. But if only one die roll or the other can be played,
+   but not both, then the player is obligated to player the _higher_ die roll. And doubles count 4 times, so the same rules about if a
+   roll can be played then it must applies to up to 4x when double are rolled, which can lead to 0, 1, 2, 3 or 4 die rolls being forfeit
+   or played in a single turn. If a player wins by using just 1 of 2 die rolls, tehnically one of the die rolls is "forfeit", because
+   it can't be played. Truly, it's complicated to describe.
+
+   Rather than try to write a single logical equation describing all valid turns of 2 die on all possible valid boards, I have opted to
+   describe _8_ different operations: 
+   1. Non-doubles, forfeit both die values
+   1. Non-doubles, forfeit one dice value
+   1. Non-doubles, play both die values
+   1. Doubles, foreit all 4 die values
+   1. Doubles, forfeit 3 of 4 die values
+   1. Doubles, forfeit 2 of 4 die values
+   1. Doubles, forfeit 1 of 4 die values
+   1. Doubles, play all 4 die values
 
 ## Domain Datatypes and Validation Functions
 

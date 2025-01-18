@@ -24,6 +24,26 @@
 )
 
 ;;;;
+;; convenience function `point.can-target` indicates whether or not a checker owned by the indicated player can land on the point. The test is
+;; whether or not the opposing player owns the point, and if so is the point not a blot?
+
+(define-fun point.can-target ((p Point) (player Color)) Bool
+  (ite
+    (or
+      (= (color p) player)
+      (= (color p)  Neutral))
+    true
+    (< (count p) 2))
+)
+
+;;;;
+;; convenience function `point.is-blot`: a point is a "blot" if it has exactly one checker
+
+(define-fun point.is-blot ((p Point)) Bool
+  (= 1 (count p))
+)
+
+;;;;
 ;; A _valid_ point has these constraints:
 ;; - it has the color `Neutral` when the count is 0
 ;; - it has the color `Red` or `Black` (ie _not_ `Neutral`) when the count is > 0

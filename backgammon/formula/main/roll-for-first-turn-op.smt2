@@ -21,21 +21,21 @@
 ;; A _valid_ roll for first turn operation has these restrictions:
 ;; - all members must be valid
 ;; - the prior board's points must all be in the "empty" state (Neutral and with no checkers), empty bar, and
-;;   standard initial state of the doubling cube (`Active`, no owner, value is 0)
+;;   standard initial state of the doubling cube (no owner, value is 0)
 ;; - in all cases, the post board has these invariant restrictions:
 ;;   - the post board points are the standard start points
 ;;   - the post board bar is empty
-;;   - the post board cube state is in standard initial state (`Active`, no owner, value is 0)
+;;   - the post board cube state is in standard initial state (no owner, value is 0)
 ;; - in all cases, the red and black rolls have these restrictions:
 ;;   - the red die roll must be made by the `Red` player and the black die roll must be made by the `Black` player
 ;;   - IF the red roll is higher than the back roll, THEN the post board next player is `Red`
 ;;   - IF the black roll is higher than the red roll, THEN the post board is next plyer is `Black`
 ;;   - the red and black rolls cannot be equal
 ;;
-;;   > WBGF rules state that if the initial rolls are equal then the roll to decide the first player must be repeated.
-;;   > I interpret this to mean a roll to decide the first player is invalid unless the two values are unequal.
-;;   > This interpretation avoids the SMT solver having the option of instantiating a (potentially infinite) sequence
-;;   > of equal equal rolls when deducing the initial operation sequence of a valid backgammon game process.
+;;   WBGF rules state that if the initial rolls are equal then the roll to decide the first player must be repeated.
+;;   I interpret this to mean a roll to decide the first player is invalid unless the two values are unequal.
+;;   This interpretation avoids the SMT solver having the option of instantiating a (potentially infinite) sequence
+;;   of equal equal when deducing the initial operation sequence of a valid backgammon game process.
 
 (declare-fun roll-for-first-turn-op.validation.members-valid (RollForFirstTurnOp) Bool)
 (assert (! (forall ((op RollForFirstTurnOp))
