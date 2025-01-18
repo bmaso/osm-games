@@ -36,6 +36,9 @@
 ;;
 ;; The `cube-op.validation` function returns `true` when the param values represent valid cube state transitions of the indicated
 ;; `DoublingOp` type. This validation function is used as part of board operation validation.
+;;
+;; The `double-offered-forfeit` cube operation is one of the 2 terminal operations of a backgammon game process. The board validation
+;; logic entangles this operation with the board completion flag in the post board state.
 
 (declare-datatype DoublingOp (
   (noop)
