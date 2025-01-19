@@ -14,4 +14,15 @@
   Neutral
 ))
 
+;;;;
+;; convenience function `color.opponent-of`: equals `Red` for `Black` and vice versa, and `Neutral` for `Neutral`
+
+(define-fun color.opponent-of ((c Color)) Color
+  (ite
+    (= c Red) Black
+    (ite
+      (= c Black) Red
+      Neutral))
+)
+
 #endif

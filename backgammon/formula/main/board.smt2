@@ -1,13 +1,13 @@
 #include "color.smt2"
 #include "point.smt2"
 #include "cube.smt2"
-#include "bar.smt2"
 
 #ifndef BACKGAMMON_DOMAIN_BOARD
 #define BACKGAMMON_DOMAIN_BOARD
 
 ;;;;;;;;;;
-;; A `Board` value is a static game state of backgammon. A `Board` is comprised of
+;; A `Board` value is 1 player's view of the game state of backgammon, so that a full `Game` is comprised of 2 entangled `Board` values
+;; oriented in reverse direction from each other. A `Board` is comprised of
 ;; - 24 `Point` values; I opt to use an array to represent these values
 ;;   - the alternative to an array would be 24 separate `Point` instances, which I believe might be easier for the SMT solver to work with,
 ;;     but would be incredibly verbose in the validation rules -- there would need to be assertions for each (dice role, point)
@@ -15,111 +15,63 @@
 ;;     like the wrong way to go
 ;;   - there are _exactly_ 24 members of the array; all rules _only_ reference points within this range, so the SMT solver
 ;;     isn't lead to even explore point values for other board index values
-;; - a `Bar` value
-;; - a `Color` representing which player goes _next_
-;; - a `CubeState` value, representing the doubling cube
+;; - a `bar_count` integer value, representing the number of checkers the current player has on the bar
+;; - a `Color` representing the `self` player, and another representing the `opponent`
+;; - a `DoublingState` value, representing the doubling cube
 
 (declare-datatype Board (
   (board
     (points (Array Int Point))
-    (bar Bar)
-    (next_player Color)
-    (cube DoublingCube))
+    (bar_count Int)
+    (self Color))
 ))
 
 ;;;;
-;; The empty board state. This is the state _prior_ to game play, before the first player has been chosen. This is the _only_ valid
-;; game state where the `next_player` is `Neutral`. A special operation to pick the first player is the only valid operation that can
-;; be applied to this game state.
-
-(declare-const new-board-empty-points (Array Int Point))
-(assert
-  (and
-    (= (select new-board-empty-points 1) empty-point)
-    (= (select new-board-empty-points 2) empty-point)
-    (= (select new-board-empty-points 3) empty-point)
-    (= (select new-board-empty-points 4) empty-point)
-    (= (select new-board-empty-points 5) empty-point)
-    (= (select new-board-empty-points 6) empty-point)
-    (= (select new-board-empty-points 7) empty-point)
-    (= (select new-board-empty-points 8) empty-point)
-    (= (select new-board-empty-points 9) empty-point)
-    (= (select new-board-empty-points 10) empty-point)
-    (= (select new-board-empty-points 11) empty-point)
-    (= (select new-board-empty-points 12) empty-point)
-    (= (select new-board-empty-points 13) empty-point)
-    (= (select new-board-empty-points 14) empty-point)
-    (= (select new-board-empty-points 15) empty-point)
-    (= (select new-board-empty-points 16) empty-point)
-    (= (select new-board-empty-points 17) empty-point)
-    (= (select new-board-empty-points 18) empty-point)
-    (= (select new-board-empty-points 19) empty-point)
-    (= (select new-board-empty-points 20) empty-point)
-    (= (select new-board-empty-points 21) empty-point)
-    (= (select new-board-empty-points 22) empty-point)
-    (= (select new-board-empty-points 23) empty-point)
-    (= (select new-board-empty-points 24) empty-point))
-)
-
-(define-const new-empty-board (Board)
-  (board
-    new-board-empty-points
-    empty-bar
-    Neutral
-    new-game-cube)
-)
-
-;;;;
-;; A new game board points.
+;; convenience function `new-game-points`: new game board points set up in the standard board initial state, with points
+;; 1-6 as the nput player's inner table, 7-12 as the input player's outer table, 13-18 as the opponent player's
+;; outer table, and 19-24 as the opponent play'ers inner table.
+;;
 ;; - each player has 15 checkers, distributed the standard way (see https://en.wikipedia.org/wiki/Backgammon#Setup)
-;; - red checkers are oriented and travel from point 1 -> point 24
-;; - black checkers are oriented and travel from point 24 -> point 1
+;; - target player's checkers travel from point 24 -> point 1
+;; - opponent player's checkers travel from point 1 -> point 24
 
-(declare-const new-game-points (Array Int Point))
-(assert
-  (and
-    (= (select new-game-points 1) (point Red 2))
-    (= (select new-game-points 2) empty-point)
-    (= (select new-game-points 3) empty-point)
-    (= (select new-game-points 4) empty-point)
-    (= (select new-game-points 5) empty-point)
-    (= (select new-game-points 6) (point Black 5))
-    (= (select new-game-points 7) empty-point)
-    (= (select new-game-points 8) (point Black 3))
-    (= (select new-game-points 9) empty-point)
-    (= (select new-game-points 11) empty-point)
-    (= (select new-game-points 12) (point Red 5))
-    (= (select new-game-points 13) (point Black 5))
-    (= (select new-game-points 14) empty-point)
-    (= (select new-game-points 15) empty-point)
-    (= (select new-game-points 16) empty-point)
-    (= (select new-game-points 17) (point Red 3))
-    (= (select new-game-points 18) empty-point)
-    (= (select new-game-points 19) (point Red 5))
-    (= (select new-game-points 20) empty-point)
-    (= (select new-game-points 21) empty-point)
-    (= (select new-game-points 22) empty-point)
-    (= (select new-game-points 23) empty-point)
-    (= (select new-game-points 24) (point Black 2)))
+(define-fun new-game-points ((self Color)) (Array Int Point)
+  (let (
+    (opponent (color.opponent-of self))
+    (base_array ((as const (Array Int Point)) empty-point)))
+
+    (store
+      (store
+        (store
+          (store
+            (store
+              (store
+                (store
+                  (store base_array 1  (point self 2))
+                                    6  (point opponent 5))
+                                    8  (point opponent 3))
+                                    12 (point self 5))
+                                    13 (point opponent 5))
+                                    17 (point self 3))
+                                    19 (point self 5))
+                                    24 (point opponent 2)))
 )
 
 ;;;;
-;; Convenience function to generate a new game with `first_player` color going first. This is always the first state to which player
-;; turn operations can be applied (dice roll and doubling) in a valid game process.
-
-(define-fun new-game ((first_player Color)) Board
+;; conveneicen function `new-game-board`: generates a new game board with the given player having inner table in point range 1-6, and
+;; opposing player having inner table in point range 19-24.
+(define-fun new-empty-board ((self Color)) Board
   (board
-    new-game-points
-    empty-bar
-    first_player
-    new-game-cube)
+    (new-game-points self)
+    0
+    self)
 )
 
 ;;;;
 ;; Convenience accessor function to retrieve reference to the N-th point in a board. Points outside the range 1-24 are always
 ;; the empty point. Always use this function to access board points in validation rules.
 
-(define-fun board-point ((b Board) (i Int)) Point
+(define-fun board.get-point ((b Board) (i Int)) Point
   (ite (or (>= i 1) (<= i 24))
     (select (points b) i)
     empty-point)
@@ -128,192 +80,91 @@
 ;;;;;;;;;;
 ;; A _valid_ board has these constraints:
 ;; - all points 1-24 are valid
-;; - the bar field is valid
-;; - the cube field is valid
-;; - it must be _somebody's_ turn once play gets under way
-;;   - that is: the `next_player` field is `Neutral` IFF there are no checkers on any point nor on the bar
-;; - the cube value must be equal to the `new-game-cube` value at the beginning of the game
-;;   - that is: IF the `next_player` field is `Neutral`, THEN the cube value is equal to `new-game-cube`
-;; - there are no more than 15 red checkers and there are no more than 15 black checkers on the board (ie, summed across all
-;;   points and the bar)
-;; - there must be at least 1 checker on the board belonging to the player whose turn it is
-;;   - even at the end of the game, when it is technically the loser's turn, this is true -- the loser has at least one
-;;     checker on the board
+;; - total checkers of the target player is <= 15, counting across all points and the bar
+;; - self is `Red` or `Black`
+;;
+;; I'm assuming that 2 boards are going to be entangled at a higher level, so it is unnecesary to guarantee that the
+;; opposing player has 15 or fewer checkers, as that will be verified when validating the opopsing player's board.
 
 (declare-fun board.validation.members-valid (Board) Bool)
 (assert (! (forall ((b Board))
   (=
     (and
-      (point.validation (board-point b 1))
-      (point.validation (board-point b 2))
-      (point.validation (board-point b 3))
-      (point.validation (board-point b 4))
-      (point.validation (board-point b 5))
-      (point.validation (board-point b 6))
-      (point.validation (board-point b 7))
-      (point.validation (board-point b 8))
-      (point.validation (board-point b 9))
-      (point.validation (board-point b 10))
-      (point.validation (board-point b 11))
-      (point.validation (board-point b 12))
-      (point.validation (board-point b 13))
-      (point.validation (board-point b 14))
-      (point.validation (board-point b 15))
-      (point.validation (board-point b 16))
-      (point.validation (board-point b 17))
-      (point.validation (board-point b 18))
-      (point.validation (board-point b 19))
-      (point.validation (board-point b 20))
-      (point.validation (board-point b 21))
-      (point.validation (board-point b 22))
-      (point.validation (board-point b 23))
-      (point.validation (board-point b 24))
-      (bar.validation (bar b))
-      (cube.validation (cube b)))
+      (point.validation (board.get-point b 1))
+      (point.validation (board.get-point b 2))
+      (point.validation (board.get-point b 3))
+      (point.validation (board.get-point b 4))
+      (point.validation (board.get-point b 5))
+      (point.validation (board.get-point b 6))
+      (point.validation (board.get-point b 7))
+      (point.validation (board.get-point b 8))
+      (point.validation (board.get-point b 9))
+      (point.validation (board.get-point b 10))
+      (point.validation (board.get-point b 11))
+      (point.validation (board.get-point b 12))
+      (point.validation (board.get-point b 13))
+      (point.validation (board.get-point b 14))
+      (point.validation (board.get-point b 15))
+      (point.validation (board.get-point b 16))
+      (point.validation (board.get-point b 17))
+      (point.validation (board.get-point b 18))
+      (point.validation (board.get-point b 19))
+      (point.validation (board.get-point b 20))
+      (point.validation (board.get-point b 21))
+      (point.validation (board.get-point b 22))
+      (point.validation (board.get-point b 23))
+      (point.validation (board.get-point b 24)))
     (board.validation.members-valid b))
 ) :named board.validation.members-valid ))
 
-(declare-fun board.validation.red-or-black-turn-consistent-with-game-commencement (Board) Bool)
+(declare-fun board.validation.no-more-than-15-checkers (Board) Bool)
 (assert (! (forall ((b Board))
   (=
-    (= 
-      (and
-        (= (count (board-point b 1)) 0)
-        (= (count (board-point b 2)) 0)
-        (= (count (board-point b 3)) 0)
-        (= (count (board-point b 4)) 0)
-        (= (count (board-point b 5)) 0)
-        (= (count (board-point b 6)) 0)
-        (= (count (board-point b 7)) 0)
-        (= (count (board-point b 8)) 0)
-        (= (count (board-point b 9)) 0)
-        (= (count (board-point b 10)) 0)
-        (= (count (board-point b 11)) 0)
-        (= (count (board-point b 12)) 0)
-        (= (count (board-point b 13)) 0)
-        (= (count (board-point b 14)) 0)
-        (= (count (board-point b 15)) 0)
-        (= (count (board-point b 16)) 0)
-        (= (count (board-point b 17)) 0)
-        (= (count (board-point b 18)) 0)
-        (= (count (board-point b 19)) 0)
-        (= (count (board-point b 20)) 0)
-        (= (count (board-point b 21)) 0)
-        (= (count (board-point b 22)) 0)
-        (= (count (board-point b 23)) 0)
-        (= (count (board-point b 24)) 0)
-        (= (red-count (bar b)) 0)
-        (= (black-count (bar b)) 0)
-        (= (cube b) new-game-cube))
-      (= (next_player b) Neutral))
-  (board.validation.red-or-black-turn-consistent-with-game-commencement b))
-) :named board.validation.red-or-black-turn-consistent-with-game-commencement))
+    (<=
+      (+
+        (ite (= (color (board.get-point b 1))  (self b)) (count (board.get-point b 1))  0)
+        (ite (= (color (board.get-point b 2))  (self b)) (count (board.get-point b 2))  0)
+        (ite (= (color (board.get-point b 3))  (self b)) (count (board.get-point b 3))  0)
+        (ite (= (color (board.get-point b 4))  (self b)) (count (board.get-point b 4))  0)
+        (ite (= (color (board.get-point b 5))  (self b)) (count (board.get-point b 5))  0)
+        (ite (= (color (board.get-point b 6))  (self b)) (count (board.get-point b 6))  0)
+        (ite (= (color (board.get-point b 7))  (self b)) (count (board.get-point b 7))  0)
+        (ite (= (color (board.get-point b 8))  (self b)) (count (board.get-point b 8))  0)
+        (ite (= (color (board.get-point b 9))  (self b)) (count (board.get-point b 9))  0)
+        (ite (= (color (board.get-point b 10)) (self b)) (count (board.get-point b 10)) 0)
+        (ite (= (color (board.get-point b 11)) (self b)) (count (board.get-point b 11)) 0)
+        (ite (= (color (board.get-point b 12)) (self b)) (count (board.get-point b 12)) 0)
+        (ite (= (color (board.get-point b 13)) (self b)) (count (board.get-point b 13)) 0)
+        (ite (= (color (board.get-point b 14)) (self b)) (count (board.get-point b 14)) 0)
+        (ite (= (color (board.get-point b 15)) (self b)) (count (board.get-point b 15)) 0)
+        (ite (= (color (board.get-point b 16)) (self b)) (count (board.get-point b 16)) 0)
+        (ite (= (color (board.get-point b 17)) (self b)) (count (board.get-point b 17)) 0)
+        (ite (= (color (board.get-point b 18)) (self b)) (count (board.get-point b 18)) 0)
+        (ite (= (color (board.get-point b 19)) (self b)) (count (board.get-point b 19)) 0)
+        (ite (= (color (board.get-point b 20)) (self b)) (count (board.get-point b 20)) 0)
+        (ite (= (color (board.get-point b 21)) (self b)) (count (board.get-point b 21)) 0)
+        (ite (= (color (board.get-point b 22)) (self b)) (count (board.get-point b 22)) 0)
+        (ite (= (color (board.get-point b 23)) (self b)) (count (board.get-point b 23)) 0)
+        (ite (= (color (board.get-point b 24)) (self b)) (count (board.get-point b 24)) 0)
+        (bar_count b))
+      15)
+   (board.validation.no-more-than-15-checkers b))
+) :named board.validation.no-more-than-15-checkers ))
 
-(declare-fun board.validation.no-more-than-15-checkers-per-player (Board) Bool)
-(assert (! (forall ((b Board))
- (=
-   (and
-     (<=
-       (+
-         (ite (= (color (board-point b 1)) Red) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 2)) Red) (count (board-point b 2)) 0)
-         (ite (= (color (board-point b 3)) Red) (count (board-point b 3)) 0)
-         (ite (= (color (board-point b 4)) Red) (count (board-point b 4)) 0)
-         (ite (= (color (board-point b 5)) Red) (count (board-point b 5)) 0)
-         (ite (= (color (board-point b 6)) Red) (count (board-point b 6)) 0)
-         (ite (= (color (board-point b 7)) Red) (count (board-point b 7)) 0)
-         (ite (= (color (board-point b 8)) Red) (count (board-point b 8)) 0)
-         (ite (= (color (board-point b 9)) Red) (count (board-point b 9)) 0)
-         (ite (= (color (board-point b 10)) Red) (count (board-point b 10)) 0)
-         (ite (= (color (board-point b 11)) Red) (count (board-point b 11)) 0)
-         (ite (= (color (board-point b 12)) Red) (count (board-point b 12)) 0)
-         (ite (= (color (board-point b 13)) Red) (count (board-point b 13)) 0)
-         (ite (= (color (board-point b 14)) Red) (count (board-point b 14)) 0)
-         (ite (= (color (board-point b 15)) Red) (count (board-point b 15)) 0)
-         (ite (= (color (board-point b 16)) Red) (count (board-point b 16)) 0)
-         (ite (= (color (board-point b 17)) Red) (count (board-point b 17)) 0)
-         (ite (= (color (board-point b 18)) Red) (count (board-point b 18)) 0)
-         (ite (= (color (board-point b 19)) Red) (count (board-point b 19)) 0)
-         (ite (= (color (board-point b 20)) Red) (count (board-point b 20)) 0)
-         (ite (= (color (board-point b 21)) Red) (count (board-point b 21)) 0)
-         (ite (= (color (board-point b 22)) Red) (count (board-point b 22)) 0)
-         (ite (= (color (board-point b 23)) Red) (count (board-point b 23)) 0)
-         (ite (= (color (board-point b 24)) Red) (count (board-point b 24)) 0)
-         (red-count (bar b)))
-       15)
-     (<=
-       (+
-         (ite (= (color (board-point b 1)) Black) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 2)) Black) (count (board-point b 2)) 0)
-         (ite (= (color (board-point b 3)) Black) (count (board-point b 3)) 0)
-         (ite (= (color (board-point b 4)) Black) (count (board-point b 4)) 0)
-         (ite (= (color (board-point b 5)) Black) (count (board-point b 5)) 0)
-         (ite (= (color (board-point b 6)) Black) (count (board-point b 6)) 0)
-         (ite (= (color (board-point b 7)) Black) (count (board-point b 7)) 0)
-         (ite (= (color (board-point b 8)) Black) (count (board-point b 8)) 0)
-         (ite (= (color (board-point b 9)) Black) (count (board-point b 9)) 0)
-         (ite (= (color (board-point b 10)) Black) (count (board-point b 10)) 0)
-         (ite (= (color (board-point b 11)) Black) (count (board-point b 11)) 0)
-         (ite (= (color (board-point b 12)) Black) (count (board-point b 12)) 0)
-         (ite (= (color (board-point b 13)) Black) (count (board-point b 13)) 0)
-         (ite (= (color (board-point b 14)) Black) (count (board-point b 14)) 0)
-         (ite (= (color (board-point b 15)) Black) (count (board-point b 15)) 0)
-         (ite (= (color (board-point b 16)) Black) (count (board-point b 16)) 0)
-         (ite (= (color (board-point b 17)) Black) (count (board-point b 17)) 0)
-         (ite (= (color (board-point b 18)) Black) (count (board-point b 18)) 0)
-         (ite (= (color (board-point b 19)) Black) (count (board-point b 19)) 0)
-         (ite (= (color (board-point b 20)) Black) (count (board-point b 20)) 0)
-         (ite (= (color (board-point b 21)) Black) (count (board-point b 21)) 0)
-         (ite (= (color (board-point b 22)) Black) (count (board-point b 22)) 0)
-         (ite (= (color (board-point b 23)) Black) (count (board-point b 23)) 0)
-         (ite (= (color (board-point b 24)) Black) (count (board-point b 24)) 0)
-         (black-count (bar b)))
-       15))
-   (board.validation.no-more-than-15-checkers-per-player b))
-) :named board.validation.no-more-than-15-checkers-per-player ))
-
-(declare-fun board.validation.current-player-has-at-least-one-checker (Board) Bool)
+(declare-fun board.validation.player-is-red-or-black (Board) Bool)
 (assert (! (forall ((b Board))
   (=
-    (=>
-      (not (= Neutral (next_player b)))
-      (>
-        (+
-         (ite (= (color (board-point b 1)) (next_player b)) (count (board-point b 1)) 0)
-         (ite (= (color (board-point b 2)) (next_player b)) (count (board-point b 2)) 0)
-         (ite (= (color (board-point b 3)) (next_player b)) (count (board-point b 3)) 0)
-         (ite (= (color (board-point b 4)) (next_player b)) (count (board-point b 4)) 0)
-         (ite (= (color (board-point b 5)) (next_player b)) (count (board-point b 5)) 0)
-         (ite (= (color (board-point b 6)) (next_player b)) (count (board-point b 6)) 0)
-         (ite (= (color (board-point b 7)) (next_player b)) (count (board-point b 7)) 0)
-         (ite (= (color (board-point b 8)) (next_player b)) (count (board-point b 8)) 0)
-         (ite (= (color (board-point b 9)) (next_player b)) (count (board-point b 9)) 0)
-         (ite (= (color (board-point b 10)) (next_player b)) (count (board-point b 10)) 0)
-         (ite (= (color (board-point b 11)) (next_player b)) (count (board-point b 11)) 0)
-         (ite (= (color (board-point b 12)) (next_player b)) (count (board-point b 12)) 0)
-         (ite (= (color (board-point b 13)) (next_player b)) (count (board-point b 13)) 0)
-         (ite (= (color (board-point b 14)) (next_player b)) (count (board-point b 14)) 0)
-         (ite (= (color (board-point b 15)) (next_player b)) (count (board-point b 15)) 0)
-         (ite (= (color (board-point b 16)) (next_player b)) (count (board-point b 16)) 0)
-         (ite (= (color (board-point b 17)) (next_player b)) (count (board-point b 17)) 0)
-         (ite (= (color (board-point b 18)) (next_player b)) (count (board-point b 18)) 0)
-         (ite (= (color (board-point b 19)) (next_player b)) (count (board-point b 19)) 0)
-         (ite (= (color (board-point b 20)) (next_player b)) (count (board-point b 20)) 0)
-         (ite (= (color (board-point b 21)) (next_player b)) (count (board-point b 21)) 0)
-         (ite (= (color (board-point b 22)) (next_player b)) (count (board-point b 22)) 0)
-         (ite (= (color (board-point b 23)) (next_player b)) (count (board-point b 23)) 0)
-         (ite (= (color (board-point b 24)) (next_player b)) (count (board-point b 24)) 0)
-         (ite (= (next_player b) Red) (red-count (bar b)) (black-count (bar b))))
-        0))
-    (board.validation.current-player-has-at-least-one-checker b))
-) :named board.validation.current-player-has-at-least-one-checker ))
+    (or
+      (= Red (self b))
+      (= Black (self b)))
+    (board.validation.player-is-red-or-black b))
+) :named board.validation.player-is-red-or-black ))
 
 (define-fun board.validation ((b Board)) Bool
   (and
     (board.validation.members-valid b)
-    (board.validation.red-or-black-turn-consistent-with-game-commencement b)
-    (board.validation.no-more-than-15-checkers-per-player b)
-    (board.validation.current-player-has-at-least-one-checker b))
+    (board.validation.no-more-than-15-checkers b)
+    (board.validation.player-is-red-or-black b))
 )
 
 #endif
