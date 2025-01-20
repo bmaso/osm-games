@@ -27,10 +27,10 @@
 ;; - the post game state is identical to the prior game state in all aspects _except_ the `next_player` must
 ;;   be equal to the player of the higher of the values of `red_roll` and `black_roll`
 ;;
-;;   WBGF rules state that if the initial rolls are equal then the roll to decide the first player must be repeated.
-;;   I interpret this to mean a roll to decide the first player is invalid unless the two values are unequal.
-;;   This interpretation avoids the SMT solver having the option of instantiating a (potentially infinite) sequence
-;;   of valid `RollForFirstTurnOp` instances as the initial portion of a valid game process graph.
+;; Note: WBGF rules state that if the initial rolls are equal then the roll to decide the first player must be repeated.
+;; I interpret this to mean a roll to decide the first player is invalid unless the two values are unequal.
+;; This interpretation avoids the SMT solver having the option of instantiating a (potentially infinite) sequence
+;; of valid `RollForFirstTurnOp` instances as the initial portion of a valid game process graph.
 
 (declare-fun game.roll-for-first-turn-op.validation.members-valid (RollForFirstTurnOp) Bool)
 (assert (! (forall ((op RollForFirstTurnOp))
