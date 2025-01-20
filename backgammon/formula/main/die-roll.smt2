@@ -2,6 +2,9 @@
 
 ;; || __FILE__ || __LINE__ ||
 
+#ifndef BACKGAMMON_DOMAIN_DIEROLL
+#define BACKGAMMON_DOMAIN_DIEROLL
+
 ;;;;;;;;;;
 ;; A die roll is comprised of:
 ;; - a player value indicating which player made the roll; the `Color` type is used to represent this.
@@ -27,3 +30,5 @@
       (<= (value d) 6))
     (die-roll.validation d))
 ) :named die-roll.validation ))
+
+#endif

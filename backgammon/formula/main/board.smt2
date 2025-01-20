@@ -2,6 +2,8 @@
 #include "point.smt2"
 #include "cube.smt2"
 
+;; || __FILE__ || __LINE__ ||
+
 #ifndef BACKGAMMON_DOMAIN_BOARD
 #define BACKGAMMON_DOMAIN_BOARD
 
@@ -58,9 +60,9 @@
 )
 
 ;;;;
-;; conveneicen function `new-game-board`: generates a new game board with the given player having inner table in point range 1-6, and
+;; convenience function `new-game-board`: generates a new game board with the given player having inner table in point range 1-6, and
 ;; opposing player having inner table in point range 19-24.
-(define-fun new-empty-board ((player Color)) Board
+(define-fun new-game-board ((player Color)) Board
   (board
     (new-game-points player)      ; board points
     0                             ; player bar count
