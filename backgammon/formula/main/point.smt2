@@ -47,9 +47,9 @@
 ;; A _valid_ point has these constraints:
 ;; - it has the color `Neutral` when the count is 0
 ;; - it has the color `Red` or `Black` (ie _not_ `Neutral`) when the count is > 0
-;; - it does not have a negative count value
+;; - point count is in range 0 <= count <= 15
 
-(declare-fun point.validation (Point) Bool)
+(declare-fun point.validation.consistent-with-neutral (Point) Bool)
 (assert (! (forall ((p Point))
   (=
     (and
@@ -58,9 +58,23 @@
         (= (count p) 0))
       (=>
         (not (= (color p) Neutral))
-        (> (count p) 0))
-      (>= (count p) 0))
-    (point.validation p))
-) :named point.validation ))
+        (> (count p) 0)))
+    (point.validation.consistent-with-neutral p))
+) :named point.validation.consistent-with-neutral ))
+
+(declare-fun point.validation.count-is-valid (Point) Bool)
+(assert (! (forall ((p Point))
+  (=
+    (and
+      (>= (count p) 0)
+      (<= (count p) 15))
+    (point.validation.count-is-valid p))
+) :named point.validation.count-is-valid ))
+
+(define-fun point.validation ((p Point)) Bool
+  (and
+    (point.validation.consistent-with-neutral p)
+    (point.validation.count-is-valid p))
+)
 
 #endif

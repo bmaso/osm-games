@@ -7,11 +7,12 @@
 #define BACKGAMMON_OPS_CUBE
 
 ;;;;;;;;;;
-;; The first part of each player's turn involves an optional state change in the doubling cube. The WBGF rules support doubling, "beavering",
-;; and "raccooning", which is a little complicated to explain. See [Wikipedia's description](https://en.wikipedia.org/wiki
-;; Backgammon#Doubling_cube) of the backgammon doubling cube.
+;; The first part of each player's turn involves an optional state change in the doubling cube. The WBGF rules only support doubling.
+;; "Beavering" (redoubling) and "raccooning" (redoubling yet again) are not supported (see [Wikipedia's description](https://en.wikipedia.org/wiki
+;; Backgammon#Doubling_cube) of the backgammon doubling cube). I have choosen to define beaving and raccooning simply because it
+;; seems more interesting.
 ;;
-;; There are 5 possible outcomes of cube doubling at the beginning of each player's turn, represented here with
+;; There are 5 possible outcomes of cube doubling at the beginning of each player's turn in my definition of the game, represented here with
 ;; different constructors of a `DoublingOp` datatype:
 ;; - `noop`, representing scenarios where the doubling cube remains static. Either the opposing player owns the cube, in which case
 ;;   the cube cannot be modified, or the current player declines to double the cube; in any event, there's no restriction on

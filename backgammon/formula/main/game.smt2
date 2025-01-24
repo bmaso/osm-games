@@ -13,24 +13,27 @@
 ;; - `next_player`, a `Color` value indicating which player's turn is next
 ;; - `red_board` and `black_board` values, `Board` values representing each player's own "view" of the game
 ;; - `cube`, which store the doubling cube value and owner
+;; - `complete`, a boolean flag indicating the game is in a terminal state
 
 (declare-datatype Game (
   (game
     (next_player Color)
     (red_board Board)
     (black_board Board)
-    (cube DoublingCube)))
+    (cube DoublingCube)
+    (complete Bool)))
 )
 
 ;;;;
-;; conveneicen constant `new-game`: equal to the initial state at the very beginning of all valid game processes.
+;; convenience constant `new-game`: equal to the initial state at the very beginning of all valid game processes.
 
 (define-const new-game Game
   (game
     Neutral                  ; next_player, which hasn't been chosen by an initial die roll yet
     (new-game-board Red)     ; red_board
     (new-game-board Black)   ; black_board
-    new-game-cube)           ; cube
+    new-game-cube            ; cube
+    false)                   ; game completion state, which is false initially
 )
 
 ;;;;
