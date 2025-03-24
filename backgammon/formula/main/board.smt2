@@ -8,10 +8,9 @@
 #define BACKGAMMON_DOMAIN_BOARD
 
 ;;;;;;;;;;
-;; A `Board` value is 1 player's view of the game state of backgammon, so that a full `Game` is comprised of 2 entangled `Board` values
-;; oriented in reverse direction from each other. A `Board` is comprised of
+;; A `Board` value is 1 player's view of the game state of backgammon. A `Board` is comprised of
 ;; - 24 `Point` values; I opt to use an array to represent these values
-;;   - the alternative to an array would be 24 separate `Point` instances, which I believe might be easier for the SMT solver to work with,
+;;   - an alternative to an array would be 24 separate `Point` instances, which I believe might be easier for the SMT solver to work with,
 ;;     but would be incredibly verbose in the validation rules -- there would need to be assertions for each (dice role, point)
 ;;     combination -- at least 18 * 24; this would obligate me to use macros to generate large numbers of assertions, and that just seems
 ;;     like the wrong way to go
@@ -30,8 +29,8 @@
 
 ;;;;
 ;; convenience function `new-game-points`: new game board points set up in the standard board initial state, with points
-;; 1-6 as the nput player's inner table, 7-12 as the input player's outer table, 13-18 as the opponent player's
-;; outer table, and 19-24 as the opponent play'ers inner table.
+;; 1-6 as the player's inner table, 7-12 as the input player's outer table, 13-18 as the opponent player's
+;; outer table, and 19-24 as the opponent player's inner table.
 ;;
 ;; - each player has 15 checkers, distributed the standard way (see https://en.wikipedia.org/wiki/Backgammon#Setup)
 ;; - target player's checkers travel from point 24 -> point 1
@@ -49,25 +48,25 @@
             (store
               (store
                 (store
-                  (store base_array 1  (point player 2))
-                                    6  (point opponent 5))
-                                    8  (point opponent 3))
-                                    12 (point player 5))
-                                    13 (point opponent 5))
-                                    17 (point player 3))
-                                    19 (point player 5))
-                                    24 (point opponent 2)))
+                  (store base_array 1  (point opponent 2))
+                                    6  (point player 5))
+                                    8  (point player 3))
+                                    12 (point opponent 5))
+                                    13 (point player 5))
+                                    17 (point opponent 3))
+                                    19 (point opponent 5))
+                                    24 (point player 2)))
 )
 
 ;;;;
 ;; convenience function `new-game-board`: generates a new game board with the given player having inner table in point range 1-6, and
-;; opposing player having inner table in point range 19-24.
-(define-fun new-game-board ((player Color)) Board
+;; opposing player having inner table in point range 19-24. Neither the player nor opponent have checkers on the bar.
+(define-fun new-game-board ((color Color)) Board
   (board
-    (new-game-points player)      ; board points
+    (new-game-points color)       ; board points
     0                             ; player bar count
     0                             ; opponent bar count
-    player)                       ; player color
+    color)                        ; owner color
 )
 
 ;;;;
@@ -80,47 +79,9 @@
     empty-point)
 )
 
-;;;;;;;;;;
-;; A _valid_ board has these constraints:
-;; - all points 1-24 are valid
-;; - total checkers of the target player is <= 15 and >= 0, counting across all points and the bar
-;; - player is `Red` or `Black`
-;;
-;; I'm assuming that 2 boards are going to be entangled at a higher level, so it is unnecesary to guarantee that the
-;; opposing player has 15 or fewer checkers, as that will be verified when validating the opposing player's board.
-
-(declare-fun board.validation.members-valid (Board) Bool)
-(assert (! (forall ((b Board))
-  (=
-    (and
-      (point.validation (board.get-point b 1))
-      (point.validation (board.get-point b 2))
-      (point.validation (board.get-point b 3))
-      (point.validation (board.get-point b 4))
-      (point.validation (board.get-point b 5))
-      (point.validation (board.get-point b 6))
-      (point.validation (board.get-point b 7))
-      (point.validation (board.get-point b 8))
-      (point.validation (board.get-point b 9))
-      (point.validation (board.get-point b 10))
-      (point.validation (board.get-point b 11))
-      (point.validation (board.get-point b 12))
-      (point.validation (board.get-point b 13))
-      (point.validation (board.get-point b 14))
-      (point.validation (board.get-point b 15))
-      (point.validation (board.get-point b 16))
-      (point.validation (board.get-point b 17))
-      (point.validation (board.get-point b 18))
-      (point.validation (board.get-point b 19))
-      (point.validation (board.get-point b 20))
-      (point.validation (board.get-point b 21))
-      (point.validation (board.get-point b 22))
-      (point.validation (board.get-point b 23))
-      (point.validation (board.get-point b 24))
-      (>= (player_bar_count b) 0)
-      (<= (player_bar_count b) 15))
-    (board.validation.members-valid b))
-) :named board.validation.members-valid ))
+;;;;
+;; Convenience function `count-player-checkers`: sums checkers on each point plus the bar. We avoid using a quantifier
+;; to range over an int index because SMT solvers have a hard time ranging over ints.
 
 (define-fun board.count-player-checkers ((b Board)) Int
   (+
@@ -151,6 +112,10 @@
     (player_bar_count b))
 )
 
+;;;;
+;; Convenience function `count-opponent-checkers`: sums checkers on each point plus the bar. We avoid using a quantifier
+;; to range over an int index because SMT solvers have a hard time ranging over ints.
+
 (define-fun board.count-opponent-checkers ((b Board)) Int
   (+
     (ite (not (= (color (board.get-point b 1))  (player b))) (count (board.get-point b 1))  0)
@@ -179,6 +144,53 @@
     (ite (not (= (color (board.get-point b 24)) (player b))) (count (board.get-point b 24)) 0)
     (opponent_bar_count b))
 )
+
+;;;;;;;;;;
+;; A _valid_ board has these constraints:
+;; - all points 1-24 are valid
+;; - player bar count is non-negative
+;; - player checker count is <= 15 and >= 0, counting across all points and the bar
+;; - player is `Red` or `Black`
+;;
+;; I'm assuming that 2 boards are going to be entangled at a higher level, so it is unnecesary to guarantee that the
+;; opposing player has 15 or fewer checkers, as that will be verified when validating the opposing player's board.
+;;
+;; Not we do not use a quantifier here to range on the point indexes 1-24. SMT solvers are generally not optimized
+;; to range over ints or other infinite-range values. When possible, use explicit loop unrolling, especially when
+;; the propositions being verified over each range element are indepenent from each other.
+
+(declare-fun board.validation.members-valid (Board) Bool)
+(assert (! (forall ((b Board))
+  (=
+    (and
+      (point.validation (board.get-point b 1))
+      (point.validation (board.get-point b 2))
+      (point.validation (board.get-point b 3))
+      (point.validation (board.get-point b 4))
+      (point.validation (board.get-point b 5))
+      (point.validation (board.get-point b 6))
+      (point.validation (board.get-point b 7))
+      (point.validation (board.get-point b 8))
+      (point.validation (board.get-point b 9))
+      (point.validation (board.get-point b 10))
+      (point.validation (board.get-point b 11))
+      (point.validation (board.get-point b 12))
+      (point.validation (board.get-point b 13))
+      (point.validation (board.get-point b 14))
+      (point.validation (board.get-point b 15))
+      (point.validation (board.get-point b 16))
+      (point.validation (board.get-point b 17))
+      (point.validation (board.get-point b 18))
+      (point.validation (board.get-point b 19))
+      (point.validation (board.get-point b 20))
+      (point.validation (board.get-point b 21))
+      (point.validation (board.get-point b 22))
+      (point.validation (board.get-point b 23))
+      (point.validation (board.get-point b 24))
+      (>= (player_bar_count b) 0))
+
+    (board.validation.members-valid b))
+) :named board.validation.members-valid ))
 
 (declare-fun board.validation.0-15-total-checkers (Board) Bool)
 (assert (! (forall ((b Board))

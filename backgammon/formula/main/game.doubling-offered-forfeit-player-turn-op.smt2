@@ -26,6 +26,9 @@
 
 ;;;;
 ;; A _valid_ `DoublingOfferedForfeitPlayerTurnOp` instance has htese restrictions:
+;; - it is either `Red` or `Black` turn
+;;   - ie, not Neutral, which would indicate the initial roll for first turn operation
+;;     has not been applied
 ;; - the members are valid
 ;; - the `cube-op.validation` restrictions are satisfied when passing `double-offered-forfeit` as the cube operation param,
 ;;   the prior and post game cubes, and the prior game current player as the remaining params
@@ -36,6 +39,7 @@
 (assert (! (forall ((op DoublingOfferedForfeitPlayerTurnOp))
   (=
     (and
+      (not (= Neutral (next_player (prior_game op))))
       (game.validation (prior_game op))
       (game.validation (post_game op))
       (cube-op.validation double-offered-forfeit (cube (prior_game op)) (cube (post_game op)) (next_player (prior_game op)))

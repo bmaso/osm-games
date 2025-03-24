@@ -72,20 +72,62 @@
 ))
 
 ;;;;
+;; Convenience function `apply-roll-op.validation.common-preconditions` proves that:
+;; - the prior and post boards as well as the die roll are individually valid
+;; - the game has commenced -- ie the current player color is either `Red` or `Black`
+;; - the prior and post board have the same current player, which is the same as the player who rolled the die
+
+(declare-fun apply-roll-op.validation.common-preconditions (Board Board DieRoll) Bool)
+(assert (! (forall (
+  (prior_board Board)
+  (post_board Board)
+  (roll DieRoll))
+  
+  (=
+    (and
+      (board.validation prior_board)
+      (board.validation post_board)
+      (die-roll.validation roll)
+
+      (not (= Neutral (player prior_board)))
+      (= (player prior_board) (player post_board) (player roll)))
+    (apply-roll-op.validation.common-preconditions prior_board post_board roll))
+) :named apply-roll-op.validation.common-preconditions ))
+
+;;;;
 ;; A valid `re-enter` operation application has these restrictions:
-;; - the prior board, post board, and die roll are all valid
-;; - the prior and post board `player` value are equal to each other and to the die roll's owner, and both are either `Red` or `Black`
-;; - the prior player bar count has a value of 1 or higher
-;; - the opponent's prior inner table point in the position corresponding to the roll value, the _reentry_point_, is not
-;;   controlled by the opposing player. (See the `point.can-target` function.)
-;;   - note that the opponent's inner able is at index 19-24 of this player's board
-;; - IF the prior reentry point is an opposing player blot, THEN
-;;   - the post reentry point has a single checker of the current player's color
-;;   - the opponent post bar count is 1 one higher than the prior count
-;; - IF the opponent's prior board point corresponding to the roll value is not an opponent blot, THEN
-;;   - the same point in the post board has one more checker of the current player than the prior board's point
-;; - the player post bar count is 1 less than the prior count
-;; - all other points than the reentry point are identical in the prior and post boards
+;; - preconditions:
+;;   - the prior board, post board, and die roll are all valid
+;;   - the prior and post board `player` value are equal to each other and to the die roll's owner, and both are either
+;;     `Red` or `Black`
+;;   - the prior player bar count has a value of 1 or higher
+;;   - the opponent's prior inner table point in the position corresponding to the roll value, the _reentry_point_, is not
+;;     controlled by the opposing player. (See the `point.can-target` function.)
+;;     - note that the opponent's inner able is at index 18-24 of this player's board
+;;
+;; - post-conditions, relating the post board state to the prior board and die roll
+;;   - IF the prior reentry point is an opposing player blot, THEN
+;;     - the post reentry point has a single checker of the current player's color
+;;     - the opponent post bar count is 1 one higher than the prior count
+;;   - IF the opponent's prior board point corresponding to the roll value is not an opponent blot, THEN
+;;     - the same point in the post board has one more checker of the current player than the prior board's point
+;;   - the player post bar count is 1 less than the prior count
+;;   - all other points than the reentry point are identical in the prior and post boards
+
+(declare-fun apply-roll-op.re-enter.validation.preconditions (Board Board DieRoll) Bool)
+(assert (! (forall (
+  (prior_board Board)
+  (post_board Board)
+  (roll DieRoll))
+
+  (=
+    (and
+      (apply-roll-op.validation.common-preconditions prior_board post_board roll)
+      (>= (player_bar_count prior_board) 1)
+      (point.can-target (select (points prior_board) (- 25 (value roll))) (player prior_board)))
+
+    (apply-roll-op.re-enter.validation.preconditions prior_board post_board roll))
+) :named apply-roll-op.re-enter.validation.preconditions ))
 
 (declare-fun apply-roll-op.re-enter.validation (Board Board DieRoll) Bool)
 (assert (! (forall (
@@ -93,22 +135,14 @@
   (post_board Board)
   (roll DieRoll))
 
-  (let (
-    (prior_reentry_point (select (points prior_board) (- 25 (value roll))))
-    (post_reentry_point (select (points post_board) (- 25 (value roll)))))
+  (=
+    (and
+      (apply-roll-op.re-enter.validation.preconditions prior_board post_board roll)
 
-    (=
-      (and
-        (board.validation prior_board)
-        (board.validation post_board)
-        (die-roll.validation roll)
+      (let (
+        (prior_reentry_point (select (points prior_board) (- 25 (value roll))))
+        (post_reentry_point (select (points post_board) (- 25 (value roll)))))
 
-        (not (= Neutral (player prior_board)))
-        (= (player prior_board) (player post_board) (player roll))
-
-        (>= (player_bar_count prior_board) 1)
-
-        (point.can-target prior_reentry_point (player prior_board))
         (or
           (and
             (point.is-blot prior_reentry_point)
@@ -116,48 +150,36 @@
             (= (player prior_board) (color post_reentry_point))
             (= (opponent_bar_count post_board) (+ 1 (opponent_bar_count prior_board))))
           (and
-            (not (point.is-blot (select (points prior_board) (- 25 (value roll)))))
+            (not (point.is-blot prior_reentry_point))
             (= (+ 1 (count prior_reentry_point)) (count post_reentry_point))
             (= (player prior_board) (color post_reentry_point))))
-        (= (- (player_bar_count prior_board) 1) (player_bar_count post_board))
-        (= (points post_board) (store (points prior_board) (- 25 (value roll)) post_reentry_point)))
 
-    (apply-roll-op.re-enter.validation prior_board post_board roll)))
+        (= (player_bar_count post_board) (- (player_bar_count prior_board) 1))
+        (= (points post_board) (store (points prior_board) (- 25 (value roll)) post_reentry_point))))
+
+    (apply-roll-op.re-enter.validation prior_board post_board roll))
 ) :named apply-roll-op.re-enter.validation ))
 
 ;;;;
 ;; A valid `bear-off` operation application has these restrictions:
-;; - the prior and post board `player` value are equal to each other and to the die roll's owner, and both are either `Red` or `Black`
-;; - the prior player bar count is 0
-;; - All of the player's checkers in the player's inner table
-;; - One of the following 2 must be true:
-;;   - IFF the player occupies the point at the index indicated by the roll, THEN the post board is identical to the prior board,
-;;       except the point indicated by the roll has 1 less checker on it than on the same point on the prior board
-;;   - let P be the higest index number of a point occupied by the owning player on the prior inner table
-;;     - IFF P is less than the die roll, THEN the post board is identical to the prior board, except the point P has 1 less
-;;       checker on it than on the prior board
-;; - All other points than the bearing-off point are identical in the post board and prior board states
-;; - the player bar count is the same in the prior and post board states
-
-
-;;;;
-;; Computing P, the higest index number of a point occupied by the owning player on the prior board, would be pretty easy to
-;; express recursively. However, you should avoid recursive definitions in SMT as much as possible, because SMT solvers tend
-;; to avoid exploring problem spaces recursively. Instead, this definition includes a function that explicitly tests all 6
-;; possible cases.
+;; - preconditions:
+;;   - the prior and post board `player` value are equal to each other and to the die roll's owner, and both are either
+;;     `Red` or `Black`
+;;   - the prior player bar count is 0
+;;   - All of the player's checkers are in the player's inner table
+;;   - the player has at least 1 checker on the board
 ;;
-;; If none of the 6 inner table points are owned by the board player, the function yields 0. It assumed that additional
-;; validation rules will be applied in conjunction so that this case is not part of any valid solution.
+;; - postconditions:
+;;   - One of the following 2 must be true:
+;;     - IFF the current player occupies the point at the point indicated by the roll, THEN this point is the bearing
+;;       off point
+;;     - Otherwise, let P be the higest index number of a point occupied by the owning player on the prior inner table
+;;       - IFF P is less than the die roll, THEN P is the bearing off point
+;;   - all other points than the bearing-off point are identical in the post board and prior board states
+;;   - the bearing off point in the post board has 1 few checkers than the same point in the prior board  
+;;   - the post player bar count is 0
 
-(define-fun greatest-player-occupied-inner-table-point-index ((b Board) (i Int)) Int
-  (ite (and (= i 6) (= (color (board.get-point b 6)) (player b))) 6
-    (ite (and (>= i 5) (= (color (board.get-point b 5)) (player b))) 5
-      (ite (and (>= i 4) (= (color (board.get-point b 4)) (player b))) 4
-        (ite (and (>= i 3) (= (color (board.get-point b 3)) (player b))) 3
-          (ite (and (>= i 2) (= (color (board.get-point b 2)) (player b))) 2
-            (ite (and (>= i 1) (= (color (board.get-point b 1)) (player b))) 1 0)))))))
-
-(declare-fun apply-roll-op.bear-off.validation (Board Board DieRoll) Bool)
+(declare-fun apply-roll-op.bear-off.validation.preconditions (Board Board DieRoll) Bool)
 (assert (! (forall (
   (prior_board Board)
   (post_board Board)
@@ -188,47 +210,77 @@
           (player_bar_count prior_board))))
 
         (and
-          (not (= Neutral (player prior_board)))
-          (= (player prior_board) (player post_board) (player roll))
+          (apply-roll-op.validation.common-preconditions prior_board post_board roll)
 
           (= 0 count_checkers_not_in_inner_table)
-          (> (board.count-player-checkers prior_board) 0)
+          (= 0 (player_bar_count prior_board))
+          (> (board.count-player-checkers prior_board) 0)))
 
-          (or
-            (and
-              ;; repeating the logic described above that's being implemented here:
-              ;;   - IFF the player occupies the point at the index indicated by the roll, THEN the post board is
-              ;;     identical to the prior board, except the point indicated by the roll has 1 less checker on it
-              ;;     than on the same point on the prior board
-              (= (player prior_board) (color (board.get-point prior_board (value roll))))
-              (= post_board
-                (let (
-                  (post_point
-                    (point
-                      (ite (= 0 (- (count (board.get-point prior_board (value roll))) 1))
-                        Neutral
-                        (player prior_board))
-                      (- (count (board.get-point prior_board (value roll))) 1))))
+    (apply-roll-op.bear-off.validation.preconditions prior_board post_board roll))
+) :named apply-roll-op.bear-off.validation.preconditions ))
 
-                  ((_ update-field points) prior_board (store (points prior_board) (value roll) post_point)))))
+;;;;
+;; Computing P, the higest index number of a point occupied by the owning player on the prior board, would be pretty easy to
+;; express recursively. However, you should avoid recursive definitions in SMT as much as possible, because SMT solvers tend
+;; to avoid exploring problem spaces recursively. Instead, this definition includes a function that explicitly tests all 6
+;; possible cases.
+;;
+;; If none of the 6 inner table points are owned by the board player, the function yields 0. It assumed that additional
+;; validation rules will be applied in conjunction so that this case is not part of any valid solution.
 
-            (and
-              ;; repeating the logic described above that's being implemented here:
-              ;;   - let P be the higest index number of a point occupied by the owning player on the prior inner table
-              ;;     - IFF P is less than the die roll, THEN the post board is identical to the prior board, except the
-              ;;       point P has 1 less checker on it than on the prior board
+(define-fun greatest-player-occupied-inner-table-point-index ((b Board) (i Int)) Int
+  (ite (and (= i 6) (= (color (board.get-point b 6)) (player b))) 6
+    (ite (and (>= i 5) (= (color (board.get-point b 5)) (player b))) 5
+      (ite (and (>= i 4) (= (color (board.get-point b 4)) (player b))) 4
+        (ite (and (>= i 3) (= (color (board.get-point b 3)) (player b))) 3
+          (ite (and (>= i 2) (= (color (board.get-point b 2)) (player b))) 2
+            (ite (and (>= i 1) (= (color (board.get-point b 1)) (player b))) 1 0)))))))
+
+(declare-fun apply-roll-op.bear-off.validation (Board Board DieRoll) Bool)
+(assert (! (forall (
+  (prior_board Board)
+  (post_board Board)
+  (roll DieRoll))
+
+  (=
+    (and
+      (apply-roll-op.bear-off.validation.preconditions prior_board post_board roll)
+
+      (or
+        (and
+          ;; repeating the logic described above that's being implemented here:
+          ;;   - IFF the player occupies the point at the index indicated by the roll, THEN the post board is
+          ;;     identical to the prior board, except the point indicated by the roll has 1 less checker on it
+          ;;     than on the same point on the prior board
+          (= (player prior_board) (color (board.get-point prior_board (value roll))))
+          (= post_board
+            (let (
+              (post_point
+                (point
+                  (ite (= 0 (- (count (board.get-point prior_board (value roll))) 1))
+                    Neutral
+                    (player prior_board))
+                  (- (count (board.get-point prior_board (value roll))) 1))))
+
+              ((_ update-field points) prior_board (store (points prior_board) (value roll) post_point)))))
+
+        (let (
+          (target_idx (greatest-player-occupied-inner-table-point-index prior_board (value roll))))
+          ;; repeating the logic described above that's being implemented here:
+          ;;   - let P be the higest index number of a point occupied by the owning player on the prior inner table
+          ;;     - IFF P is less than the die roll, THEN the post board is identical to the prior board, except the
+          ;;       point P has 1 less checker on it than on the prior board
+
+          (and
+            (>= (value roll) target_idx)
+            (= post_board
               (let (
-                (target_idx (greatest-player-occupied-inner-table-point-index prior_board (value roll))))
+                (post_point
+                  (point
+                    (player prior_board)
+                    (- (count (board.get-point prior_board target_idx)) 1))))
 
-                (>= (value roll) target_idx)
-                (= post_board
-                  (let (
-                    (post_point
-                      (point
-                        (player prior_board)
-                        (- (count (board.get-point prior_board target_idx)) 1))))
-
-                    ((_ update-field points) prior_board (store (points prior_board) target_idx post_point)))))))))
+                ((_ update-field points) prior_board (store (points prior_board) target_idx post_point))))))))
 
     (apply-roll-op.bear-off.validation prior_board post_board roll))
 ) :named apply-roll-op.bear-off.validation ))
@@ -253,6 +305,30 @@
 ;; - all other points than the source point and the target point are identical in the post board and prior board states
 ;; - the player bar count is the same in the prior and post board states
 
+(declare-fun apply-roll-op.move.validation.preconditions (Board Board Int DieRoll) Bool)
+(assert (! (forall (
+  (prior_board Board)
+  (post_board Board)
+  (from_index Int)
+  (roll DieRoll))
+
+  (=
+    (and
+      (apply-roll-op.validation.common-preconditions prior_board post_board roll)
+      (= 0 (player_bar_count prior_board))
+      (> (board.count-player-checkers prior_board) 0)
+
+      (>= from_index 1)
+      (<= from_index 24)
+
+      (> from_index (value roll))
+      (= (player prior_board) (color (board.get-point prior_board from_index)))
+
+      (point.can-target (board.get-point prior_board (- from_index (value roll))) (player prior_board)))
+
+    (apply-roll-op.move.validation.preconditions prior_board post_board from_index roll))
+) :named apply-roll-op.move.validation.preconditions ))
+
 (declare-fun apply-roll-op.move.validation (Board Board Int DieRoll) Bool)
 (assert (! (forall (
   (prior_board Board)
@@ -268,18 +344,7 @@
         (post_target_point (board.get-point post_board (- from_index (value roll)))))
 
         (and
-          (not (= Neutral (player prior_board)))
-          (= (player prior_board) (player post_board) (player roll))
-
-          (= (player_bar_count prior_board) 0)
-
-          (>= from_index 1)
-          (<= from_index 24)
-
-          (> from_index (value roll))
-          (= (player prior_board) (color prior_source_point))
-
-          (point.can-target prior_target_point (player prior_board))
+          (apply-roll-op.move.validation.preconditions prior_board post_board from_index roll)
 
           (or
             (and
@@ -289,8 +354,8 @@
               (= post_source_point (point (color prior_source_point) (- (count prior_source_point) 1))))
             (and
               (not (point.is-blot prior_target_point))
-              (= post_target_point (point (color prior_source_point) (+ 1 (count prior_source_point))))
-              (= post_source_point (point (color prior_source_point) (- (count prior_source_point) 1)))))
+              (= post_source_point (point (color prior_source_point) (- (count prior_source_point) 1)))
+              (= post_target_point (point (color prior_source_point) (+ 1 (count prior_target_point))))))
 
           (=
             (points post_board)
@@ -310,7 +375,10 @@
 ;; A valid `inapplcable` operation application has these restrictions:
 ;; - there does not exist any valid `re-enter`, `bear-off`, or `move` operation with the same prior board and die roll
 ;;   as the operation
-;;   - this restriction captures the backgammon rule that says you _must_ perform a move if you have one
+;;   - this restriction captures the backgammon rule that says you _must_ apply a roll if you can
+;;   - we do not assert a "(not (exists ...))" for the other roll application types -- this is harder for an SMT solver to prove
+;;   - instead we craft pre-conditions that prove each of the other roll application types could not be applied
+;;     to the same prior and post boards with the same die roll
 ;; - the post board state is identical to the prior board state in all points and in the bar counts
 
 (declare-fun apply-roll-op.inapplicable.validation (Board Board DieRoll) Bool)
@@ -321,12 +389,45 @@
 
   (=
     (and
-      (not (exists ((reenter_post_board Board))
-        (apply-roll-op.re-enter.validation prior_board reenter_post_board roll)))
-      (not (exists ((bearoff_post_board Board))
-        (apply-roll-op.bear-off.validation prior_board bearoff_post_board roll)))
-      (not (exists ((move_post_board Board) (from_idx Int))
-        (apply-roll-op.move.validation prior_board move_post_board from_idx roll)))
+      (apply-roll-op.validation.common-preconditions prior_board post_board roll)
+
+      (not (apply-roll-op.re-enter.validation.preconditions prior_board post_board roll))
+      (not (apply-roll-op.bear-off.validation.preconditions prior_board post_board roll))
+
+      ;; expressing the following using any kind of existential quantifier produces an "unknown"
+      ;; result when checking for satisfiability. Whether as a `forall` or a `not exists`, either
+      ;; way that's the result. But explicitly listing all possibilities yields a `sat` result.
+      ;;
+      ;; Its typical for an SMT solver to have these kinds of issues w/ quantifiers in SMT solvers,
+      ;; especially quanitifying over ints. Other options include a custom sort, or even using
+      ;; the preprocessor to generate these specific expressions over a range of ints -- see
+      ;; Metalang99.
+
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 1 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 2 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 3 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 4 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 5 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 6 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 7 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 8 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 9 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 10 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 11 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 12 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 13 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 14 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 15 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 16 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 17 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 18 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 19 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 20 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 21 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 22 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 23 roll))
+      (not (apply-roll-op.move.validation.preconditions prior_board post_board 24 roll))
+
       (= post_board prior_board))
 
     (apply-roll-op.inapplicable.validation prior_board post_board roll))

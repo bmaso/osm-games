@@ -4,7 +4,7 @@
 Backgammon Federation](https://wbgf.info/) oversees international tournaments today, and its [definition](https://wbgf.info/tournament-rules/) of backgammon can be taken as "standard" for the
 purposes of authoring an OSM model of the game process.
 
-The OSM model in this module follows the same general OSM model structure described in [project README](../README.md). A sequence of _operations_ models each game process as. Each operation instance relates a _prior game_ state to an _post game_ state, along with operation input
+The OSM model in this module follows the same general OSM model structure described in the [project README](../README.md). A sequence of _operations_ models each game process as. Each operation instance relates a _prior game_ state to an _post game_ state, along with operation input
 and output describing the change made to the prior state that resulted in the post state.
 
 The post state of one operation is the prior state of the subsequent operation. The game process can be considered a DAG of game states, more

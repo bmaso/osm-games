@@ -2,3 +2,5 @@
 # Ignore personal notes
 notes/
 
+# Ignore Mac filesystem files
+.DS_Store
