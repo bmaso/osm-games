@@ -33,6 +33,15 @@
     (winner Color))))
 
 ;;;;
+;; The empty board: all table positions as `neutral`, as are the `current_player` and `winner` values.
+
+(define-const board.empty Board
+  (board
+    (as const (Aray Coordinate Color) neutral)  ;; table
+    neutral                                     ;; current_player
+    neutral))                                   ;; winner
+
+;;;;
 ;; board validation rule: there are no `neutral` table positions below non-`neutral` ones
 
 (define-fun board.validation.no-floating-markers ((b Board)) Bool
