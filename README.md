@@ -1,6 +1,6 @@
 # osm-games
 
-A demonstration of operation-state modeling (OSM, prononced "awsome"). This repo defines operation-state models of a few
+A demonstration of operation-state modeling (OSM, pronounced "awesome"). This repo defines operation-state models of a few
 popular games: [Connect Four](./connect4), [bowling](./bowling), backgammon (TBD), and spades (a card game, also
 TBD). This repo also demonstrates the tools and techniques for rigorously and unambiguously verifing the expected
 behavior of a game sequence. That is, how to verify a game sequence is provably within the game's rules through the use of
@@ -135,7 +135,7 @@ OSM for two reasons:
 and techniques of TDD. In fact history has a few exalted examples of books and works that introduce powerful intellectual tools to the world,
 while _technically_ missing the original goals of the work. Artistotle himself introduced the essential operators of boolean logic and set
 theory to the world in his "Organon": the AND, OR, NOT operators an the existential and universal quanitifiers all were introduced to the world
-in this book. But Aristotle actually failed at his _indended_ purpose for this book, which was to rigorously define the exact logical meaning of
-Koine Greek words and phrases. Niccolo Tartaglia intended to equate classical geometry with then-nescent algebraic and "sum of infinity"
-techniques in his 1556 work "Questi et Inventioni Diversi", which he technically failed to do, but he did succeed in introducing the world to
-the viability of many of the techniques of what we call integral calculus today.
+in this book. But Aristotle actually failed at his _indended_ purpose, which was to rigorously define the exact logical meaning of
+Koine Greek words and phrases. (Turns out spoken language is fundamentally incompatible with logic.) Niccolo Tartaglia intended to equate classical geometry with then-nescent algebraic and "sum of infinity"
+techniques in his 1556 work "Questi et Inventioni Diversi", which he technically failed to do. But he did succeed in introducing the world to
+the validity of many techniques subsummed in what we call integral calculus today.
