@@ -31,20 +31,16 @@
 ;;;;
 
 (define-const incomplete-throw Throw
-  (throw 0 false false false true)
-)
+  (throw 0 false false false true))
 
 (define-const strike-throw Throw
-  (throw 10 false false false false)
-)
+  (throw 10 false false false false))
 
 (define-const foul-throw Throw
-  (throw 0 false true false false)
-)
+  (throw 0 false true false false))
 
 (define-const unused-throw Throw
-  (throw 0 false false true false)
-)
+  (throw 0 false false true false))
 
 ;;;;
 ;; Validation rules for throws.

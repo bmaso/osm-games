@@ -15,9 +15,9 @@ then it cannot be played. Thus each player has at most 7 possible plays in each 
 
 The game state is represented by a 6x7 matrix of _`Coordinate`_ values. Each `Coordinate` has a
 `RowId` and `ColId` value -- which are _not_ integers, but rather a custom value type. We use an array as a "look up table" to
-define adjacency sufficient to determine when 4 pieces have been place in a row. (See [./main/row-col.smt2](./main/row-col.smt2).)
+define adjacency sufficient to determine when 4 pieces have been place in a row. (See [formula/main/row-col.smt2](formula/main/row-col.smt2).)
 
-The `color` value of each coordinate is `red`, `black`, or `neutral`. (See [./main/color.smt2](./main/color.smt2).)
+The `color` value of each coordinate is `red`, `black`, or `neutral`. (See [formula/main/color.smt2](formula/main/color.smt2).)
 
 A `Board` is comprised of:
 * a 6x7 array of `Coordinate` to `Color` values, called the `table`
@@ -25,7 +25,7 @@ A `Board` is comprised of:
   is `neutral`. Once a player is chosen, then the player color alternates between `Red` and `Black` each turn.
 * a `winner` color value. This value remains `neutral` until a winner is declared.
 
-(See [./main/board.smt2](./main/board.smt2).)
+(See [formula/main/board.smt2](formula/main/board.smt2).)
 
 ### Operation-states
 
@@ -38,7 +38,7 @@ play --> [*] : Winner declared
 @enduml
 ```
 
-All operations are encoded in [./main/board-ops.smt2](./main/board-ops.smt2).
+All operations are encoded in [./formula/main/board-ops.smt2](formula/main/board-ops.smt2).
 
 There is one operation for **choosing a first player** (the `board-ops.choose-first-player` function). This operation application is the
 first of a valid game sequence, and is the only time this operation is applied during the valid game sequence.

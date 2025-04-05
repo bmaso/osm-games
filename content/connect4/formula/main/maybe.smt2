@@ -14,7 +14,6 @@
 
 (declare-datatype Maybe (par (T) (
   (none)
-  (some (value T))
-)))
+  (some (value T)))))
 
 #endif

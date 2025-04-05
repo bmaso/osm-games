@@ -2,7 +2,7 @@
 
 **Engineer's Notebook: An Equational Thinking Episode**
 
-| "The person who says he knows what he thinks but cannot express it usually does not know what he thinks.""
+| "The person who says he knows what he thinks but cannot express it usually does not know what he thinks."
     ― Mortimer J. Adler, How to Read a Book: The Classic Guide to Intelligent Reading
 
 ## Introduction
@@ -15,9 +15,9 @@ Distinctly missing from the narrative: any actual definition of "the game of bow
 of what they set out to build, which is the best indication of what they were trying to accomplish:
 
 | RCM: "It seems to me that the inputs are simply a sequence of throws. A throw is just an integer that tells how
-| many pins were knocked down by the ball. The output is the data on a standard bowling score card, a set of frames
+| many pins were knocked down by the ball. The output is the data on a ***standard bowling score card***, a set of frames
 | populated with the pins knocked down by each throw, and marks denoting spares and strikes. The most important
-| number in each frame is the current game score."
+| number in each frame is the current game score." _[Emphasis mine]_
 
 What's missing is any "standard" that the solution can be verified against. In effect what the Bobs end up doing is defining their own axiomatic standard -- their code _is_ the standard, so of course it does what it is supposed
 to do. Does it correctly score the definition of "the game of bowling" that the Bobs were trying to implement?
@@ -29,7 +29,7 @@ development process in the narrative would have gone more smoothly and quickly, 
 provably correct (or provably incorrect) final software package. I imagine they also would have identified possible
 failures of the software they produced (described below).
 
-Instead of a provably correct result, what the Bobs produced is _some_ integer sequence reduce function,
+Instead of a provably correct result, what the Bobs produced is _some_ integer sequence aggregation function,
 implemented internally by a set of inter-reliant Java classes. Most of the narrative concerns incremental development
 of the Java classes. Ignoring the internal intricacies and nitty-gritty of the Bobs' domain and problem space
 exploration, the final work product is effecitvely a reduce function `bowling_score`:
@@ -63,8 +63,10 @@ narrative expresses this state:
 
 A much more convincing TDD episode would have started with a logical, objectively provable definition of
 the target algorithm, and incrementally developed a Java implementation with individual test cases proven to meet the
-standard. In this article we will first develop a logical definition of "bowling". We will then utilize this logical definition
-to explore how the Bob's TDD episode may have evolved differently if the original goal had been to provably meet this definition.
+standard.
+
+In this article we will develop a definition of "bowling". That is, a definition of the standard against which any integer
+sequence reduce function can be applied to verify the function agrees with the standard [^1].
 
 ### The Bowling Score Card Standard
 
@@ -73,9 +75,9 @@ organization publishes [a standard for scoring a game of bowling](./assets/Score
 matches the Bobs' internal understanding of the game, with some key differences:
 
 1. The official version does not support the concept of an _incomplete_ game. A game consists of all necessary
-  throws [^1] to complete 10 frames: up to 2 throws for the first 9 frames, and two throws plus one or two bonus 
-  throws for the tenth frame. Legal games can be produced from as few as 12 throws (12 consecutive strikes), and
-  as many as 21 throws (any sequence of 21 throws that includes no strikes).
+  throws [^1] to complete 10 frames: up to 2 throws plus up to two bonus throws forms a frame. The bonus throws for frame
+  `N` are synonymous with the normal throws of the `N+1`-th frame. Legal games can be produced from as few as 12 throws
+  (12 consecutive strikes), and as many as 21 throws (any sequence of 21 throws that includes no strikes).
 
   The TDD narrative's technique for developing a test suite, by constructing partially-complete games and testing
   the state of those games, coincidentally mimics the way that the USBC official scoring standard is written. This is
@@ -94,16 +96,16 @@ matches the Bobs' internal understanding of the game, with some key differences:
 | frame would have to look ahead at later frames to calculate its score. If those later frames don't exist, then it
 | would have to return something ugly like -1. I don't want to return -1."
 
-  To a software engineer, this incremental, constructivist style of algorithm implies a _reduction_. A game is
-  the product of a reduce operation on a sequence of throws. The computation receives a sequence of throws, and
-  produces a single completed game by repeated incremental accumulation of each throw to an accumulator -- a "game in
-  progress".
+  To a software engineer, this incremental, constructivist style of algorithm implies a "fold left" in the functional
+  programming style, technically termed a _catamorphism_. A game is the product of a "fold left" operation on a sequence
+  of throws. The computation receives a sequence of throws, and produces a single completed game by repeated incremental
+  accumulation of each throw to an accumulator -- a "game in progress".
 
-  Typically an iterative reduce operation can be isomorphically translated to an iterative "scan" operation,
+  Typically an iterative "fold" operation can be isomorphically translated to an iterative "scan" operation,
   where the intermediate result of applying the "next" element to an accumulator object are retained. These
-  intermediate states are the incompleted games that the Bobs' test cases are concerned with.
+  intermediate states are the incomplete games that the Bobs' test cases are concerned with.
 
-  The accumulator type is often a slightly more "relaxed" version of the final reduce operation product type, because
+  The "fold" or "scan" accumulator type is often a slightly more relaxed version of the final operation result type, because
   it needs to have the flexibility to represent a computation "in progress", not just valid and completed values. In
   our case, the "game in progress" needs to be able to represent missing values, such as the "meaningless" frame
   value that Bob indicates above. The "game" model produced by the USBC bowling definition cannot have "missing"
@@ -112,7 +114,7 @@ matches the Bobs' internal understanding of the game, with some key differences:
   This article develops the bowling standard as a reduce operation. A reduce can be translated to a scan without loss
   of information, which means it will be easy to create test cases on partially completed games that can be proven
   to conform to the standard by a logic verifier. That is, we can prove candidate software implements the exact
-  same test cases the Bobs' develop -- but a lot faster and with absolute confidence our test case expectations are correct.
+  same test cases the Bobs' develop -- but with absolute confidence our test case expectations actually meet a standard.
 
 1. In the official version of bowling, a throw cannot be represented by a single integer. In the TDD narrative,
   Robert Koss and Bob Martin quickly convince themselves, incorrectly, that a single integer is sufficient to store
@@ -138,7 +140,8 @@ Again a little later, the assumption is reinforced:
   This may seem like persnickety special-casery, and perhaps it is, but it is evidence that the Bobs' were
   not developing any objectively provable implementation of a standard, but instead were simply encoding a
   subjectively-derived psuedostandard. This will be the case with all software developed without an objectively
-  verifiable logical model, such as the smtlib2 model developed below.
+  verifiable logical model -- today this includes vertually _all software_. There is no practice of developing
+  software to meet a mechanically verifiable model.
 
 1. In addition to fouls, the USBC standard also supports recording "split" throws: throws which leave pins standing
   in certain patterns. A split throw is recorded as a integer number of pins with the tag letter "S" next to it.
@@ -148,12 +151,12 @@ Again a little later, the assumption is reinforced:
 ## Developing Equations for a bowling score card
 
 The missing piece in Bob Martin's TDD narrative is a verifiable logic model. Armed with such a model, any input
-and any output of the system can be verified using a logic solver. Smtlib2 is a very capable language for logic
+and any output, even intermediate state output, can be verified using a logic solver. SMTLIB2 is a capable language for logic
 modeling, readily understandable to software professionals becuase it is very Lisp-like. Several logic solvers exist
 that accept smtlib2 models, such as [Microsoft's Z3](https://github.com/Z3Prover/z3/wiki),
-[CVC4](http://cs.nyu.edu/acsys/cvc4/), and several [others](https://smt-lib.org/solvers.shtml).
+[CVC5](http://cs.nyu.edu/acsys/cvc5/), and several [others](https://smt-lib.org/solvers.shtml).
 
-Let's start by reviewing a bowling score card, and develop logical model of a bowling game from it.
+Let's start by reviewing a bowling score card, and develop a logical model of a bowling game from it.
 
 ![./assets/example-bowling-scorecard.svg]
 
@@ -164,25 +167,68 @@ one of 10 squares, read from left to right.
 In the square for each frame we write the _accumlated total points_ (the sum of points in all previous frames plus
 the points scored in the current frame) rather than the points scored in each frame individually. 
 
-There are areas towards the top of each frame's square for representing the 1 or 2 throws that are part of each
-frame.
+There are areas towards the top of each frame's square for representing the 1 or 2 normal throws that are part of each
+frame. Each frame's score also includes the value of 0, 1 or 2 additional bonus throws. The standard scrore card
+does not represent the bonus throws, as the bonus throw from one frame is synonymous with the normal throw of the
+subsequent frame. This is true for all frames except the 10th. The 10th frame has no subsequent, so the 10th frame
+does has extra space to represent its bonus throws.
 
 The rules and traditions for where and how to display each throw in a frame, as well as the tradition of displaying a
 running sum, are _visualization_ rules. The formal logical model we now develop is easily transformed into this
 kind of representation, but is actually a bit simpler. We will define the model of a "game in progress" -- a more
-relaxed model than a "completed game" model. We can that add restrictions on the relaxed model to define the
+relaxed model than a "completed game" model. We then add restrictions on the relaxed model to define the
 completed game model.
 
 ### Representing a Throw
 
-While a game is in progress, throws can take on one of 4 values: a _delivery_ or a _foul_, and also a couple special
-case values `incomplete` and `open` who's utility will be more obvious later.
+Let's begin with what seems like the simplest concept: a single throw. A throw seems to _either_ be a foul, _or_
+a count of pins knocked down (which is going to have to be between 0 and 10). If it is not a foul, then it may or
+may not be a _split_. It's simple to create an either/or datatype. I start with this then:
 
-TODO: Throw definition and description
-```smtlib2
+
+```
+;; throw.smt2
+
+(declare-datatype Throw (
+    FOUL_THROW
+    (throw
+      (points Int)
+      (split Bool))))
 ```
 
-TODO: assertions on intra-throw constraints
+I'm going to employ a standard where a name in ALL CAPS means the symbol is a nominal value for the type.
+
+I want to start getting the validation predicate and its test assertions right away to encode the invariate
+restrictions on throws -- a non-foul throw must be between 0-10 points.
+
+```
+;; test-cases.throw.smt2
+
+#import "throw.smt2"
+
+(assert (! (forall ((t Throw))
+    (and
+        (throw.validation t)
+        (not (= THROW_FOUL t))
+        (>= 0 (points t))
+        (<= 10 (points t)))
+) :named test-case.throw.validation.non-foul-points ))
+```
+
+I need a function `throw.validation` that passes this test. The test is that _either_ a throw is a foul, _or_
+it is between 0-10 points.
+
+```
+;; throw.smt2
+(define-fun throw.validation ((t Throw)) Bool
+    (or
+        (= THROW_FOUL t))
+        (and
+            (>= 0 (points t))
+            (<= 10 (points t))))
+```
+
+
 
 ### Representing a Frame and a Frame in Progress
 
@@ -195,7 +241,8 @@ indicator flags for strike and spare, and a field for the computed score.
 > Note: this is not how you usually think of a bowling frame, which is typically described as including "one or two
 > throws, except in the case of the tenth frame which has 2 or 3 throws". _That_ definition is how frames are
 > represented in the _score card visualization_. The definition above is a lot simpler, and is what we use
-> to define the _bowling algorithm_, which is different that the visualization.
+> to define the _bowling algorithm_, which is different that the visualization. The visualization is convenient for
+> humans to use. The description below makes more sense for theorem solvers.
 
 - TODO: datatype definition
 ```smtlib2
@@ -208,7 +255,8 @@ indicator flags for strike and spare, and a field for the computed score.
 #### A frame's score
 
  A frame's score can be computed by summing the values of the frame's throws using the score-summing function
- `score.sum`. If any of the frame's throws are `incomplete`, then the frame's score will also be `incomplete`.
+ `score.sum`. If any of the frame's throws are `incomplete`, indicating that the frame is in-progress, then the
+ frame's score will also be `incomplete`.
 
  ```smtlib2
  (define-fun frame.score ((f frame)) score
@@ -587,11 +635,17 @@ A game is just a list of frames. A valid game has exactly 10 frames. The constan
 
 ## Footnotes
 
+[^1]: In general you can't create a proof production system that can prove any given software implementation conforms to a any given
+  logical definition. The only way to verify an implementation conforms with a definition is through exhaustive case analysis -- trying
+  each and every possible input and verifying the output conforms with the logical definition. Any logical definition with an infinite domain obvious can't be verified completely. What we _can_ do is prove that the implementation conforms to a logical
+  definition across a finite domain, which can be arbitrarily large. So really the best we can do for inifinitely large domains is
+  show that an implementation _apparently doesn't conflict_ with a logical definition, meaning that we can't find any finite portion
+  of the domain where the implementation doesn't conform to the definition.
+
 [^1]: The standard uses the term _delivery_, and the Bobs' apparently replace this with the term _throw_. This
   article uses the Bobs' term _throw_ throughout, but the correct term from the standard is _delivery_.
 
 [^2]: This is similar to unit testing or property testing the bowling definition functions. But rather that "executing" the functions
-  and examining that the outputs match expectations in pecific cases, we define the properties we expect the function to have and ask a theorem
-  prover to prove the property assertions are true. We don't care what techniques the prover employs, we just need to know the
-  assertions are true.
-
+  and examining that the outputs match expectations in specific cases, we define the properties we expect the function to have and
+  ask a theorem prover to prove the property assertions are true. We don't care what proof techniques the prover employs, we just need to
+  know the assertions are true.

@@ -53,7 +53,7 @@
 ;;;;
 ;; A valid game is comprised of valid frames. The state of sequential the frames are entangled.
 ;; - The frames are completed sequentially; if frame X has either regular throw incomplete, then frame X+1 is
-;;   is the empty-frame -- this rule applies to frames 1-9
+;;   is the empty-frame -- this rule applies to frames 1-10
 ;; - For member frames that are "mark" frames (strike or spare):
 ;;   - The first bonus throw is equal to the first normal throw of the next frame -- this rule applies to frames 1-9
 ;; - For member frames that are strike frames and the next frame is _not_ a strike frame

@@ -1,0 +1,26 @@
+site_name: OSM Games
+docs_dir: content
+nav:
+  - Home: index.md
+  - An Equational Thinking Episode: bowling/OSM-Episode.md
+  - OSM Specs in smtlib2: osm-specs-in-smtlib2.md
+  - Connect Four OSM: connect4/index.md
+  - Bowling OSM: bowling/index.md
+  - Backgammon OSM: backgammon/index.md
+  - Spades OSM: spades/index.md
+
+theme: material
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.superfences
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+    - plantuml:
+        puml_url: http://www.plantuml.com/plantuml/
