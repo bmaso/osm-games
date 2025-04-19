@@ -1,23 +1,13 @@
 # Bowling OSM
 
-> NOTE: I NEED TO CONSIDER USING A FINITE TYPE FOR THROW POINTS. I SUSPECT THAT THE CONSTRAINTS FOR STRIKES
-> AND SPARES, WITH RELIANCE ON FIXED INTEGE VALUES AND SUMS, CANNOT BE EXPLOITED BY SMT SOLVER WELL AT ALL.
-> I FOUND AN `unknown` SAT RESULT TO A RELATIVELY SIMPLE FORMULA ALREADY.
-> FINITE-TYPED ALTERNATIVES:
-> * Bit Vector 10 -- one boolean per pin!
->     * WOULD ALLOW FOR PRECISE DEFINITION OF SPLITS
->     * GREATLY INCREASES NUMBER OF POSSIBLE THROWS BEYOND 20 to 2^10 = 1024... but actually
->       MAKES STRIKES AND SPARES EASIER TO DEDUCE!
-> * Finite Field
->     * See [this youtube video](https://youtu.be/WFlBwhw42DA)
->     * SO FAR ONLY AN ADDITIONAL THEORY IN cvc5
->
-> Bit Vector IS THE WAY TO GO. IT IS STANDARDIZED AND BOTH Z3 and cvc5 HAVE FOCED ON BV MATH AS AN
-> AREA OF OPTIMIZATION WITHIN THEIR RESPECTIVE SOLVERS.
+The governing body for bowling in the US is the United States Bowling Congress ([USBC](https://bowl.com)). For
+international play, game play is regulated by the International Bowling Federation ([IBF](https://bowling.sport)).
+The defition of scoring and game play defined by both organizations are are equivalent. I will reference
+the USBC's [standard for scoring a game of bowling](./assets/ScoreHowto.2024-11-11.pdf) as the "standard" implemented
+in this project.
 
-The governing body for bowling in the US is the United States Bowling Congress ([USBC](https://bowl.com)). This
-organization publishes [a standard for scoring a game of bowling](./assets/ScoreHowto.2024-11-11.pdf). A single player
-rolls a ball down a flat surface multiple times, repeatedly trying to knock down pins set up in a triangular configuration.
+In a game of bowling a single player rolls a ball down a flat surface multiple times, repeatedly trying to knock
+down a set of 10 pins set up in a triangular configuration.
 The player's rolls, known as "throws", are grouped into frames. The scoring description is notable for having several odd
 corner-cases and a quirky game termination, where the tenth and final frame is described as having a different set of
 throws as the initial 9 frames.
@@ -39,10 +29,10 @@ This is a simpler description of how bowling score works:
 * If the player knocks down all 10 pins in one throw (a "strike"), the player is awarded two bonus throws and fresh
   set of 10 pins
   * in this case the second normal throw in the frame is unused
+  * if the player knocks down all 10 bonus pins on his first bonus throw, the player gets another fresh set of 10
+    pins for his second bonus throw
 * If the player instead knocks down all 10 pins in 2 throws (a "spare"), the player is awarded a single bonus throw
   and a fresh set of 10 pins
-* If the player knocks down all 10 bonus pins on his first bonus throw, the player gets another fresh set of 10
-  pins for his second bonus throw
 * The bonus throws for each frame are identical to the normal throws of subsequent frames
   * For example, if all 10 pins are knocked down in the first throw of frame 1, then the first normal throw of
     frame 2 is also the first bonus throw of frame 1
@@ -56,48 +46,79 @@ This is a simpler description of how bowling score works:
 
 ## A Throw
 
-There are two normal throws within each frame, though the second throw may be unused. Prior to a throw taking place,
-we can call the throw "incomplete", meaning it has yet to happen. I define several convenience constants for
-foul, unused, strike, and incomplete throws.
+There are two normal throws within each frame. In the case of a strike the second throw will be unused. Otherwise both
+throws are used. Prior to a throw taking place, we can call the throw "incomplete", meaning it has yet to happen. I define several convenience constants for foul, unused, strike, and incomplete throws.
+
+### BitVectors to represent pins combinations
+
+We avoid using `integer` to record the throw result. A finite-valued type is preferable to an infinitely-valued type, because
+we will be quantifying over the pins knocked down to define special rules for strikes and spares. Smtlib2 conveniently
+defines finite-valued `bitvector` types [^1]. We represent a set of standing pins by a 10-bit bitvector: leading pin is
+numbered `0`, the second rank of pins are numbered {1, 2} from left to right, the third rank of pins are numbered
+`{3, 4, 5}` from left to right, and so on. A false value represents a pin that is knocked down, and a true value is
+a standing pin. (Standard bowling uses a 1-based numbering scheme, but `smtlib2` bitvectors are 0-based.)
+
+A "strike" is all 10 pin knocked down: `#b0000000000`. (`#b`_`nnnnn...`_ is a static representation of a bitvector)
+
+### Explicit definition of all known split combinations
+
+The USBC and IBF definitions of a "split" are rule-based, and can be succinctly defined as
+
+> A setup of pins remaining standing after the first delivery, where the headpin is down and at least two
+> pins remain standing, with one or more intermediate pins down, creating a gap.”
+
+The most onerous "7-10" split in our representation would be `#b0000001001`.
+
+We define a function `is-split-pins` from an explicit list of split constants, which is the most efficient implementation
+for SMT solvers to reason with.
+
+```
+(define-fun is-split-pins ((pins (_ BitVector 10))) Bool
+  (or
+    (= #b0000001001 pins)
+    (= #b0001001001 pins)
+    ... ))
+```
+
+### Definition of a single _valid_ throw
+
+Here's is the unconstrained definition of a `Throw`:
 
 ```
 (declare-datatype Throw (
   (throw
-    (points Int)
-    (split Bool)
+    (pins (_ BitVector 10))
     (foul Bool)
     (unused Bool)
     (incomplete Bool))))
 
-(define-const incomplete-throw Throw
-  (throw 0 false false false true))
-
-(define-const strike-throw Throw
-  (throw 10 false false false false))
-
 (define-const foul-throw Throw
-  (throw 0 false true false false))
+  (throw #b0000000000 true false false))
 
 (define-const unused-throw Throw
-  (throw 0 false false true false))
+  (throw #b0000000000 false true false))
+
+(define-const incomplete-throw Throw
+  (throw #b0000000000 false false true))
+
 ```
 
 A _valid_ throw is going to conform to one of these three rules:
 
-* it is one of the four throws above (incomplete, strike, foul, or unused)
-* it is a "split" -- meaning the split flag is true and the other flags are false, and the pins count is between 3-8
-    * I looked it up -- there are multiple types of splits; they range of 3 to 8 pins left standing
-* it is not a "split" -- meaning the split flag and the other flags are false, and the pins count is 0-10
+* it is one of {`foul-throw`, or `unused-throw`, `incomplete-throw`}
+* it has none of the `foul`, `unused` or `incomplete` flags set
 
 ```
-(define-fun throw.validation ((t Throw)) Bool
+(define-fun throw.is-valid ((t Throw)) Bool
   (or
-    (throw.validation.is-standard-throw t)
-    (throw.validation.is-valid-split-throw t)
-    (throw.validation.is-valid-nonsplit-throw t)))
+    (= foul-throw t)
+    (= unused-throw t)
+    (= incomplete-throw t)
+    (and
+      (not (foul t))
+      (not (unused t))
+      (not (incomplete t)))))
 ```
-
-See the `smtlib2` source for the specific validation cases.
 
 ## A Frame 
 
@@ -369,3 +390,7 @@ functions. Here's `game.validation`, which simply esures all the individual rule
 
 ## Applying a Single Throw to a Game
 
+----
+
+[^1] SMT solver's include are S**A**T solvers (boolean network solvers). SMT solvers inherit very efficient boolean and
+    bitvector heuristics, as well as convenient syntax for representing bitvector values.

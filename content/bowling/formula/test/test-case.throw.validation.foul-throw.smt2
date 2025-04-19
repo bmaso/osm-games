@@ -1,22 +1,20 @@
 #include "throw.smt2"
 ;;|| __FILE__ || __LINE__ ||
 
-;;
-;; A foul throw with any of the flags `{unused, split, incomplete}` set, or with a non-zero point value, is
-;; not valid in all cases
-;;
-
-(push 1)
+;;;;
+;; There are no valid foul throws with any of the flags `{unused, incomplete}` set, or that are "splits", or
+;; with any pins knocked down.
+;;;;
 
 (assert (! (not (exists ((t Throw))
   (and
-    (throw.validation t)
+    (throw.valid t)
     (foul t)
     (or
       (unused t)
-      (split t)
       (incomplete t)
-      (not (= 0 (points t)))))
-)) :named test-case.throw.validation.foul-throw))
+      (is-split-pins (pins t))
+      (not (= #b0000000000 (pins t)))))
+)) :named test-case.throw.valid.foul-throw))
 
 (check-sat)
