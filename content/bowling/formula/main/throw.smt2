@@ -6,7 +6,6 @@
 ;;;;;;;;;;
 ;; A throw has a BitVec of pins knocked down, `pins`, and a some additional flags:
 ;; - a "foul" flag, indicating the player committed a foul during delivery
-;; - a "split" flag, inidicating the pins left standing after the throw are in a certain configuration
 ;; - an "unused" flag, indicating the throw is not taken; for example, the second throw in a strike frame is unused
 ;; - an "incomplete" flag, indicating the throw has not occurred yet. In incomplete throw is used as a placeholder
 ;;   for future throws in frame and game datatypes.
@@ -84,5 +83,32 @@
       (not (foul t))
       (not (unused t))
       (not (incomplete t)))))
+
+;;;;
+;; The point value of a throw is the total number of pins knocked down. A bitvector _population_ value, also known as the
+;; _Hamming wieght_, is the number of bits with a 1 value. This would be the number of pins knocked down in a `Throw`.
+;; Surprisingly, the `smtlib2` standard library doesn't have a native operator for bitvector population, so we have
+;; to make our own using bit extraction and numeric convertion from a bitvector to integer.
+;;
+;; Notes:
+;; - `((_ zero_extend N) bitvector)` returns a new bitvector with N more 0-valued bits concatted to the left (msb) side
+;;   of input bitvector
+;; - `((_ extract x y) bitvector)` returns a new bitvector of length (y - x + 1) with values taken from the x through y bits
+;;   (inclusive) of input bitvector
+;;;;
+
+(define-fun throw.points ((t Throw)) Int
+  (bv2nat
+    (bvadd
+      ((_ zero_extend 3) ((_ extract 0 0) (pins t)))
+      ((_ zero_extend 3) ((_ extract 1 1) (pins t)))
+      ((_ zero_extend 3) ((_ extract 2 2) (pins t)))
+      ((_ zero_extend 3) ((_ extract 3 3) (pins t)))
+      ((_ zero_extend 3) ((_ extract 4 4) (pins t)))
+      ((_ zero_extend 3) ((_ extract 5 5) (pins t)))
+      ((_ zero_extend 3) ((_ extract 6 6) (pins t)))
+      ((_ zero_extend 3) ((_ extract 7 7) (pins t)))
+      ((_ zero_extend 3) ((_ extract 8 8) (pins t)))
+      ((_ zero_extend 3) ((_ extract 9 9) (pins t))))))
 
 #endif

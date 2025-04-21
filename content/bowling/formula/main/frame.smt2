@@ -7,8 +7,9 @@
 
 ;;;;;;;;;;
 ;; A frame is comprised of 2 throws and 2 bonus throws. The frame state includes `strike` and `spare` flags, a
-;; `points` field and an `incomplete` field. In a _valid_ frame, the consistency between the mark flags, the `points`,
-;; the `incomplete` flag, and the individual throws is maintained by the definition of the `frame.validation` function.
+;; an `incomplete` field, and a function for computing frame points. In a _valid_ frame, the consistency between
+;; the mark flags, the frame `incomplete` flag, and the individual throw values is maintained by the
+;; definition of the `frame.valid` function.
 ;;;;;;;;;;
 
 (declare-datatype Frame (
