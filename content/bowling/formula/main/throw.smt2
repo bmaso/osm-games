@@ -40,6 +40,9 @@
 (define-const incomplete-throw Throw
   (throw #b0000000000 false false true))
 
+(define-const strike-throw Throw
+  (throw #b1111111111 false false false))
+
 ;;;;
 ;; Split test function. Checks to see if the pins match any of the known split configurations.
 ;;
