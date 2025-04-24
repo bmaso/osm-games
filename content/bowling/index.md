@@ -7,10 +7,9 @@ the USBC's [standard for scoring a game of bowling](./assets/ScoreHowto.2024-11-
 in this project.
 
 In a game of bowling a single player rolls a ball down a flat surface multiple times, repeatedly trying to knock
-down a set of 10 pins set up in a triangular configuration.
-The player's rolls, known as "throws", are grouped into frames. The scoring description is notable for having several odd
-corner-cases and a quirky game termination, where the tenth and final frame is described as having a different set of
-throws as the initial 9 frames.
+down a set of 10 pins set up in a triangular configuration. The player's rolls, known as "throws", are grouped into
+frames. The scoring description is notable for having several odd corner-cases and a quirky game termination, where
+the tenth and final frame is described as having a different set of throws as the initial 9 frames.
 
 Most of the oddness of the scoring algorithm arises from the game scorecard, which is a tool for human recording and
 scoring. This is reminiscent of the confusion that arises from visualizations humans use for arithetic long division
@@ -47,7 +46,7 @@ This is a simpler description of how bowling score works:
 ## A Throw
 
 There are two normal throws within each frame. In the case of a strike the second throw will be unused. Otherwise both
-throws are used. Prior to a throw taking place, we can call the throw "incomplete", meaning it has yet to happen. I define several convenience constants for foul, unused, strike, and incomplete throws.
+throws are used. Prior to a throw taking place, we can call the throw "incomplete", meaning it has yet to happen. I define several convenience constants for foul, unused, and incomplete throws.
 
 ### BitVectors to represent pins combinations
 
