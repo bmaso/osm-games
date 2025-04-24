@@ -128,10 +128,10 @@ In a frame's initial state, all throws are incomplete. As individual valid throw
 
 * **a strike frame**. The frame's workflow terminates with the first normal throw a strike, the second normal throw
   unused, and both bonus throws used (ie, not unused)
-* **a spare frame**. The frame's workflow terminates with both normal throws used and with a sum of points totalling
-  10, the first bonus throw used and the second bonus throw unused.
-* **a scratch frame**. The frame's workflow terminates with both noraml throws used and with a sum of points totalling
-  less that 10, and both bonus throws unused.
+* **a spare frame**. The frame's workflow terminates with both normal throws used and with all pins knocked down, the
+  first bonus throw not unused and the second bonus throw unused.
+* **a scratch frame**. The frame's workflow terminates with both noraml throws used and with not all pins knocked down,
+  and both bonus throws unused.
 
 ```puml
 @startuml
@@ -154,8 +154,6 @@ Scratch --> [*]
 The `Frame` datatype includes:
 * two normal throw members
 * two bonus throw members
-* some flags to make deduction easier (strike, spare, and incomplete)
-* total points of the frame, which is the sum of the 4 throws
 
 I've also defined a convenience constant for an "empty" frame: a frame with no throws applied at all
 
@@ -165,22 +163,14 @@ I've also defined a convenience constant for an "empty" frame: a frame with no t
     (throw_1 Throw)
     (throw_2 Throw)
     (bonus_1 Throw)
-    (bonus_2 Throw)
-    (strike Bool)
-    (spare Bool)
-    (points Int)
-    (incomplete Bool))))
+    (bonus_2 Throw)))
 
 (define-const empty-frame Frame
   (frame
     incomplete-throw      ; throw_1
     incomplete-throw      ; throw_2
     incomplete-throw      ; bonus_1
-    incomplete-throw      ; bonus_2
-    false                 ; strike flag
-    false                 ; spare flag
-    0                     ; points
-    true)                 ; incomplete flag)
+    incomplete-throw))    ; bonus_2
 ```
 
 There are a lot of validation rules for a frame. I have included a written description of the rules in the
@@ -190,60 +180,46 @@ source code to help explain what the `smtlib2` logic implements.
 ;;;;
 ;; Validation rules for frames:
 ;; - the member throws must be valid
-;; - the frame is incomplete iff any of the the throws are incomplete
-;; - the frame's score is consistent with the sum of the throw scores iff the frame is complete
+;; - the pins knocked down by throws must be consistent
+;;   - the same pin can't be knocked down in the first and second normal throws
+;;   - unless the first bonus throw is a strike, the same pin can't be knocked down in the
+;;     first and second bonus throw
+;; - one of the following rules must be met, which ensure consistency for scratch, strike, and spare frames
+;;   - all 4 throws in the frame are incomplete
+;;   - throw 1 is a strike and throw 2 is unused; both bonus throws are not unused
+;;   - throw 1 is a not strike and throw 2 is incomplete; bonus 1 and bonus 2 are also incomplete
+;;   - throw 1 is not a strike, throw 2 is not incomplete and together throw 1 and throw 2 form a spare; bonus 1
+;;     is not unused and bonus 2 is unused
+;;   - throw 1 is not a strike and together throw 1 and throw 2 form a scratch (not a spare); bonus 1
+;;     and bonus 2 are both unused 
 ;; - the throws must be in-order -- later throws cannot be completed before earlier throws within the same frame
 ;;   - if second regular throw is complete then the first regular throw is also complete
 ;;   - if the first bonus throw is complete the the second regular throw is also complete
 ;;   - if the second bonus throw is complete then either
 ;;     - the first regular throw is complete and not a strike
 ;;     - OR the first regular throw is a strike and the first bonus throw is also complete
-;; - one of the following rules as well
-;;   - the frame is a valid strike frame
-;;     - the strike flag is true
-;;     - the spare flag is false
-;;     - the first throw is a strike
-;;     - the second throw is unused
-;;     - the first and second bonus throws are not unused
-;;   - the frame is a valid spare frame
-;;     - the strike flag is false and the spare flag is true
-;;     - the first and second throws are not incomplete, and the first throw is not a strike throw
-;;     - the sum of the first and second throws is 10
-;;     - the second regular throw and the first bonus throw are not unused
-;;     - the second bonus throw is unused
-;;   - the frame is a valid scratch frame
-;;     - the strike and spare flags are false
-;;     - the sum of the point values of the first and second throws is less than 10
-;;     - the first and second throws are not unused
-;;     - if first throw is incomplete, then the second bonus throw is incomplete, else the second bonus throw is unused
-;;     - if the second throw is incomplete, then first bonus throw is incomplete, else the first bonus throw is unused
 ;;;;
 ```
 
-> Note that where it says a throw is "not unused" above this means the throw is either complete or incomplete. So long
-> as the `unused` flag is not `true`, the throw is not unused.
+> Note that where it says a throw is "not unused" above this means the throw is not incomplete and not unused.
 
 All these validation rules are individually encoded in helper validation functions, which are all either directly
-or indirectly referenced by `frame.validation`:
+or indirectly referenced by `frame.valid`:
 
 ```
-(define-fun frame.validation ((f Frame)) Bool
+(define-fun frame.valid ((f Frame)) Bool
   (and
-    (frame.validation.member-throws-valid f)
-    (frame.validation.frame-complete-consistent-with-throws f)
-    (frame.validation.score-consistent-with-throws f)
-    (frame.validation.throws-in-order f)
-    (or
-      (frame.validation.is-valid-strike-frame f)
-      (frame.validation.is-valid-spare-frame f)
-      (frame.validation.is-valid-scratch-frame f))))
+    (frame.valid.member-throws-valid f)
+    (frame.valid.throw-pins-consistency f)
+    (frame.valid.throw-mark-consistency f)
+    (frame.valid.throws-in-order f)))
 ```
 
 The state diagram above implies there are at least 8 distinct valid states a single frame can be in. This one validation
 function will be `true` if a frame is in any one of these 8 states and the frame doesn't conflict with any of the
 state's rules. Otherwise it will be false.
 
-Note that the frame's validation includes ensuring the frame's throws are completed in order. If would be invalid
+Note that the frame's validation includes ensuring the frame's throws are completed in order. It would be invalid
 for a bonus throw to be completed before one of the normal throws, for example.
 
 ## Operation to Apply a Single Throw to a Frame
@@ -276,29 +252,36 @@ validation rules encoded by the validation function:
 ;; - the prior frame must be valid
 ;; - the post frame must be valid
 ;; - the throw must be valid a not incomplete and not unused
-;; - and one of these two rules must be satisfied
+;; - and one of these rules must be satisfied
 ;;   - prior frame throw_1 is incomplete and
 ;;     - post frame throw_1 is equal to the operation's throw
 ;;     - it is necessary to initialize throw_2 and the bonus throws in the post frame
 ;;       - if post frame is not a strike, post frame throw_2 and bonus_1 are incomplete, and bonus_2 is unused
 ;;       - if post frame is a strike, post frame bonus_1 and bonus_2 are incomplete, and throw_2 is unused
-;;   - prior frame throw_2 is incomplete and
+;;   - prior frame throw_1 is not incomplete, prior frame throw_2 is incomplete and
 ;;     - post frame throw_2 is equal to the operation's throw and
 ;;     - post frame throw_1 and prior frame throw_1 are equal
 ;;     - it is necessary to initialize the bonus throws in the post frame
 ;;       - if post frame is a spare, post frame bonus_1 is incomplete
 ;;       - if post frame is not a space, bonus_1 is unused
+;;   - prior frame throw_1 and throw_2 are not incomplete, and bonus_1 is incomplete
+;;     - post frame throw_1 and throw_2 are equals to prior the same prior frame fields
+;;     - post frame bonus_1 is equal to the operation's throw
+;;     - post frame bonus_2 is equal to prior frame's bonus_2 field
+;;   - prior frame throw_1, throw_2 and bonus_1 are not incomplete, and bonus_2 is incomplete
+;;     - post frame throw_1, throw_2, and bonus_1 are equal to prior the same prior frame fields
+;;     - post frame bonus_2 is equal to the operation's throw
+;;
+;; You cannot create a valid frame throw application operation with prior and post frames in any other states.
 ;;;;
 ```
 
-There's a lot of twisty-turny logic in there. That's just how the bowling algorithm is. The full implementation of
-this logic is in the `frame.apply-throw-op.validation` function in `frame-ops.smt2`, which I won't repeat here because
-its a bit of an eyeful for casual perusal.
+The task of entangling one frame's bonus throws with subsequent frames' normal throws is done by game validation rules.
 
 ## A Game
 
-A game is comprised of 10 frames, an `incomplete` flag, and a `score`. I also define a convenience
-constant representing an empty game:
+A game is comprised of 10 frames. There are also functions for computing a game's score and deducing
+whether or not the game is incomplete. We also define a convenience constant representing an empty game:
 
 ```
 (declare-datatype Game (
@@ -312,9 +295,7 @@ constant representing an empty game:
     (frame_7 Frame)
     (frame_8 Frame)
     (frame_9 Frame)
-    (frame_10 Frame)
-    (incomplete Bool)
-    (score Int))))
+    (frame_10 Frame)))
 
 (define-const empty-game Game
   (game
@@ -327,68 +308,72 @@ constant representing an empty game:
     empty-frame      ; frame_7
     empty-frame      ; frame_8
     empty-frame      ; frame_9
-    empty-frame      ; frame_10
-    true             ; incomplete flag
-    0)               ; score)
+    empty-frame))    ; frame_10
 ```
 
 > Note that I've opted to use an expicit set of fields, one for each frame, instead of an array or list. Using an array
 > with an integer index key I felt like might require using quantifiers (`forall` or `exists`) over the infinite `Int`
-> datatype. I try to avoid doing that when possible, because SMT solvers don't perform consistently with quantifying
-> over infinite types. A list implies recursion, something SMT solvers also aren't great at (at least not as of the
-> time I am writing this monograph).
+> datatype. We avoid quantifying over infinite types whenever possible, because SMT solvers don't perform well
+> when quantifying over infinite types. A list implies recursion, something SMT solvers also aren't great at (at
+> least not as of the time I am writing this monograph).
 >
 > There's a downside to this: voluminous detailing of inter-frame relationships. There's no implied
 > successor/succeeding relationship between the individual frame fields. So when detailing the relationships between
 > frames you have to explicitly list out these relationships. See note below in the next section regarding the
-> function to apply a throw to a game also, which requires a very drawn-out listing of inter-frame relationships in
+> function to apply a throw to a game, which requires an explicit listing of inter-frame relationships in
 > an operation validation function.
 
 The game validation function "entangles" the states of the individual frames. This is where the bonus throws from
-prior frames are defined to be equal to the normal throws of subsequent frames. The comments within `game.smt2`
-describe the full set of rules for a _valid_ game:
+prior frames are defined to be equal to the normal throws of subsequent frames. The general rules entangling a frame
+with the subsequent frame are relatively simple to state:
 
-```
-;;;;
-;; A valid game is comprised of valid frames. The state of sequential the frames are entangled.
-;; - The frames are completed sequentially; if frame X has either regular throw incomplete, then frame X+1 is
-;;   is the empty-frame -- this rule applies to frames 1-9
-;; - For member frames that are "mark" frames (strike or spare):
-;;   - The first bonus throw is equal to the first normal throw of the next frame -- this rule applies to frames 1-9
-;; - For member frames that are strike frames and the next frame is _not_ a strike frame
-;;   - the second bonus throw is equal to the second normal throw of the next frame -- this rule applies to frames 1-9
-;; - For member frames that are strike frames and the next frame is also a strike frame
-;;   - the second bonus throw is equal to the first bonus throw of the next frame, which is also equal to the
-;;     first normal throw of the second frame seqentially forward, because of the "mark" frame rule above -- this rule
-;;     applies to frames 1-9
-;; - The game's incomplete flag is consistent with the completion state of the 10th frame; the game is complete when the
-;;   10th frame is complete
-;; - The score is the sum of the point values of all the frames
-;;;;
-```
+- if a frame is a mark (strike or spare), then the frame's first bonus throw is equal to the subsequent frame's first normal
+  throw
+- furthermore, if the frame is a strike AND the next frame is NOT a strike, then the frame's second bonus throw is
+  equal to the subsequent frame's second normal throw
+- furthermore, if the frame is a strike AND the next frame is ALSO a strike, then the frame's second bonus throw is
+  equal to the subsequent frame's first bonus throw
+
+We must explicitly define this relationship between each game's frames 1 and 2, and also between each game's frames 2 and 3,
+and so on, all the way to frames 9 and 10. Frame 10 has no further entanglements, because there is no frame after frame 10.
 
 Notice how subsequent frame states are automatically entangled by the logic. For example, if a frame is a spare then
-the `bonus_1` of the frame must be equal to `throw_1` of the subsequent frame. Not just the point values equal, but the
-entire throw. This is how normal frame throws are distributed to previous "mark" frames (strikes or spares) as bonuses.
+the `bonus_1` of the frame must be equal to `throw_1` of the subsequent frame. This is how normal frame throws are
+distributed to previous "mark" frames (strikes or spares) as bonuses.
 
-Each of these rules is individually encoded in rule-specific validation functions, which are referenced
-directly or indirectly from the `game.validation` function. Check out `game.smt2` to see the individual rule validation
-functions. Here's `game.validation`, which simply esures all the individual rule functions are satisfied:
+If two frames in a row are strikes, then the first frame's bonus_2 is equal to the second frame's bonus_1, which in turn
+is equal to the _next_ frame's throw_1 (by application of the same rules).
 
-```
-(define-fun game.validation ((g Game)) Bool
-  (and
-    (game.validation.member-frames-valid g)
-    (game.validation.sequential-frames g)
-    (game.validation.mark-frames-first-bonus-consistency-with-next-throw g)
-    (game.validation.strike-then-not-strike-bonus-2-consistency g)
-    (game.validation.strike-then-strike-bonus-2-consistency g)
-    (game.validation.completion-consistent-with-frame-10 g)
-    (game.validation.score-consistent-with-frames-point-total g)))
-
-```
+The `game.valid` function encode these rules by referencing helper validation functions. Check out `game.smt2` to see
+the individual rule validation functions.
 
 ## Applying a Single Throw to a Game
+
+A game's state sequence is pretty simple: a game begins in the "empty" state, where all frames are incomplete. Throws
+are applied to the game, which in turn applies the throws to each individual frame, in sequence until each frame
+is no longer incomplete. The game concludes when there are no more incomplete frames -- when frame 10 is complete,
+the game is done.
+
+A `Game.ApplyThrowOp` datatype represents the application of a single throw to a game. The datatype includes a
+prior game state, a post game state, and the throw being applied to the game. A valid throw application requires
+a valid `Frame.ApplyThrowOp`, which defines the application of the throw to the first incomplete frame in the
+game.
+
+I define how to apply the throw to the first incomplete frame using a large disjunction ("or"):
+
+- if frame 1 is incomplete, apply the throw to frame 1.
+  - That is: Frame 1 in the prior game state is the prior frame of a `Frame.ApplyThrowOp`, and frame 1 in the
+    post game state is equal to the post game of the same `Frame.ApplyThrowOp`. Frames 2-10 in the prior game state
+    or equal to frames 2-10 in the post game state.
+- if frame 1 is complete and frame 2 is incomplete, apply the throw to frame 2.
+  - See logic above -- use similar logic to apply the throw to frame 2 using a `Frame.ApplyThrowOp`. Frame 1 and frames
+    3-10 in the prior game state are equal to frames 1 and 3-10 in the post game state.
+- if frame 2 is complete and frame 3 is incomplete, apply the throw to frame 3 similarly
+- if frame 3 is complete and frame 4 is incomplete, apply the throw to frame 4 similarly
+- etc.
+
+There alsoa validation rule that guarantees game frames are completed in order. Frame 2 can't be complete if frame 1
+isn't complete. Frame 3 can't be complete if frame 2 isn't complete. And so on.
 
 ----
 

@@ -34,7 +34,6 @@
 ;;;;
 ;; Validation rules for frames:
 ;; - the member throws must be valid
-;; - the frame is incomplete iff any of the the throws are incomplete
 ;; - the pins knocked down by throws must be consistent
 ;;   - the same pin can't be knocked down in the first and second normal throws
 ;;   - unless the first bonus throw is a strike, the same pin can't be knocked down in the
