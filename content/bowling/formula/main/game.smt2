@@ -7,10 +7,8 @@
 ;; || __FILE__ || __LINE__ ||
 
 ;;;;;;;;;;
-;; A game represents a game of bowling, from "initial state", while in progress, or completed. A game is comprised of:
-;; - 10 frames
-;; - an incomplete flag, indicating that the game is in progress
-;; - a score integer
+;; A game represents a game of bowling, from "initial state", while in progress, or completed. A game is comprised of
+;; 10 frames.
 ;;;;;;;;;;
 
 (declare-datatype Game (
@@ -24,14 +22,11 @@
     (frame_7 Frame)
     (frame_8 Frame)
     (frame_9 Frame)
-    (frame_10 Frame)
-    (incomplete Bool)
-    (score Int))
-))
+    (frame_10 Frame))))
 
 ;;;;
 ;; `empty-game` is a convenience constant representing the state of a game without any throws applied to it. This is
-;; the state used when starting a new game. The game is incomplete, and the initial score is zero.
+;; the state used when starting a new game.
 ;;;;
 
 (define-const empty-game Game
@@ -45,164 +40,208 @@
     empty-frame      ; frame_7
     empty-frame      ; frame_8
     empty-frame      ; frame_9
-    empty-frame      ; frame_10
-    true             ; incomplete flag
-    0)               ; score
-)
+    empty-frame))    ; frame_10
 
 ;;;;
-;; A valid game is comprised of valid frames. The state of sequential the frames are entangled.
-;; - The frames are completed sequentially; if frame X has either regular throw incomplete, then frame X+1 is
-;;   is the empty-frame -- this rule applies to frames 1-10
-;; - For member frames that are "mark" frames (strike or spare):
+;; A valid game is:
+;; - comprised of valid frames
+;; - the frames are completed sequentially
+;;   - if frame X has an incomplete and unused normal throw (throw_1 or throw_2), then frame X+1 must be the empty frame
+;; - member frames that are "mark" frames (strike or spare):
 ;;   - The first bonus throw is equal to the first normal throw of the next frame -- this rule applies to frames 1-9
-;; - For member frames that are strike frames and the next frame is _not_ a strike frame
-;;   - the second bonus throw is equal to the second normal throw of the next frame -- this rule applies to frames 1-9
-;; - For member frames that are strike frames and the next frame is also a strike frame
-;;   - the second bonus throw is equal to the first bonus throw of the next frame, which is also equal to the
-;;     first normal throw of the second frame seqentially forward, because of the "mark" frame rule above -- this rule
-;;     applies to frames 1-9
-;; - The game's incomplete flag is consistent with the completion state of the 10th frame; the game is complete when the
-;;   10th frame is complete
-;; - The score is the sum of the point values of all the frames
+;; - For member frames that are strike frames:
+;;   - if the next frame is a strike, then the second bonus throw is equal to the next frame's first bonus throw
+;;   - if the next frame is not a strike, then the second bonus throw is equal to the next frame's second normal throw
+;;   - this rule applied to frames 1-9
 ;;;;
 
-(declare-fun game.validation.member-frames-valid (Game) Bool)
-(assert (! (forall ((g Game))
-  (=
-    (and
-      (frame.validation (frame_1 g))
-      (frame.validation (frame_2 g))
-      (frame.validation (frame_3 g))
-      (frame.validation (frame_4 g))
-      (frame.validation (frame_5 g))
-      (frame.validation (frame_6 g))
-      (frame.validation (frame_7 g))
-      (frame.validation (frame_8 g))
-      (frame.validation (frame_9 g))
-      (frame.validation (frame_10 g)))
-    (game.validation.member-frames-valid g))
-) :named game.validation.member-frames-valid ))
-
-(declare-fun game.validation.sequential-frames (Game) Bool)
-(assert (! (forall ((g Game))
-  (=
-    (and
-      (=> (frame.incomplete-regular-throws (frame_1 g)) (= empty-frame (frame_2 g)))
-      (=> (frame.incomplete-regular-throws (frame_2 g)) (= empty-frame (frame_3 g)))
-      (=> (frame.incomplete-regular-throws (frame_3 g)) (= empty-frame (frame_4 g)))
-      (=> (frame.incomplete-regular-throws (frame_4 g)) (= empty-frame (frame_5 g)))
-      (=> (frame.incomplete-regular-throws (frame_5 g)) (= empty-frame (frame_6 g)))
-      (=> (frame.incomplete-regular-throws (frame_6 g)) (= empty-frame (frame_7 g)))
-      (=> (frame.incomplete-regular-throws (frame_7 g)) (= empty-frame (frame_8 g)))
-      (=> (frame.incomplete-regular-throws (frame_8 g)) (= empty-frame (frame_9 g)))
-      (=> (frame.incomplete-regular-throws (frame_9 g)) (= empty-frame (frame_10 g))))
-    (game.validation.sequential-frames g))
-) :named game.validation.sequental-frames ))
-
-(declare-fun game.validation.mark-frames-first-bonus-consistency-with-next-throw (Game) Bool)
-(assert (! (forall ((g Game))
-  (=
-    (and
-      (=>
-        (or (strike (frame_1 g)) (spare (frame_1 g)))
-        (= (bonus_1 (frame_1 g)) (throw_1 (frame_2 g))))
-      (=>
-        (or (strike (frame_2 g)) (spare (frame_2 g)))
-        (= (bonus_1 (frame_2 g)) (throw_1 (frame_3 g))))
-      (=>
-        (or (strike (frame_3 g)) (spare (frame_3 g)))
-        (= (bonus_1 (frame_3 g)) (throw_1 (frame_4 g))))
-      (=>
-        (or (strike (frame_4 g)) (spare (frame_4 g)))
-        (= (bonus_1 (frame_4 g)) (throw_1 (frame_5 g))))
-      (=>
-        (or (strike (frame_5 g)) (spare (frame_5 g)))
-        (= (bonus_1 (frame_5 g)) (throw_1 (frame_6 g))))
-      (=>
-        (or (strike (frame_6 g)) (spare (frame_6 g)))
-        (= (bonus_1 (frame_6 g)) (throw_1 (frame_7 g))))
-      (=>
-        (or (strike (frame_7 g)) (spare (frame_7 g)))
-        (= (bonus_1 (frame_7 g)) (throw_1 (frame_8 g))))
-      (=>
-        (or (strike (frame_8 g)) (spare (frame_8 g)))
-        (= (bonus_1 (frame_8 g)) (throw_1 (frame_9 g))))
-      (=>
-        (or (strike (frame_9 g)) (spare (frame_9 g)))
-        (= (bonus_1 (frame_9 g)) (throw_1 (frame_10 g)))))
-    (game.validation.mark-frames-first-bonus-consistency-with-next-throw g))
-) :named game.validation.mark-frames-first-bonus-consistency-with-next-throw ))
-
-(declare-fun game.validation.strike-then-not-strike-bonus-2-consistency (Game) Bool)
-(assert (! (forall ((g Game))
-  (=
-    (and
-      (=> (strike (frame_1 g)) (not (strike (frame_2 g)))  (= (bonus_2 (frame_1 g)) (throw_2 (frame_2 g))))
-      (=> (strike (frame_2 g)) (not (strike (frame_3 g)))  (= (bonus_2 (frame_2 g)) (throw_2 (frame_3 g))))
-      (=> (strike (frame_3 g)) (not (strike (frame_4 g)))  (= (bonus_2 (frame_3 g)) (throw_2 (frame_4 g))))
-      (=> (strike (frame_4 g)) (not (strike (frame_5 g)))  (= (bonus_2 (frame_4 g)) (throw_2 (frame_5 g))))
-      (=> (strike (frame_5 g)) (not (strike (frame_6 g)))  (= (bonus_2 (frame_5 g)) (throw_2 (frame_6 g))))
-      (=> (strike (frame_6 g)) (not (strike (frame_7 g)))  (= (bonus_2 (frame_6 g)) (throw_2 (frame_7 g))))
-      (=> (strike (frame_7 g)) (not (strike (frame_8 g)))  (= (bonus_2 (frame_7 g)) (throw_2 (frame_8 g))))
-      (=> (strike (frame_8 g)) (not (strike (frame_9 g)))  (= (bonus_2 (frame_8 g)) (throw_2 (frame_9 g))))
-      (=> (strike (frame_9 g)) (not (strike (frame_10 g))) (= (bonus_2 (frame_9 g)) (throw_2 (frame_10 g)))))
-    (game.validation.strike-then-not-strike-bonus-2-consistency g))
-) :named game.validation.strike-then-not-strike-bonus-2-consistency ))
-
-(declare-fun game.validation.strike-then-strike-bonus-2-consistency (Game) Bool)
-(assert (! (forall ((g Game))
-  (=
-    (and
-      (=> (strike (frame_1 g)) (strike (frame_2 g))  (= (bonus_2 (frame_1 g)) (bonus_1 (frame_2 g))))
-      (=> (strike (frame_2 g)) (strike (frame_3 g))  (= (bonus_2 (frame_2 g)) (bonus_1 (frame_3 g))))
-      (=> (strike (frame_3 g)) (strike (frame_4 g))  (= (bonus_2 (frame_3 g)) (bonus_1 (frame_4 g))))
-      (=> (strike (frame_4 g)) (strike (frame_5 g))  (= (bonus_2 (frame_4 g)) (bonus_1 (frame_5 g))))
-      (=> (strike (frame_5 g)) (strike (frame_6 g))  (= (bonus_2 (frame_5 g)) (bonus_1 (frame_6 g))))
-      (=> (strike (frame_6 g)) (strike (frame_7 g))  (= (bonus_2 (frame_6 g)) (bonus_1 (frame_7 g))))
-      (=> (strike (frame_7 g)) (strike (frame_8 g))  (= (bonus_2 (frame_7 g)) (bonus_1 (frame_8 g))))
-      (=> (strike (frame_8 g)) (strike (frame_9 g))  (= (bonus_2 (frame_8 g)) (bonus_1 (frame_9 g))))
-      (=> (strike (frame_9 g)) (strike (frame_10 g)) (= (bonus_2 (frame_9 g)) (bonus_1 (frame_10 g)))))
-    (game.validation.strike-then-strike-bonus-2-consistency g))
-) :named game.validation.strike-then-strike-bonus-2-consistency ))
-
-(declare-fun game.validation.completion-consistent-with-frame-10 (Game) Bool)
-(assert (! (forall ((g Game))
-  (=
-    (= (incomplete g) (incomplete (frame_10 g)))
-    (game.validation.completion-consistent-with-frame-10 g))
-) :named game.validation.completion-consistent-with-frame-10 ))
-
-(declare-fun game.validation.score-consistent-with-frames-point-total (Game) Bool)
-(assert (! (forall ((g Game))
-  (=
-    (=
-      (score g)
-      (+
-        (points (frame_1 g))
-        (points (frame_2 g))
-        (points (frame_3 g))
-        (points (frame_4 g))
-        (points (frame_5 g))
-        (points (frame_6 g))
-        (points (frame_7 g))
-        (points (frame_8 g))
-        (points (frame_9 g))
-        (points (frame_10 g))))
-    (game.validation.score-consistent-with-frames-point-total g))
-) :named game.validation.score-consistent-with-frames-point-total ))
-
-(define-fun game.validation ((g Game)) Bool
+(define-fun game.valid.member-frames-valid ((g Game)) Bool
   (and
-    (game.validation.member-frames-valid g)
-    (game.validation.sequential-frames g)
-    (game.validation.mark-frames-first-bonus-consistency-with-next-throw g)
-    (game.validation.strike-then-not-strike-bonus-2-consistency g)
-    (game.validation.strike-then-strike-bonus-2-consistency g)
-    (game.validation.completion-consistent-with-frame-10 g)
-    (game.validation.score-consistent-with-frames-point-total g))
-)
+    (frame.valid (frame_1 g))
+    (frame.valid (frame_2 g))
+    (frame.valid (frame_3 g))
+    (frame.valid (frame_4 g))
+    (frame.valid (frame_5 g))
+    (frame.valid (frame_6 g))
+    (frame.valid (frame_7 g))
+    (frame.valid (frame_8 g))
+    (frame.valid (frame_9 g))
+    (frame.valid (frame_10 g))))
+
+(define-fun frame.incomplete-normal-throws ((f Frame)) Bool
+  (or
+    (incomplete (throw_1 f))
+    (incomplete (throw_2 f))))
+
+(define-fun game.valid.sequential-frames ((g Game)) Bool
+  (and
+    (=> (frame.incomplete-normal-throws (frame_1 g)) (= empty-frame (frame_2 g)))
+    (=> (frame.incomplete-normal-throws (frame_2 g)) (= empty-frame (frame_3 g)))
+    (=> (frame.incomplete-normal-throws (frame_3 g)) (= empty-frame (frame_4 g)))
+    (=> (frame.incomplete-normal-throws (frame_4 g)) (= empty-frame (frame_5 g)))
+    (=> (frame.incomplete-normal-throws (frame_5 g)) (= empty-frame (frame_6 g)))
+    (=> (frame.incomplete-normal-throws (frame_6 g)) (= empty-frame (frame_7 g)))
+    (=> (frame.incomplete-normal-throws (frame_7 g)) (= empty-frame (frame_8 g)))
+    (=> (frame.incomplete-normal-throws (frame_8 g)) (= empty-frame (frame_9 g)))
+    (=> (frame.incomplete-normal-throws (frame_9 g)) (= empty-frame (frame_10 g)))))
+
+(define-fun game.valid.mark-frames-first-bonus-consistent-with-next-frame ((g Game)) Bool
+  (and
+    (=>
+      (= #b1111111111 (bvor (pins (throw_1 (frame_1 g))) (pins (throw_2 (frame_1 g)))))
+      (= (bonus_1 (frame_1 g)) (throw_1 (frame_2 g))))
+    (=>
+      (= #b1111111111 (bvor (pins (throw_1 (frame_2 g))) (pins (throw_2 (frame_2 g)))))
+      (= (bonus_1 (frame_2 g)) (throw_1 (frame_3 g))))
+    (=>
+      (= #b1111111111 (bvor (pins (throw_1 (frame_3 g))) (pins (throw_2 (frame_3 g)))))
+      (= (bonus_1 (frame_3 g)) (throw_1 (frame_4 g))))
+    (=>
+      (= #b1111111111 (bvor (pins (throw_1 (frame_4 g))) (pins (throw_2 (frame_4 g)))))
+      (= (bonus_1 (frame_4 g)) (throw_1 (frame_5 g))))
+    (=>
+      (= #b1111111111 (bvor (pins (throw_1 (frame_5 g))) (pins (throw_2 (frame_5 g)))))
+      (= (bonus_1 (frame_5 g)) (throw_1 (frame_6 g))))
+    (=>
+      (= #b1111111111 (bvor (pins (throw_1 (frame_6 g))) (pins (throw_2 (frame_6 g)))))
+      (= (bonus_1 (frame_6 g)) (throw_1 (frame_7 g))))
+    (=>
+      (= #b1111111111 (bvor (pins (throw_1 (frame_7 g))) (pins (throw_2 (frame_7 g)))))
+      (= (bonus_1 (frame_7 g)) (throw_1 (frame_8 g))))
+    (=>
+      (= #b1111111111 (bvor (pins (throw_1 (frame_8 g))) (pins (throw_2 (frame_8 g)))))
+      (= (bonus_1 (frame_8 g)) (throw_1 (frame_9 g))))
+    (=>
+      (= #b1111111111 (bvor (pins (throw_1 (frame_9 g))) (pins (throw_2 (frame_9 g)))))
+      (= (bonus_1 (frame_9 g)) (throw_1 (frame_10 g))))))
+
+(define-fun game.valid.strike-then-strike-bonus-2-consistency ((g Game)) Bool
+  (and
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_1 g))))
+        (= #b1111111111 (pins (throw_1 (frame_2 g)))))
+      (= (bonus_2 (frame_1 g)) (bonus_1 (frame_2 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_2 g))))
+        (= #b1111111111 (pins (throw_1 (frame_3 g)))))
+      (= (bonus_2 (frame_2 g)) (bonus_1 (frame_3 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_3 g))))
+        (= #b1111111111 (pins (throw_1 (frame_4 g)))))
+      (= (bonus_2 (frame_3 g)) (bonus_1 (frame_4 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_4 g))))
+        (= #b1111111111 (pins (throw_1 (frame_5 g)))))
+      (= (bonus_2 (frame_4 g)) (bonus_1 (frame_5 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_5 g))))
+        (= #b1111111111 (pins (throw_1 (frame_6 g)))))
+      (= (bonus_2 (frame_5 g)) (bonus_1 (frame_6 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_6 g))))
+        (= #b1111111111 (pins (throw_1 (frame_7 g)))))
+      (= (bonus_2 (frame_6 g)) (bonus_1 (frame_7 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_7 g))))
+        (= #b1111111111 (pins (throw_1 (frame_8 g)))))
+      (= (bonus_2 (frame_7 g)) (bonus_1 (frame_8 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_8 g))))
+        (= #b1111111111 (pins (throw_1 (frame_9 g)))))
+      (= (bonus_2 (frame_8 g)) (bonus_1 (frame_9 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_9 g))))
+        (= #b1111111111 (pins (throw_1 (frame_10 g)))))
+      (= (bonus_2 (frame_9 g)) (bonus_1 (frame_10 g))))))
+
+(define-fun game.valid.strike-then-not-strike-bonus-2-consistency ((g Game)) Bool
+  (and
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_1 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_2 g))))))
+      (= (bonus_2 (frame_1 g)) (throw_2 (frame_2 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_2 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_3 g))))))
+      (= (bonus_2 (frame_2 g)) (throw_2 (frame_3 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_3 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_4 g))))))
+      (= (bonus_2 (frame_3 g)) (throw_2 (frame_4 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_4 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_5 g))))))
+      (= (bonus_2 (frame_4 g)) (throw_2 (frame_5 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_5 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_6 g))))))
+      (= (bonus_2 (frame_5 g)) (throw_2 (frame_6 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_6 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_7 g))))))
+      (= (bonus_2 (frame_6 g)) (throw_2 (frame_7 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_7 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_8 g))))))
+      (= (bonus_2 (frame_7 g)) (throw_2 (frame_8 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_8 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_9 g))))))
+      (= (bonus_2 (frame_8 g)) (throw_2 (frame_9 g))))
+    (=>
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_9 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_10 g))))))
+      (= (bonus_2 (frame_9 g)) (throw_2 (frame_10 g))))))
+
+(define-fun game.valid ((g Game)) Bool
+  (and
+    (game.valid.member-frames-valid g)
+    (game.valid.sequential-frames g)
+    (game.valid.mark-frames-first-bonus-consistent-with-next-frame g)
+    (game.valid.strike-then-strike-bonus-2-consistency  g)
+    (game.valid.strike-then-not-strike-bonus-2-consistency g)))
+
+;;;;
+;; `game.is-incomplete` convenience function. Only useful when input `Game` is valid per `game.valid`.
+;;;;
+
+(define-fun game.is-incomplete ((g Game)) Bool
+  (frame.is-incomplete (frame_10 g)))
+
+;;;;
+;; The the total game score is just the sum of all frames.
+;;;;
+
+(define-fun game.points ((g Game)) Int
+  (+
+    (frame.points (frame_1 g))
+    (frame.points (frame_2 g))
+    (frame.points (frame_3 g))
+    (frame.points (frame_4 g))
+    (frame.points (frame_5 g))
+    (frame.points (frame_6 g))
+    (frame.points (frame_7 g))
+    (frame.points (frame_8 g))
+    (frame.points (frame_9 g))
+    (frame.points (frame_10 g))))
 
 #endif
-
 
