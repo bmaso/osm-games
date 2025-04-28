@@ -51,21 +51,36 @@
         (= (throw_1 (post_frame op)) (throw op))
         (=>
           (not (= strike-throw (throw op)))
-          (incomplete (throw_2 (post_frame op))))
+          (and
+            (incomplete (throw_2 (post_frame op)))
+            (incomplete (bonus_1 (post_frame op)))
+            (unused (bonus_2 (post_frame op)))))
         (=>
           (= strike-throw (throw op))
           (and
             (unused (throw_2 (post_frame op)))
-            (incomplete (bonus_1 (post_frame op))))))
+            (incomplete (bonus_1 (post_frame op)))
+            (incomplete (bonus_2 (post_frame op))))))
       (and
         (incomplete (throw_2 (prior_frame op)))
         (= (throw_2 (post_frame op)) (throw op))
-        (= (throw_1 (prior_frame op)) (throw_1 (post_frame op))))
+        (= (throw_1 (prior_frame op)) (throw_1 (post_frame op)))
+        (=>
+          (= #b1111111111 (bvor (pins (throw_1 (post_frame op))) (pins (throw_2 (post_frame op)))))
+          (and
+            (incomplete (bonus_1 (post_frame op)))
+            (unused (bonus_2 (post_frame op)))))
+        (=>
+          (not (= #b1111111111 (bvor (pins (throw_1 (post_frame op))) (pins (throw_2 (post_frame op))))))
+          (and
+            (unused (bonus_1 (post_frame op)))
+            (unused (bonus_2 (post_frame op))))))
       (and
         (incomplete (bonus_1 (prior_frame op)))
         (= (bonus_1 (post_frame op)) (throw op))
         (= (throw_1 (prior_frame op)) (throw_1 (post_frame op)))
-        (= (throw_2 (prior_frame op)) (throw_2 (post_frame op))))
+        (= (throw_2 (prior_frame op)) (throw_2 (post_frame op)))
+        (= (bonus_2 (prior_frame op)) (bonus_2 (post_frame op))))
       (and
         (incomplete (bonus_2 (prior_frame op)))
         (= (bonus_2 (post_frame op)) (throw op))
