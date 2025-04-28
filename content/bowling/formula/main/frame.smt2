@@ -31,6 +31,18 @@
     incomplete-throw      ; bonus_1
     incomplete-throw))    ; bonus_2
 
+;; Convenience function defining a frame that is a strike. Only applies to valid frames.
+
+(define-fun frame.is-strike ((f Frame)) Bool
+  (= #b1111111111 (pins (throw_1 f))))
+
+;; Convenience function defining a frame that is a spare (and not a strike). Only applies to valid frames.
+
+(define-fun frame.is-spare ((f Frame)) Bool
+  (and
+    (not (= #b1111111111 (pins (throw_1 f))))
+    (= #b1111111111 (bvor (pins (throw_1 f)) (pins (throw_2 f))))))
+
 ;;;;
 ;; Validation rules for frames:
 ;; - the member throws must be valid

@@ -20,94 +20,94 @@
 
 (assert (! (not (exists ((op Game.ApplyThrowOp))
   (and
-    (game.apply-throw-op.validation op)
-    (< (points (throw op)) 10)
+    (game.apply-throw-op.valid op)
+    (not (= #b1111111111 (pins (throw op))))
     (or
       (and
         (= empty-frame (frame_1 (prior_game op)))
         (or
-          (not (incomplete (frame_1 (post_game op))))
+          (not (frame.is-incomplete (frame_1 (post_game op))))
           (not (= (throw op) (throw_1 (frame_1 (post_game op)))))
           (not (incomplete (throw_2 (frame_1 (post_game op)))))
           (not (incomplete (bonus_1 (frame_1 (post_game op)))))
           (not (unused (bonus_2 (frame_1 (post_game op)))))))
       (and
-        (not (frame.incomplete-regular-throws (frame_1 (prior_game op))))
+        (not (frame.incomplete-normal-throws (frame_1 (prior_game op))))
         (= empty-frame (frame_2 (prior_game op)))
         (or
-          (not (incomplete (frame_2 (post_game op))))
+          (not (frame.is-incomplete (frame_2 (post_game op))))
           (not (= (throw op) (throw_1 (frame_2 (post_game op)))))
           (not (incomplete (throw_2 (frame_2 (post_game op)))))
           (not (incomplete (bonus_1 (frame_2 (post_game op)))))
           (not (unused (bonus_2 (frame_2 (post_game op)))))))
       (and
-        (not (frame.incomplete-regular-throws (frame_2 (prior_game op))))
+        (not (frame.incomplete-normal-throws (frame_2 (prior_game op))))
         (= empty-frame (frame_3 (prior_game op)))
         (or
-          (not (incomplete (frame_3 (post_game op))))
+          (not (frame.is-incomplete (frame_3 (post_game op))))
           (not (= (throw op) (throw_1 (frame_3 (post_game op)))))
           (not (incomplete (throw_2 (frame_3 (post_game op)))))
           (not (incomplete (bonus_1 (frame_3 (post_game op)))))
           (not (unused (bonus_2 (frame_3 (post_game op)))))))
       (and
-        (not (frame.incomplete-regular-throws (frame_3 (prior_game op))))
+        (not (frame.incomplete-normal-throws (frame_3 (prior_game op))))
         (= empty-frame (frame_4 (prior_game op)))
         (or
-          (not (incomplete (frame_4 (post_game op))))
+          (not (frame.is-incomplete (frame_4 (post_game op))))
           (not (= (throw op) (throw_1 (frame_4 (post_game op)))))
           (not (incomplete (throw_2 (frame_4 (post_game op)))))
           (not (incomplete (bonus_1 (frame_4 (post_game op)))))
           (not (unused (bonus_2 (frame_4 (post_game op)))))))
       (and
-        (not (frame.incomplete-regular-throws (frame_4 (prior_game op))))
+        (not (frame.incomplete-normal-throws (frame_4 (prior_game op))))
         (= empty-frame (frame_5 (prior_game op)))
         (or
-          (not (incomplete (frame_5 (post_game op))))
+          (not (frame.is-incomplete (frame_5 (post_game op))))
           (not (= (throw op) (throw_1 (frame_5 (post_game op)))))
           (not (incomplete (throw_2 (frame_5 (post_game op)))))
           (not (incomplete (bonus_1 (frame_5 (post_game op)))))
           (not (unused (bonus_2 (frame_5 (post_game op)))))))
       (and
-        (not (frame.incomplete-regular-throws (frame_5 (prior_game op))))
+        (not (frame.incomplete-normal-throws (frame_5 (prior_game op))))
         (= empty-frame (frame_6 (prior_game op)))
         (or
-          (not (incomplete (frame_6 (post_game op))))
+          (not (frame.is-incomplete (frame_6 (post_game op))))
           (not (= (throw op) (throw_1 (frame_6 (post_game op)))))
           (not (incomplete (throw_2 (frame_6 (post_game op)))))
           (not (incomplete (bonus_1 (frame_6 (post_game op)))))
           (not (unused (bonus_2 (frame_6 (post_game op)))))))
       (and
-        (not (frame.incomplete-regular-throws (frame_6 (prior_game op))))
+        (not (frame.incomplete-normal-throws (frame_6 (prior_game op))))
         (= empty-frame (frame_7 (prior_game op)))
         (or
-          (not (incomplete (frame_7 (post_game op))))
+          (not (frame.is-incomplete (frame_7 (post_game op))))
           (not (= (throw op) (throw_1 (frame_7 (post_game op)))))
           (not (incomplete (throw_2 (frame_7 (post_game op)))))
           (not (incomplete (bonus_1 (frame_7 (post_game op)))))
           (not (unused (bonus_2 (frame_7 (post_game op)))))))
       (and
-        (not (frame.incomplete-regular-throws (frame_7 (prior_game op))))
+        (not (frame.incomplete-normal-throws (frame_7 (prior_game op))))
         (= empty-frame (frame_8 (prior_game op)))
         (or
-          (not (incomplete (frame_8 (post_game op))))
+          (not (frame.is-incomplete (frame_8 (post_game op))))
           (not (= (throw op) (throw_1 (frame_8 (post_game op)))))
           (not (incomplete (throw_2 (frame_8 (post_game op)))))
           (not (incomplete (bonus_1 (frame_8 (post_game op)))))
           (not (unused (bonus_2 (frame_8 (post_game op)))))))
       (and
-        (not (frame.incomplete-regular-throws (frame_8 (prior_game op))))
+        (not (frame.incomplete-normal-throws (frame_8 (prior_game op))))
         (= empty-frame (frame_9 (prior_game op)))
         (or
-          (not (incomplete (frame_9 (post_game op))))
+          (not (frame.is-incomplete (frame_9 (post_game op))))
           (not (= (throw op) (throw_1 (frame_9 (post_game op)))))
           (not (incomplete (throw_2 (frame_9 (post_game op)))))
           (not (incomplete (bonus_1 (frame_9 (post_game op)))))
           (not (unused (bonus_2 (frame_9 (post_game op)))))))
       (and
-        (not (frame.incomplete-regular-throws (frame_9 (prior_game op))))
+        (not (frame.incomplete-normal-throws (frame_9 (prior_game op))))
         (= empty-frame (frame_10 (prior_game op)))
         (or
-          (not (incomplete (frame_10 (post_game op))))
+          (not (frame.is-incomplete (frame_10 (post_game op))))
           (not (= (throw op) (throw_1 (frame_10 (post_game op)))))
           (not (incomplete (throw_2 (frame_10 (post_game op)))))
           (not (incomplete (bonus_1 (frame_10 (post_game op)))))
@@ -118,119 +118,118 @@
 
 (assert (! (not (exists ((op Game.ApplyThrowOp))
   (and
-    (game.apply-throw-op.validation op)
-    (< (points (throw op)) 10)
-    (or
-      (and
-         (not (incomplete (throw_1 (frame_1 (prior_game op)))))
-         (incomplete (throw_2 (frame_1 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_1 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_1 (post_game op)))
-           (strike (frame_1 (post_game op)))
-           (spare (frame_1 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_1 (post_game op))))))
-           (not (unused (bonus_1 (frame_1 (post_game op)))))
-           (not (unused (bonus_2 (frame_1 (post_game op))))))
-      (and
-         (not (incomplete (throw_1 (frame_2 (prior_game op)))))
-         (incomplete (throw_2 (frame_2 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_2 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_2 (post_game op)))
-           (strike (frame_2 (post_game op)))
-           (spare (frame_2 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_2 (post_game op))))))
-           (not (unused (bonus_1 (frame_2 (post_game op)))))
-           (not (unused (bonus_2 (frame_2 (post_game op))))))
-      (and
-         (not (incomplete (throw_1 (frame_3 (prior_game op)))))
-         (incomplete (throw_2 (frame_3 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_3 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_3 (post_game op)))
-           (strike (frame_3 (post_game op)))
-           (spare (frame_3 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_3 (post_game op))))))
-           (not (unused (bonus_1 (frame_3 (post_game op)))))
-           (not (unused (bonus_2 (frame_3 (post_game op))))))
-      (and
-         (not (incomplete (throw_1 (frame_4 (prior_game op)))))
-         (incomplete (throw_2 (frame_4 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_4 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_4 (post_game op)))
-           (strike (frame_4 (post_game op)))
-           (spare (frame_4 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_4 (post_game op))))))
-           (not (unused (bonus_1 (frame_4 (post_game op)))))
-           (not (unused (bonus_2 (frame_4 (post_game op))))))
-      (and
-         (not (incomplete (throw_1 (frame_5 (prior_game op)))))
-         (incomplete (throw_2 (frame_5 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_5 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_5 (post_game op)))
-           (strike (frame_5 (post_game op)))
-           (spare (frame_5 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_5 (post_game op))))))
-           (not (unused (bonus_1 (frame_5 (post_game op)))))
-           (not (unused (bonus_2 (frame_5 (post_game op))))))
-      (and
-         (not (incomplete (throw_1 (frame_6 (prior_game op)))))
-         (incomplete (throw_2 (frame_6 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_6 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_6 (post_game op)))
-           (strike (frame_6 (post_game op)))
-           (spare (frame_6 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_6 (post_game op))))))
-           (not (unused (bonus_1 (frame_6 (post_game op)))))
-           (not (unused (bonus_2 (frame_6 (post_game op))))))
-      (and
-         (not (incomplete (throw_1 (frame_7 (prior_game op)))))
-         (incomplete (throw_2 (frame_7 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_7 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_7 (post_game op)))
-           (strike (frame_7 (post_game op)))
-           (spare (frame_7 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_7 (post_game op))))))
-           (not (unused (bonus_1 (frame_7 (post_game op)))))
-           (not (unused (bonus_2 (frame_7 (post_game op))))))
-      (and
-         (not (incomplete (throw_1 (frame_8 (prior_game op)))))
-         (incomplete (throw_2 (frame_8 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_8 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_8 (post_game op)))
-           (strike (frame_8 (post_game op)))
-           (spare (frame_8 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_8 (post_game op))))))
-           (not (unused (bonus_1 (frame_8 (post_game op)))))
-           (not (unused (bonus_2 (frame_8 (post_game op))))))
-      (and
-         (not (incomplete (throw_1 (frame_9 (prior_game op)))))
-         (incomplete (throw_2 (frame_9 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_9 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_9 (post_game op)))
-           (strike (frame_9 (post_game op)))
-           (spare (frame_9 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_9 (post_game op))))))
-           (not (unused (bonus_1 (frame_9 (post_game op)))))
-           (not (unused (bonus_2 (frame_9 (post_game op))))))
-      (and
-         (not (incomplete (throw_1 (frame_10 (prior_game op)))))
-         (incomplete (throw_2 (frame_10 (prior_game op)))) 
-         (< (+ (points (throw_1 (frame_10 (prior_game op)))) (points (throw op))) 10)
-         (or
-           (incomplete (frame_10 (post_game op)))
-           (strike (frame_10 (post_game op)))
-           (spare (frame_10 (post_game op)))
-           (not (= (throw op) (throw_2 (frame_10 (post_game op))))))
-           (not (unused (bonus_1 (frame_10 (post_game op)))))
-           (not (unused (bonus_2 (frame_10 (post_game op))))))))
-)) :named test-case.game-ops.validation.2nd-scratch-throw-applied-to-frame ))
+    (game.apply-throw-op.valid op)
+    (not (= #b1111111111 (pins (throw op))))
+      (or
+        (and
+          (not (incomplete (throw_1 (frame_1 (prior_game op)))))
+          (incomplete (throw_2 (frame_1 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_1 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_1 (post_game op)))
+            (frame.is-strike (frame_1 (post_game op)))
+            (frame.is-spare (frame_1 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_1 (post_game op))))))
+            (not (unused (bonus_1 (frame_1 (post_game op)))))
+            (not (unused (bonus_2 (frame_1 (post_game op))))))
+        (and
+          (not (incomplete (throw_1 (frame_2 (prior_game op)))))
+          (incomplete (throw_2 (frame_2 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_2 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_2 (post_game op)))
+            (frame.is-strike (frame_2 (post_game op)))
+            (frame.is-spare (frame_2 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_2 (post_game op))))))
+            (not (unused (bonus_1 (frame_2 (post_game op)))))
+            (not (unused (bonus_2 (frame_2 (post_game op))))))
+        (and
+          (not (incomplete (throw_1 (frame_3 (prior_game op)))))
+          (incomplete (throw_2 (frame_3 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_3 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_3 (post_game op)))
+            (frame.is-strike (frame_3 (post_game op)))
+            (frame.is-spare (frame_3 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_3 (post_game op))))))
+            (not (unused (bonus_1 (frame_3 (post_game op)))))
+            (not (unused (bonus_2 (frame_3 (post_game op))))))
+        (and
+          (not (incomplete (throw_1 (frame_4 (prior_game op)))))
+          (incomplete (throw_2 (frame_4 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_4 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_4 (post_game op)))
+            (frame.is-strike (frame_4 (post_game op)))
+            (frame.is-spare (frame_4 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_4 (post_game op))))))
+            (not (unused (bonus_1 (frame_4 (post_game op)))))
+            (not (unused (bonus_2 (frame_4 (post_game op))))))
+        (and
+          (not (incomplete (throw_1 (frame_5 (prior_game op)))))
+          (incomplete (throw_2 (frame_5 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_5 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_5 (post_game op)))
+            (frame.is-strike (frame_5 (post_game op)))
+            (frame.is-spare (frame_5 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_5 (post_game op))))))
+            (not (unused (bonus_1 (frame_5 (post_game op)))))
+            (not (unused (bonus_2 (frame_5 (post_game op))))))
+        (and
+          (not (incomplete (throw_1 (frame_6 (prior_game op)))))
+          (incomplete (throw_2 (frame_6 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_6 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_6 (post_game op)))
+            (frame.is-strike (frame_6 (post_game op)))
+            (frame.is-spare (frame_6 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_6 (post_game op))))))
+            (not (unused (bonus_1 (frame_6 (post_game op)))))
+            (not (unused (bonus_2 (frame_6 (post_game op))))))
+        (and
+          (not (incomplete (throw_1 (frame_7 (prior_game op)))))
+          (incomplete (throw_2 (frame_7 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_7 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_7 (post_game op)))
+            (frame.is-strike (frame_7 (post_game op)))
+            (frame.is-spare (frame_7 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_7 (post_game op))))))
+            (not (unused (bonus_1 (frame_7 (post_game op)))))
+            (not (unused (bonus_2 (frame_7 (post_game op))))))
+        (and
+          (not (incomplete (throw_1 (frame_8 (prior_game op)))))
+          (incomplete (throw_2 (frame_8 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_8 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_8 (post_game op)))
+            (frame.is-strike (frame_8 (post_game op)))
+            (frame.is-spare (frame_8 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_8 (post_game op))))))
+            (not (unused (bonus_1 (frame_8 (post_game op)))))
+            (not (unused (bonus_2 (frame_8 (post_game op))))))
+        (and
+          (not (incomplete (throw_1 (frame_9 (prior_game op)))))
+          (incomplete (throw_2 (frame_9 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_9 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_9 (post_game op)))
+            (frame.is-strike (frame_9 (post_game op)))
+            (frame.is-spare (frame_9 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_9 (post_game op))))))
+            (not (unused (bonus_1 (frame_9 (post_game op)))))
+            (not (unused (bonus_2 (frame_9 (post_game op))))))
+        (and
+          (not (incomplete (throw_1 (frame_10 (prior_game op)))))
+          (incomplete (throw_2 (frame_10 (prior_game op)))) 
+          (not (= #b1111111111 (bvor (pins (throw_1 (frame_10 (prior_game op)))) (pins (throw op)))))
+          (or
+            (frame.is-incomplete (frame_10 (post_game op)))
+            (frame.is-strike (frame_10 (post_game op)))
+            (frame.is-spare (frame_10 (post_game op)))
+            (not (= (throw op) (throw_2 (frame_10 (post_game op))))))
+            (not (unused (bonus_1 (frame_10 (post_game op)))))
+            (not (unused (bonus_2 (frame_10 (post_game op))))))))))))
 
 (check-sat)
