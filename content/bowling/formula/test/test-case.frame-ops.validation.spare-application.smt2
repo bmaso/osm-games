@@ -2,6 +2,34 @@
 ;; || __FILE__ || __LINE__ ||
 
 ;;;;
+;; Prove that for every application of 2 valid throws to an empty frame which form a spare (which implies the
+;; first is not a strike) yields a final op post frame where:
+;; - the frame is incomplete
+;; - throw_1 and throw_2 form a spare
+;; - bonus_1 is incomplete
+;; - bonus_2 unused
+;;;;
+
+(assert (forall ((op1 Frame.ApplyThrowOp) (op2 Frame.ApplyThrowOp))
+  (=>
+    (and
+      (frame.apply-throw.valid op1)
+      (frame.apply-throw.valid op2)
+      (= empty-frame (prior_frame op1))
+      (= (post_frame op1) (prior_frame op2))
+      (not (= strike-throw (throw op1)))
+      (= #b1111111111 (bvor (pins (throw op1)) (pins (throw op2)))))  ; <-- throws form a spare and not a strike
+    (and
+      (frame.is-incomplete (post_frame op2))
+      (= (throw op1) (throw_1 (post_frame op2)))
+      (= (throw op2) (throw_2 (post_frame op2)))
+      (incomplete (bonus_1 (post_frame op2)))
+      (unused (bonus_2 (post_frame op2)))
+      (= (frame.points (post_frame op2)) (+ (throw.points (throw op1)) (throw.points (throw op2))))))))
+
+(check-sat)
+
+;;;;
 ;; Prove that for every application of 3 valid throws, the first and second of which form a spare (which implies the
 ;; first is not a strike), to an empty frame yields a final op post frame where:
 ;; - the frame is complete

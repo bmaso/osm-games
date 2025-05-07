@@ -108,7 +108,7 @@ A _valid_ throw is going to conform to one of these three rules:
 * it has none of the `foul`, `unused` or `incomplete` flags set
 
 ```
-(define-fun throw.is-valid ((t Throw)) Bool
+(define-fun throw.valid ((t Throw)) Bool
   (or
     (= foul-throw t)
     (= unused-throw t)

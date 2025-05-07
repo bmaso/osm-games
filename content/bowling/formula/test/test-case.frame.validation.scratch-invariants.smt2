@@ -16,8 +16,6 @@
     (frame.valid f)
     (not (= #b1111111111 (bvor (pins (throw_1 f)) (pins (throw_2 f)))))
     (or
-      (= strike-throw (throw_1 f))
-      (= #b1111111111 (bvor (pins (throw_1 f)) (pins (throw_2 f))))
       (unused (throw_1 f))
       (unused (throw_2 f))
       (or

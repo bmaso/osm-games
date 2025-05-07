@@ -17,8 +17,7 @@
     (throw_1 Throw)
     (throw_2 Throw)
     (bonus_1 Throw)
-    (bonus_2 Throw))
-))
+    (bonus_2 Throw))))
 
 ;;;;
 ;; `empty-frame` is a convenience constant representing the state of a frame without any throws applied to it.

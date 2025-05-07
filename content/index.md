@@ -2,7 +2,8 @@
 
 ### The Problem
 
-Software "specs" are not objectively verifiable. There's no mechanical, repeatable way to prove a piece of software meets a "spec".
+Software "specs" are not objectively verifiable. There's no mechanical, objective, repeatable way to prove a piece of software meets
+a written "spec".
 
 ### The Solution
 
@@ -11,13 +12,13 @@ Operation-state modeling (OSM): a logical, verifiable description of system beha
 
 ## This Repo
 
-This repo is a demonstration of operation-state modeling (OSM, pronounced "awesome"). This repo defines operation-state models of a few
+[The `osm-games` repo](https://github.com/bmaso/osm-games) is a demonstration of operation-state modeling (OSM, pronounced "awesome"). This repo defines operation-state models of a few
 popular games: [Connect Four](./connect4), [bowling](./bowling), [backgammon](./backgammon), and [spades](./spades) (a card game).
 It also demonstrates the tools and techniques for verifing a game sequence conforms to an OSM through the use of a type of software
 known as an [_SMT solver_](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories).
 
 Table top and card games are just special cases of multi-party workflows. The intention of this repo is to show that OSM
-is a powerful and practical technique for defining complex, multi-party, and distributed system behavior -- really any process
+is a practical technique for specifying complex, multi-party, and distributed system behavior -- really any process
 that produces a sequence of state changes. The repo also demonstrates how to create software behavior validators out of
 OSM descriptions using freely available tools.
 
@@ -34,41 +35,40 @@ With an SMT solver we can:
   The problem OSM aims to solve stems from the fact that software "specs" are unverifiable. They are generally comprised of
   words and drawings, which sometimes are incredibly detailed (though often not). But there is no tool or mechanism on Earth able
   to objectively verify an implementation actually conforms to words and drawings, no matter how detailed. With OSM and an SMT solver,
-  there's a standardized way to define expected behavior, and tools to prove observed behavior does not conflict with expectations
+  there's a way to specify expected behavior, and tools to prove observed behavior does not conflict with specification
   through an automated, objective, and repeatable mechanism.
 
 - **Unambiguously answer novel and unanticipated questions about expected system behavior**. Using all the power of mathematical
-  refactoring and symbolic logic, we can answer questions not detailed in a specification. Where a spec based
-  on words and visualizations would typically require time-consuming and expensive human interactions, inconsistent reasoning,
-  "judgement calls", and all the logical transgressions that stem from design-by-committee techniques to answer novel and
-  unanticipated questions, a logical description of behavior can answer novel facts about the expectations of a system. Someone
-  implementing the software package for scoring a game of bowling, for example, need not consult an "expert" to answer questions about
-  the finer points of the game if he has an OSM model available.
+  refactoring and symbolic logic, we can answer questions not detailed in a specification. Deriving answers to novel and
+  unanticipated questions from a spec based on words and visualizations will typically require time-consuming and expensive
+  human interactions, inconsistent reasoning, "judgement calls", authoritative dicta, and all the myriad intellectual transgressions
+  that stem from using the spoken word. But a logical description of behavior can answer novel facts about the expectations of a
+  system. Someone implementing the software package for scoring a game of bowling, for example, need not consult an "expert" to
+  answer questions about the finer points of the game if he has an OSM model available.
 
 - **Generate test data**. An exploitable feature of SMT solvers is that they are quite good at generating values for free variables
-  that solve a system of equations. For example, given an equational description of bowling (which an OSM is), one can query an SMT
+  in a system of equations. For example, given an equational description of bowling (which a bowling OSM is), one can direct an SMT
   solver to generate a complete valid game of bowling that includes a string of 3 strikes in successive frames. There's no need for
   a human to laboriously "make up" data that matches a specific test-case when such data is needed, so we can avoid this time-consuming
-  and error prone part of software development.
+  and error prone part of software verification.
 
-[OSM Models in `smtlib2`](osm-models-in-smtlib2.md) covers the tool chains and techniques I employ for developing OSMs in `smtlib2`.
+[OSM Models in `smtlib2`](./osm-specs-in-smtlib2/) covers the tool chains and techniques I employ for developing OSMs in `smtlib2`.
 
 ## Operation-state Models
 
-An _operation-state model_ describes of the _behavior_ of a finite-state system or process, such as a table-top
-or card game, equationally. The description is comprised of:
+An _operation-state model_ (OSM) equationally describes the valid states and state transitions of a finite-state system or process,
+such as a table-top game. The description is comprised of:
 
 - **A state model**. At any one point in time, the state of the system can be fully described by a single instance of the state model.
   A graph of algebraic data values with tuples as graph vectors forms a system's state.
 
     In the game of bowling, for example, individual _throws_ are groupled into _frames_, and _frames_ are grouped into a _game_.
-    Each throw includes a count of _points_ and some additional flags, such as _foul_ and _split_. Each frame is comprise of up to
-    two regular throws and up to two bonus throws. Each game is comprised of a sequence of 10 frames. Every possible bowling game,
-    at any point of play up to and including termination, can be completely described by an instance of this state model.
+    Each throw includes a count of _points_ and some additional flags, such as _foul_ and _split_. Every possible bowling game,
+    at any point of play up to and including termination, is representable as an instance of this state model.
 
 * **Operations**. The system proceeds through its lifecycle by the sequential application of atomic _operations_. An operation is simply a
-  tuple that relates a _prior state_ with a _post state_ (which are each instances of the state model), and _input_ values using
-  equations.
+  tuple that equationally relates a _prior state_ with a _post state_ (which are each instances of the state model), operation
+  _input_ values, and soemtimes also operation _output_ values.
 
     In bowling there's only one type of operation: "apply throw". An apply throw operation value will be
     a tuple comprised of:
@@ -84,31 +84,31 @@ or card game, equationally. The description is comprised of:
 
     In the game of bowling, for example, there are multiple assertions that distinguish a valid throw application from an invalid one:
 
-    * the sum of two throws in the same frame can't be more than 10
-    * any single throw can't have a negative number of pins knocked down either
+    * two throws in the same frame can't knock the same pins down twice
+    * the first bonus throw in from X is equal to the first normal throw of frame X+1 (a special scoring case for strikes and spares)
     * the frame and game total score in the post game state must reflect the number of pins knocked down by the throw
     * most importantly, a valid throw operation must reference a _valid_ prior game state, a _valid_ post game state, and
       a _valid_ throw
 
-    The assertions are expressed as a set of predicate functions (ie, boolean statements) on the domain of game operations. Note that an
+    The assertions are expressed as a set of predicate functions (ie, boolean statements) in the domain of game operations. Note that an
     _equation_ is actually a boolean statement: _if_ the left side of the equation is mathematically identical or reducible to the
     right side (or vice versa), _then_ the equation is "true"; _if_ the  left side of the equation is proveably non-identical to the
-    right, then the equation is "false". An OSM model expresses validation logic as a set of equations which must all be _true_ in
+    right, _then_ the equation is "false". An OSM model expresses validation logic as a set of equations which must all be _true_ in
     order for an operation application to be valid.
 
-    ![An Operation related prior and post states with operation input](./assets/bowling-operation-illustration.svg)
+    ![An Operation relating prior and post states with operation input](./bowling/assets/bowling-operation-illustration.drawio.png)
 
     A game sequence is comprised of a chain of operation applications. Each operation application entangles a prior game state
     and a post game state. A prevous operation's post game state becomes the next operation's prior game state. Thus the game sequence
-    is a chain of operation applications bound together by shared state instances, and ends up being just a giant system of equations.
+    is a chain of operation applications bound together by shared state instances, and is in fact simply a large system of equations.
 
-    ![Game sequence conformance and string regex conformance illustration]()
+    ![Game sequence conformance and string regex conformance illustration](./bowling/assets/game-state-sequence.drawio.png)
 
     An OSM can also be thought of as an _operation sequence schema_, in the same way that a regex expression can be thought of as a
     _string schema_. A regex describes a class of _valid_ strings that conform to the regex's pattern. Similarly, the OSM describes a
     class of _valid_ operation application sequences (a type of DAG) that conform to the OSM.
 
-The role of the SMT solver is to solve an OSM's system of equations, where the various player's "moves" during game are the bound
+The role of the SMT solver is to solve an OSM system of equations, where the various player's "moves" during game are the bound
 values of the system's free variables. 
 
 ## Connect Four, Bowling, Backgammon, and Spades
@@ -130,7 +130,7 @@ The game model consists of just an array storing the "game table position" to "c
 fields to store the current player and the winning player.
 
 Studying the Connect Four OSM is a good way to get an introduction to `smtlib2`. Effectively representing a 6x7 2D game grid, for
-example, is surprisingly different in `smtlib2`, a logical laguage, than in a traditional programming language.
+example, is surprisingly different in `smtlib2`, a logical language, than in a traditional programming language.
 
 The [backgammon OSM example](./backgammon) defines the game of backgammon as a system of equations relating `Point`, `Bar`, `DiceThrow`,
 and `Board` algebraic datatypes. The game proceeds through "apply player turn" operations, which are comprised of these data constructs.
@@ -148,10 +148,11 @@ The [spades OSM example](./spades) defines the game of spades as a system of equ
   published the _`Z`_ language (pronounced "zed"), a language for definiting system behavior using set theory and propositional logic,
   not completely unlike how OSMs describe behavior in `smtlib2`. The UML standard includes a logical verification language called the
   [Object Constraint Language](https://www.omg.org/spec/OCL/) (OCL), which is also very similar in overall concept. Finally made
-  an official OMG standard in 2006, OCL originates in the early 1990s. These are just two better-known examples -- there are
-  literally dozens of examples created and abandoned over the decades. None of these languages were _usable_, however, because the
-  logical theorem provers available at the time were far too incapable of proving non-trivial specifications. Modern SMT solvers
-  and modern computers finally have the "heft" to solve the kinds of problems necessary to prove system behavior conformance.
+  an official OMG standard in 2006, OCL originates in the early 1990s. These are just some better-known examples
+  -- there are literally dozens of examples created and abandoned over the decades. None of these languages were _usable_, however,
+  because the logical theorem provers available at the time were far too incapable of proving non-trivial specifications, or the
+  systems simply never included theorem provers at all. Modern SMT solvers and modern computers finally have the "heft" to solve
+  the kinds of problems necessary to prove system behavior conformance.
 
 [^2]: I'm not trying to throw shade on Martin & Koss by pointing out they missed their _stated_ goal while demonstrating the powerful
   tools and techniques of TDD. In fact history has several exalted examples of books and works that introduce powerful intellectual tools to
@@ -162,4 +163,5 @@ The [spades OSM example](./spades) defines the game of spades as a system of equ
   is fundamentally incongruent with logic.) And [Cavalieri](https://en.wikipedia.org/wiki/Bonaventura_Cavalieri) intended to equate
   classical geometry with then-nescent "sum of infinity" techniques in his 1627 work "Geometria indivisibilibus", which he technically
   failed to do. But he did succeed in introducing the world to the validity of techniques subsummed in what we call integral calculus
-  today, most notably [Cavalieri's principle](https://en.wikipedia.org/wiki/Cavalieri%27s_principle).
+  today, most notably [Cavalieri's principle](https://en.wikipedia.org/wiki/Cavalieri%27s_principle). TDD is a foundational practice
+  in modern software development and maintenance, and Martin & Koss's Episode earns credit for helping popularizing it.

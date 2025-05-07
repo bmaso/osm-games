@@ -2,7 +2,8 @@
 
 `smtlib2` is a single-source language. There is no version of "import" or "using", and no concept of modules or re-usable
 source. An `smtlib2` solver is given a single source file containing equations and assertions, known as a _formula_, and the
-solver does it's best to find bindings for the formula's unbound variables that make the assertions _true_.
+solver does it's best to find bindings for the formula's unbound variables that make the assertions _true_. The latest
+standard version is [2.7](https://smt-lib.org/papers/smt-lib-reference-v2.7-r2025-02-05.pdf).
 
 ## Flash Intro to Using an SMT Solver
 
@@ -97,7 +98,8 @@ logic we would write this as:
 ```
 
 I haven't declared any unbound constants or functions here. I've just made a universal assertion, which indeed is true. The SMT
-solver has found a model consistent with this assertion: the empty model.
+solver has found a model consistent with this assertion: the empty model. The SMT solver known all the fundamenta theories of
+arithmetic and algebra, and is able to verify this assertion from the first principals that it knows.
 
 ### Interrogating the Model
 
@@ -336,15 +338,16 @@ The `define-datatype` directive is used to define new datatypes, as the name imp
     `smtlib2` parameterized types are _not_ as useful as you would think, because they often imply recursive graphs and recursive
     functions. Think cons lists, finger tries, etc. SMT solvers abhor recursion, because they avoid exploring repetative loops when
     solving systems of equations. This is a fairly constraining restriction especially for programmers with a functional mindset, who
-    instinctually reach for for tool like this first. They will need to learn new representational skills and use alternative constructs
+    instinctually reach for a tool like this first. They will need to learn new representational skills and use alternative constructs
     to represent domain values and validation rules.
 
     SMT solvers have internal special cases for a few common recursive datatypes, such as `List` and `Set`. These are known as
     _theories_, and is beyond the scope of this explanation.
 
-    The game OSM examples in this repository avoid recursive structures altogether, both custom ones and those provided natively in theories.
-    I find the solvers have very unpredictable results with them: often assertions you would think are simple turn out to
-    confound solvers, and other assertions you would think are way too complex get solved easily.
+    The OSM examples in this repository avoid recursive structures altogether, both custom ones and those provided natively in theories.
+    I find the solvers have very unpredictable results with even recursive type built-in to solvers, such as `List`, or `Set`;
+    often assertions you would think are simple turn out to confound solvers, and other assertions you would think are way too
+    complex get solved easily.
 
     There are a cases where parameterized types are useful for representing domain concepts. The `Maybe` type above, for example,
     is not recursive. It works predictably as part of formula proofs.
@@ -493,21 +496,21 @@ And now I'm going to assert that each die can only be between 1 and 6:
 > unsat
 ```
 
-Oh no! What happened? I have done nothing but make a single assertion, and the solver says the assertion is unsolvable!
+Oh no! What happened? All I did was make a make an obvious assertion about dice rolls, and the solver says the assertion is unsolvable!
 
-The issue here is that ***you can't make universal constraints on datatypes***. For example, you can't say something like
-"all integers are evenly divisible by two". That just doesn't make sense. We know some integers that are not evenly divisible by
+The issue here is that ***you can't make universal constraints on datatypes***. A more obvious example: you can't say something
+like "all integers are divisible by two". That just doesn't make sense. We know some integers that are not divisible by
 two. So that assertion should always produce an `unsat` response from the solver.
 
-Similarly you can't say "all `DiceRoll` instances have a `die1` value greater than 0". We know some `DieRoll` values do have a
-`die1` value less than or equal to zero. For example: `(roll -100 -100)` is a `DieRoll` value that breaks this rule. So that assertion
-is never satisfiable.
+Similarly you can't say "all `DiceRoll` instances have a `die1` value greater than 0". We know some `DiceRoll` values _do_ have a
+`die1` value less than or equal to zero. For example: `(roll -100 -100)` is a `DiceRoll` value that breaks this rule. So the
+assertion not universally satisfiable.
 
-What we do instead is define a predicate function that returns `true` for `DieRoll` values that are "valid" in our problem domain,
+Instead we can define a predicate function that returns `true` for `DiceRoll` values that are "valid" in our problem domain,
 and returns `false` for all others (which are by definition "invalid" in our problem domain):
 
 ```
-(define-fun dieroll.validation.valid-range ((d DieRoll)) Bool
+(define-fun diceroll.valid.range ((d DieRoll)) Bool
     (and
         (<= 1 (die1 d))
         (<= (die1 d) 6)
@@ -525,13 +528,13 @@ in a valid game sequence graph are automatically valid.
 
 ### Domain Optimization Using Finite Datatypes
 
-The `DieRoll` datatype above has an infinite number of values, which stems from the fact that there are an infinite number
+The `DiceRoll` datatype above has an infinite number of values, which stems from the fact that there are an infinite number
 of values for each field.
 
-An alternative to this definition of `DieRoll` is a finite type, one in which the only values that exist are just the valid ones.
+An alternative to this definition of `DiceRoll` is a finite type, one in which the only values that exist are valid.
 
 ```
-(define-datatype DieRoll (
+(declare-datatype DieRoll (
     roll_one
     roll_two
     roll_three
@@ -539,7 +542,7 @@ An alternative to this definition of `DieRoll` is a finite type, one in which th
     roll_five
     roll_six))
 
-(define-datatype FiniteDiceRoll (
+(declare-datatype FiniteDiceRoll (
     (roll
         (die1 DieRoll)
         (die2 DieRoll))))
@@ -549,36 +552,37 @@ All `DieRoll` values are "valid". Each die roll can only represent a roll of one
 that exist. There are therefore only 36 possible `FiniteDiceRoll` values, and all of them are "valid" as well.
 
 Of course I've lost the association of a `DieRoll` to any actual number. There's nothing saying a `roll_one` represents
-the number 1. I can't add two `DieRoll` values together either; I have no way to know what the total pip value of a `FiniteDiceRoll`
-is, since there is no number associated with constituent values. This is easy to solve though. Since `FiniteDiceRoll` is finite in
-size, we can create a function that maps each `FiniteDiceRoll` to a total pip value:
+the number 1. I can't add two `DieRoll` values together either; I have no way to know what the total pip value of
+a `FiniteDiceRoll` is, since there is no number associated with constituent values. This is easy to solve though. Since 
+`FiniteDiceRoll` is finite in size, we can create an array and associated function that maps each `FiniteDiceRoll` to a total
+pip value:
 
 ```
+(define-const dieroll.pips.array (Array DieRoll Int)
+  (store
+  (store
+  (store
+  (store
+  (store
+  (store ((as const (Array DieRoll Int)) 0)
+    roll_one 1)
+    roll_two 2)
+    roll_three 3)
+    roll_four 4)
+    roll_five 5)
+    roll_six 6))
+
 (define-fun dieroll.pips ((d DieRoll)) Int
-  (ite (= roll_one d) 1)
-    (ite (= roll_two d) 2)
-      (ite (= roll_three d) 3)
-        (ite (= roll_four d) 4)
-          (ite (= roll_five d) 5 6))
+  (select dieroll.pips.array d))
 
-(declare-fun diceroll.pips (FiniteDiceRoll) Int)
-(assert
-    (forall ((d FiniteDiceRoll))
-      (= (diceroll.pips d) (+ (dieroll.pips (die1 d)) (dieroll.pips (die2 d))))))
+(define-fun diceroll.pips ((d FiniteDiceRoll)) Int
+  (+ (dieroll (die1 d)) (dieroll (die2 d))))
 ```
 
-> Note: `ite` is a function. The name stands for "if-then-else". It is a standard part of `smtlib2` environments. The function evaluates
-> to the value of either the 2nd or 3rd parameter, based on whether or not the first parameter is true.
-
-`FiniteDiceRoll` is a finite type, so I can use a `forall` statement to define the `diceroll.pips` function. The Z3 solver will
-enumerate all 36 possible values of `FiniteDiceRoll` to construct the array-based definition of `diceroll.pips`.
-
-Another option would be to create an array that maps each `FiniteDiceRoll` to an integer value myself, rather than using a
-`forall` statement to iterate over all possibilities.
-
-The key goal is avoiding infinite datatypes in order to define universal constraints using finite types. This is an optmization
-to help your solver figuring things out faster which is very useful in some cases. It's going to take some practice to understand
-the payoffs and benefits of different domain design decisions. Experience with computing languages sometimes leads you astray.
+The key goal is avoiding quantifying over infinite datatypes in order to define constraints over finite ranges. This
+is an optmization to help your solver figuring things out in finite time. It's going to take some practice to understand
+the payoffs and benefits of different domain design decisions when creating your own smtlib2 OSMs. Experience with
+imperative and functional computing languages sometimes leads you astray.
 
 ### Defining Operation Datatypes
 
@@ -601,10 +605,11 @@ knocking some pins over. Imagine I've already defined a `Game` domain datatype r
 of updating a game with the result of a throw:
 
 ```
-(define-datatype ApplyThrowOp (
-    (prior_game Game)
-    (post_game Game)
-    (throw Throw)))
+(declare-datatype Game.ApplyThrowOp (
+    game.apply-throw-op (
+      (prior_game Game)
+      (post_game Game)
+      (throw Throw))))
 ```
 
 The definition of the mechanics of the game are all inside the operation validation predicate. This is the validation function that
@@ -621,15 +626,14 @@ defines a "valid" throw operation. This function returns `true` when:
 The initial few lines of the `ApplyThrowOp` value validation function are going to look like this:
 
 ```
-(define-fun apply-throw-op.validation ((op ApplyThrowOp)) Bool
+(define-fun game.apply-throw-op.valid ((op Game.ApplyThrowOp)) Bool
     (and
-        (game.validation (prior_game op))
-        (game.validation (post_game op))
-        (throw.validation (throw op))
+        (game.valid (prior_game op))
+        (game.valid (post_game op))
+        (throw.valid (throw op))
         ... additional validation function references, validating the throw applied
             to the prior game is equal to the post game ...
-        )
-)
+        ))
 ```
 
 [^1]: It is mildly surprising to realize C is a "single source" language. The C compiler can actually only compile a single,

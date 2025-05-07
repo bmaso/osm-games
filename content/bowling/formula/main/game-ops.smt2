@@ -18,8 +18,7 @@
   (game.apply-throw-op
     (prior_game Game)
     (post_game Game)
-    (throw Throw))
-))
+    (throw Throw))))
 
 ;;;;
 ;; convenience function that computes whether on not a _valid_ function is incomplete.

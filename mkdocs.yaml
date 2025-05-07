@@ -1,4 +1,6 @@
 site_name: OSM Games
+site_url: https://bmaso.github.io/osm-games
+use_directory_urls: false
 docs_dir: content
 nav:
   - Home: index.md
