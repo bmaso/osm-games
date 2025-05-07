@@ -2,8 +2,9 @@
 
 **Engineer's Notebook: An Equational Thinking Episode**
 
-| "The person who says he knows what he thinks but cannot express it usually does not know what he thinks."
-    ― Mortimer J. Adler, How to Read a Book: The Classic Guide to Intelligent Reading
+> "The person who says he knows what he thinks but cannot express it usually does not know what he thinks."
+>
+>   ― Mortimer J. Adler, How to Read a Book: The Classic Guide to Intelligent Reading
 
 ## Introduction
 
