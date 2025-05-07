@@ -1,0 +1,1230 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://bmaso.github.io/osm-games/osm-specs-in-smtlib2.html">
+      
+      
+        <link rel="prev" href="bowling/OSM-Episode.html">
+      
+      
+        <link rel="next" href="connect4/index.html">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>OSM Specs in smtlib2 - OSM Games</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.4af4bdda.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/mkdocs_puml/puml.css">
+    
+      <link rel="stylesheet" href="assets/mkdocs_puml/interaction.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#osm-specs-in-smtlib2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="OSM Games" class="md-header__button md-logo" aria-label="OSM Games" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OSM Games
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              OSM Specs in smtlib2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="OSM Games" class="md-nav__button md-logo" aria-label="OSM Games" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OSM Games
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bowling/OSM-Episode.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    An Equational Thinking Episode
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    OSM Specs in smtlib2
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="osm-specs-in-smtlib2.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    OSM Specs in smtlib2
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#flash-intro-to-using-an-smt-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flash Intro to Using an SMT Solver
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flash Intro to Using an SMT Solver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-a-model-for-a-system-of-assertions-in-smtlib2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding a Model for a System of Assertions in smtlib2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zero-entry-models-ie-no-unbound-constants-or-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zero-entry Models, I.e. No Unbound Constants or Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interrogating-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interrogating the Model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bound-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bound constants
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-and-project-layout-for-creating-osms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tools and Project Layout for Creating OSMs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#values-and-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Values and Validation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Values and Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-domain-datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining Domain Datatypes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arrays
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unbound-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unbound Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-predicates-for-game-sequence-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation Predicates for Game Sequence Values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#domain-optimization-using-finite-datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain Optimization Using Finite Datatypes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-operation-datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining Operation Datatypes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="connect4/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connect Four OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bowling/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bowling OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backgammon/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Backgammon OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="spades/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spades OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#flash-intro-to-using-an-smt-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flash Intro to Using an SMT Solver
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flash Intro to Using an SMT Solver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-a-model-for-a-system-of-assertions-in-smtlib2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding a Model for a System of Assertions in smtlib2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zero-entry-models-ie-no-unbound-constants-or-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Zero-entry Models, I.e. No Unbound Constants or Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interrogating-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interrogating the Model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bound-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bound constants
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-and-project-layout-for-creating-osms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tools and Project Layout for Creating OSMs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#values-and-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Values and Validation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Values and Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-domain-datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining Domain Datatypes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arrays
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unbound-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unbound Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-predicates-for-game-sequence-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation Predicates for Game Sequence Values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#domain-optimization-using-finite-datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain Optimization Using Finite Datatypes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-operation-datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining Operation Datatypes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="osm-specs-in-smtlib2">OSM Specs in smtlib2</h1>
+<p><code>smtlib2</code> is a single-source language. There is no version of "import" or "using", and no concept of modules or re-usable
+source. An <code>smtlib2</code> solver is given a single source file containing equations and assertions, known as a <em>formula</em>, and the
+solver does it's best to find bindings for the formula's unbound variables that make the assertions <em>true</em>. The latest
+standard version is <a href="https://smt-lib.org/papers/smt-lib-reference-v2.7-r2025-02-05.pdf">2.7</a>.</p>
+<h2 id="flash-intro-to-using-an-smt-solver">Flash Intro to Using an SMT Solver</h2>
+<p>There are 3 things you need to know to start using an SMT solver:</p>
+<ol>
+<li>An SMT Solver's job is to solve a system of assertions. Assertions can be any boolean predicate. Equations, inequalities, or
+  any other expression that resolves to a boolean value can be a valid assertion.</li>
+<li>An SMT solver will find <em>exactly one</em> solution to a system of assertions. The solution is known as a <em>model</em> in <code>smtlib2</code> parlance. A
+  model is just a set of name -&gt; value pairs for all unbound variables and functions you have declared, where the values are consistent
+  with the assertions you've defined. Variables are usually known as "constants" in <code>smtlib2</code> parlance.</li>
+<li>In case you didn't catch it in the previous point, SMT solvers will find solutions for unbound <em>functions</em>, not just unbound
+  constants. In fact a "constant" is just a synonym for a function with zero parameters. (Discussed more below.)</li>
+</ol>
+<h3 id="finding-a-model-for-a-system-of-assertions-in-smtlib2">Finding a Model for a System of Assertions in <code>smtlib2</code></h3>
+<p>Let's do a very quick illustrative example. Imagine I want to identify an integer value for <span class="arithmatex">\(x\)</span> that satisfies
+the following system of inequalities:</p>
+<div class="arithmatex">\[
+0 \lt x &lt; 5
+\]</div>
+<div class="arithmatex">\[
+21x + 4 &gt; 60
+\]</div>
+<div class="arithmatex">\[
+101x^2 &lt; 40^2
+\]</div>
+<p>Here's the encoding in <code>smtlib2</code>:</p>
+<div class="highlight"><pre><span></span><code>(declare-const x Int)           ;; declare in unbound integer variable &quot;x&quot;
+
+(assert                         ;; defining each constraint on x as a boolean assertion
+    (and
+        (&lt; 0 x)
+        (&lt; x 5)))
+(assert
+    (&gt; (+ (* 21 x) 4)))
+
+(assert
+    (&lt; (* 101 x x) (* 40 40)))
+
+(check-sat)                     ;; This command means &quot;find a model that satisfies all my assertions&quot;
+</code></pre></div>
+<p>When I feed this to an SMT solver, it replies immediately with</p>
+<div class="highlight"><pre><span></span><code>&gt; sat
+</code></pre></div>
+<p>which simply means that is was able to satisfy the assertions. Once it has found a model we can interrogate it:</p>
+<div class="highlight"><pre><span></span><code>(get-value (x))
+&gt; ((x 1))
+</code></pre></div>
+<p>In fact there are 3 solutions to this system of equations. All bindings <span class="arithmatex">\(x=\{ 1, 2, 3\} \)</span> are valid solutions. All an SMT solver does
+is find <em>one</em> solution that satisfies all assertions. It won't natively find all of them for you. That's all the SMT solver is designed
+to do: find a <em>single</em> solution to a system of assertions.</p>
+<p>An OSM spec in <code>smtlib2</code> is a system of equations (assertions) you can apply to unbound variables, where the types of the unbound variables
+are algebraic datatypes representing game states. You validate a specific game sequence by invoking <code>(check-sat)</code> in an SMT solver.
+If the game sequence is valid the SMT solver will return <code>sat</code>, and if it is invalid it will return <code>unsat</code>.</p>
+<h3 id="zero-entry-models-ie-no-unbound-constants-or-functions">Zero-entry Models, I.e. No Unbound Constants or Functions</h3>
+<p>An SMT solver will validate a set of assertions containing <em>no</em> unbound constants or functions just fine. When we do
+this we are really just asking the SMT solver to verify the assertions are internally consistent.</p>
+<p>For example I can use an SMT Solver to prove the conjecture <em>for every integer there is an even higher integer</em>. In symbolic
+logic we would write this as:</p>
+<div class="arithmatex">\[
+\forall n \in I. \exists m \in I. m &gt; n
+\]</div>
+<p>(which admittedly is Vulcan to most people. Read this as "For every integer <span class="arithmatex">\(n\)</span>, there exists another integer <span class="arithmatex">\(m\)</span> such that <span class="arithmatex">\(m \gt n\)</span>".)</p>
+<div class="highlight"><pre><span></span><code>(assert
+    (forall ((n Int))
+      (exists ((m Int))
+        (&gt; m n))))
+
+(check-sat)
+&gt; sat
+</code></pre></div>
+<p>I haven't declared any unbound constants or functions here. I've just made a universal assertion, which indeed is true. The SMT
+solver has found a model consistent with this assertion: the empty model. The SMT solver known all the fundamenta theories of
+arithmetic and algebra, and is able to verify this assertion from the first principals that it knows.</p>
+<h3 id="interrogating-the-model">Interrogating the Model</h3>
+<p>Once you have successfully generated a model using the <code>check-sat</code> directive, you can then use the <code>get-value</code> directive to
+print out the value of expressions. <code>get-value</code> actually can be used to print out <em>any</em> computable expression. It's the equivalent
+to a "println" statement in most programming languages.</p>
+<div class="highlight"><pre><span></span><code>(declare-const x Int)
+
+(check-sat)
+&gt; sat
+
+(get-value (x))
+&gt; ((x 0))
+
+(get-value ((* 20 (+ x 5))))
+&gt; (((* 20 (+ x 5)) 100))
+</code></pre></div>
+<ul>
+<li>I asked an SMT solver to find a model for an integer <span class="arithmatex">\(x\)</span> with no restrictions</li>
+<li>the solver picked the number "0". The solver could have picked 1, 42, or -867,329. I'm guessing zero is one of this solver's
+  "go to" integer values, but it could have been any integer.</li>
+</ul>
+<p>The <code>get-value</code> directive takes a single argument: a <em>list</em> of expressions to evaluate. A list in <code>smtlib2</code> is just a parentheses-delimited,
+whitespace-separated sequence of terms. <code>get-value</code> results are a list of term -&gt; value pairs. Here are a couple more
+examples:</p>
+<div class="highlight"><pre><span></span><code>(get-value (x x x))
+&gt; ((x 0)
+   (x 0)
+   (x 0))
+
+(get-value ((+ x 1) (+ x x) (= 0 (mod x 2))))
+&gt; (((+ x 1) 1)
+   ((+ x x) 0)
+   ((= 0 (mod x 2)) true))
+</code></pre></div>
+<h3 id="bound-constants">Bound constants</h3>
+<p>In addition to unbound constants you can also define, well, <em>constant</em> constants. That is, symbols with a fixed, bound value. Use
+the <code>define-const</code> directive to do this:</p>
+<div class="highlight"><pre><span></span><code>(define-const inches-per-foot Int
+    12)
+
+(check-sat)
+&gt; sat
+
+(get-value (inches-per-foot))
+&gt; ((inches-per-foot 12))
+</code></pre></div>
+<h2 id="tools-and-project-layout-for-creating-osms">Tools and Project Layout for Creating OSMs</h2>
+<p>I re-use the C pre-processor to modularize a
+non-trivial <code>smtlib2</code> project into separate, semantically partitioned source files <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>, which is key to making mangeable, modularized
+formulas. <code>cpp</code> is a standard command-line C development tool freely and easily available. I use well-known <code>#include</code>, <code>#ifndef</code>, <code>#define</code> directives to reference one dependent source file within another, exactly like you would in a C-language project.</p>
+<p>I like to organize a project's source base into <code>main</code> and <code>test</code> folders, like so:</p>
+<div class="highlight"><pre><span></span><code>index.md
+formula/
+  |-- main/
+  |   |-- board.smt2
+  |   |-- board-ops.smt2
+  |   |-- ...
+  |- test/
+  |   |-- test.board.validation.empty-board-before-first-turn.smt2
+  |   |-- test.board.validation.player-turn-forfeitures.smt2
+  |   |-- ...
+</code></pre></div>
+<p>Important features:</p>
+<ul>
+<li>The <code>main</code> folder contains the OSM: the domain and operation definitions, and the validation predicates describing a valid game
+  sequence. These files don't contain any assertions, only definitions of what makes valid domain values and operations in the game
+  I'm defining.</li>
+<li>The <code>test</code> folder contains formulas proving properties about my OSM. These test formulas ensure the
+  validation predicates actually mean what I expect them to mean <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. A test is going to prove assertions such as:
+  <em>in checkers, every valid "jump" operation has the space opposite the jumping checker empty</em>.</li>
+<li><code>index.md</code> is just a markdown documentation source file. What you are reading now is stored in markdown format within the
+  <a href="https://github.com/bmaso/osm-games"><code>osm-game</code> repo</a>. </li>
+</ul>
+<p>To prove a test's assertions are true, I pipe the pre-processed test <code>smt2</code> file through <code>cpp</code> and then on to my chosen SMT solver (usually
+Z3 for reasons I won't go in to here). To prove a test formula <code>test/test.validation.example.smt2</code> I execute the following
+command-line from the root project folder <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>:</p>
+<div class="highlight"><pre><span></span><code>&gt; (cpp -w -P -iquote./formula/main ./formula/test/test.validation.example.smt2 &amp;&amp; cat) | \
+    z3 -smt2 -in
+</code></pre></div>
+<p>Explanation:</p>
+<ul>
+<li><code>cpp -w -P -iquote./formula/main ./formula/test/test.validation.example.smt2</code> -- pre-process the named <code>smt2</code> file. Search in the
+  <code>./formula/main</code> folder for files referenced in any <code>#include</code> directives.</li>
+<li><code>... &amp;&amp; cat</code> -- after sending the pre-processed <code>smt2</code> file to Z3's input, also keep Z3's stdin open, appending everything I type
+  to the formula. This let's me type in extra <code>smtlib2</code> directives, like additional assertions, constant
+  definitions, etc. as additional formula content. This let's me do REPL-like development and experimentation. Since there is no
+  <code>smtlib2</code> IDE, this is the old school next-best-thing for rapid development.</li>
+<li><code>z3 -in -smt2</code> -- pipe the output of the pre-processed <code>smt2</code> file (appending anything I type on the keyboard), to Z3's direct input.</li>
+</ul>
+<p>During a game formula development session I will have two windows open: a text editor open to the project root folder; and a
+terminal with my chosen shell (I like <code>zsh</code>), with the project root as the current dir. </p>
+<h2 id="values-and-validation">Values and Validation</h2>
+<p>An OSM spec defines the universe of valid state change sequences a system can undergo during its lifecycle, from
+initial state to terminal state. It does not define <em>how</em> the system progresses from one state to the next, but
+rather merely what is allowed.</p>
+<p>We define an <code>smtlib2</code>-language OSM by defining two sets of datatypes, each with validation predicates:</p>
+<ul>
+<li><strong><em>domain</em> datatypes</strong> describing state values, operation inputs, and operation outputs (where the model calls for them)</li>
+<li><strong><em>operation</em> datatypes</strong> describing the individual atomic state changes the model can undergo</li>
+</ul>
+<p>Operation values are comprised completely of domain datatype values. Every operation references at least two
+domain values: a <strong>prior state</strong> and a <strong>post state</strong>. Together these two values define the change that the system undergoes.</p>
+<h3 id="defining-domain-datatypes">Defining Domain Datatypes</h3>
+<p>The <code>define-datatype</code> directive is used to define new datatypes, as the name implies. There are four distinct use-cases:</p>
+<ol>
+<li>
+<p><strong>Define an enumeration type</strong>. This is just a collection of nominal identity values. Each value has a unique symbolic name,
+  with no other properties. There is no implicit ordering to the type members. It's just a set of distinct, nominal values.
+  I use this to define finite collections of values. For example, here's an enumeration of card suits:</p>
+<div class="highlight"><pre><span></span><code>(define-datatype Suit (
+  spades
+  clubs
+  hearts
+  diamonds))
+</code></pre></div>
+<p>Reference members simply by their symbolic name in other expressions where a <code>Suit</code> is expected or allowed.</p>
+<p>All we can do with <code>Suit</code> value is check equality. There is no ranking or ordering. There are a few ways to define
+an ordering, which I'll cover just below.</p>
+</li>
+<li>
+<p><strong>Define a record type (aka tuple type)</strong>. This is a collection of fields, with a symbolic name given to a "constructor"
+    value used to create record instances.</p>
+<div class="highlight"><pre><span></span><code>(define-datatype Card (
+  (card
+    (suit Suit)
+    (rank Int))))
+</code></pre></div>
+<p>Here I've defined a record type <code>Card</code> with two fields: <code>suit</code> of type <code>Suit</code>, and <code>rank</code> of type <code>Int</code>. The symbol <code>card</code> is
+a constructor, used to define <code>Card</code> values. For example, here I create a <code>Card</code> constant value named <code>ace-of-spades</code> using the <code>card</code>
+constructor function, with <code>spades</code> and <code>1</code> as the <code>suit</code> and <code>rank</code> field values, respectively. (Note the field values are provided positionally, in the same order the fields are declared in the type definition.)</p>
+<div class="highlight"><pre><span></span><code>(define-const ace-of-spaces Card
+    (card spades 1))
+</code></pre></div>
+<p>I can extract the <code>suit</code> and <code>rank</code> field values from a given <code>Card</code> value using field "extractor" functions, which have the same
+symbolic name as the field. For example, here is a boolean function that determines whether or not two <code>Card</code> parameter values
+(named <code>c1</code> and <code>c2</code>) have the same <code>suit</code> field value.</p>
+<div class="highlight"><pre><span></span><code>(define-fun is-same-suit ((c1 Card) (c2 Card)) Bool
+    (= (suit c1) (suit c2)))
+</code></pre></div>
+</li>
+<li>
+<p><strong>Define a sum type (aka "typed union", "disjoint union", or "variant type")</strong>. This is a collection of constructors, a kind
+    of closed collection of subtypes. This is equivalent to a Haskell <code>data</code> type, or sealed trait subtype set in Scala. Each
+    constructor produces a value with its own set of fields. All values are instances of the parent type. In this contrived example
+    I create a set of types representing different types of furntiture:</p>
+<div class="highlight"><pre><span></span><code>(define-datatype Furniture (
+    (chair
+        (seat-depth Int)
+        (seat-width Int))
+
+    (couch
+        (profile-width Int)
+        (profile-depth Int))
+
+    (credenza
+        (drawer-count Int)
+        (height Int))))
+</code></pre></div>
+<p>Each constructor produces a <code>Furniture</code> instance. In addition to the constructor and field extractor functions, <code>smtlib2</code> also
+provides a couple ways to identify whether a given <code>Furniture</code> instance is a <code>chair</code>, <code>couch</code> or <code>credenza</code>:</p>
+<ul>
+<li><strong>a <code>match</code> statement</strong>. A weaker version of Scala's <code>match</code> and Haskell's <code>case .. of</code>. It doesn't support nested pattern
+   matching. Here, for example, is a function that maps a <code>Furniture</code> value to a descriptive string value:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>(define-fun furniture-description ((f Furniture)) String
+  (match f (
+     ((chair d w) &quot;A chair&quot;)
+     ((couch w d) &quot;A couch&quot;)
+     ((credenza c h) &quot;A credenza&quot;))))
+</code></pre></div>
+<ul>
+<li>
+<p><strong>the <code>is</code> parameterized predicate</strong>. I'm not going to take the time to explain much about this, because the syntax is a
+    bit complicated, and I don't use this construct often. Here is a function that tells you whether or not a <code>Furniture</code>
+    instance is intended to be sat upon:</p>
+<div class="highlight"><pre><span></span><code>(define-fun should-be-sat-upon ((f Furniture))
+  (not ((_ is credenza) f)))  ;; you shouldn&#39;t sit on a credenza, and you can sit on anything else
+</code></pre></div>
+<p>The structure <code>(_ is &lt;constructor&gt;)</code> produces a function of type <code>&lt;datatype&gt; -&gt; Bool</code>. That is, it determines whether or
+not a <code>Datatype</code> instance is an instance of a particular constructor.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Define a parameterized sum type</strong>. Let's say you want to define a list of Ints, or a set of strings. That is, a type parameterized
+    by another type. Here for example is a parameterized <code>Maybe</code> type, similar to the standard Haskell <code>Maybe x</code> and the Scala
+    <code>Option[X]</code> types:</p>
+<div class="highlight"><pre><span></span><code>(declare-datatype Maybe (par (T) (
+  (none)
+  (some (value T)))))
+</code></pre></div>
+<p>This defines a whole class of datatypes: <code>(Maybe Int)</code>, <code>(Maybe Bool)</code>, etc. It can be applied recursively: <code>(Maybe (Maybe String))</code>
+for example.</p>
+<p>The datatype <code>(Maybe Int)</code> has two constructors: <code>none</code> and <code>(some (value Int))</code>. It can be used to represent a "nullable" value type.</p>
+<p><code>smtlib2</code> parameterized types are <em>not</em> as useful as you would think, because they often imply recursive graphs and recursive
+functions. Think cons lists, finger tries, etc. SMT solvers abhor recursion, because they avoid exploring repetative loops when
+solving systems of equations. This is a fairly constraining restriction especially for programmers with a functional mindset, who
+instinctually reach for a tool like this first. They will need to learn new representational skills and use alternative constructs
+to represent domain values and validation rules.</p>
+<p>SMT solvers have internal special cases for a few common recursive datatypes, such as <code>List</code> and <code>Set</code>. These are known as
+<em>theories</em>, and is beyond the scope of this explanation.</p>
+<p>The OSM examples in this repository avoid recursive structures altogether, both custom ones and those provided natively in theories.
+I find the solvers have very unpredictable results with even recursive type built-in to solvers, such as <code>List</code>, or <code>Set</code>;
+often assertions you would think are simple turn out to confound solvers, and other assertions you would think are way too
+complex get solved easily.</p>
+<p>There are a cases where parameterized types are useful for representing domain concepts. The <code>Maybe</code> type above, for example,
+is not recursive. It works predictably as part of formula proofs.</p>
+</li>
+</ol>
+<h3 id="arrays">Arrays</h3>
+<p>An array in <code>smtlib2</code> is an <em>associative array</em>. It is not necessarily integer indexed, and it is not a contiguous portion
+of memory (like in C and related languages).</p>
+<p>The <code>Array</code> type is parameterized on both the index type and the value type. So you can define an array indexed by integer. You can also
+create an array indexed by strings, booleans, or even your custom type like the <code>Furniture</code> datatype above. For each index, the
+<code>Array</code> maps a value.</p>
+<p>In <code>smtlib2</code> arrays must cover their entire index space. An array indexed by integer has a value for <em>every</em> integer, meaning the array is
+infinite. An array indexed by boolean values will only have 2 entries: one for <code>true</code> and <code>false</code> index values.</p>
+<p>For all solvers I've used, an array value is just a linked list of index -&gt; value pairs. There are two contructors for making
+arrays: <code>store</code> and <code>const</code>, which are kind of like cons list's <code>car</code> and <code>cdr</code> structures.</p>
+<p><code>const</code> creates an array that is constant for all index values. You have to "cast" a <code>const</code> value to the correct array type whenever
+you use it. (The <code>smtlib2</code> language needs a type hint to know what kind of array you want to create.) For example, here is an integer-indexed
+array with the value 7 for all indexes:</p>
+<div class="highlight"><pre><span></span><code>(define-const all-sevens (Array Int Int)
+    ((as const (Array Int Int)) 7))
+</code></pre></div>
+<p>The <code>select</code> function retrieves an array value given a specific index value. </p>
+<div class="highlight"><pre><span></span><code>(check-sat)
+&gt; sat
+
+(get-value (
+    (select all-sevens 0)
+    (select all-sevens 42)
+    (select all-sevens -876322)))
+&gt; (((select all-sevens 0) 7)
+   ((select all-sevens 42) 7)
+   ((select all-sevens -876322) 7)
+</code></pre></div>
+<p>The <code>store</code> function creates a new array from an existing array by replacing just one of the existing array's index -&gt; value tuples. Here
+I create a new array from <code>all-sevens</code> where the value at index 1 is 77. All other indexes in the new array will be 7.</p>
+<div class="highlight"><pre><span></span><code>(define-const all-sevens-but-index-1 (Array Int Int)
+    (store all-sevens 1 77))
+</code></pre></div>
+<h3 id="unbound-functions">Unbound Functions</h3>
+<p>Witness me try to get an SMT solver to figure out the function <span class="arithmatex">\(f(x) = x^2\)</span> from example values:</p>
+<div class="highlight"><pre><span></span><code>(declare-fun squared (Int) Int)
+
+(assert
+    (= 0 (squared 0)))
+
+(assert
+    (= 1 (squared 1)))
+
+(assert
+    (= 4 (squared 2)))
+
+(assert
+    (= 9 (squared 3)))
+
+(check-sat)
+&gt; sat
+
+(get-value ((squared 1) (squared 2) (squared 3)))
+&gt; (((squared 1) 1)
+   ((squared 2) 4)
+   ((squared 3) 9))
+</code></pre></div>
+<p>That looks promising! But things start to fall apart quickly...</p>
+<div class="highlight"><pre><span></span><code>(get-value ((squared 5) (squared 6) (squared 100)))
+&gt; (((squared 5) 0)
+   ((squared 6) 0)
+   ((squared 100) 0))
+</code></pre></div>
+<p>Huh? It did great figuring out the square values of for the examples I gave it, but seems to think every other square value is 0.</p>
+<p>Let's look behind the curtain on what the solver has decided about <code>squared</code>:</p>
+<div class="highlight"><pre><span></span><code>(get-value (squared))
+&gt; ((squared (store (store (store ((as const (Array Int Int)) 0) 1 1) 2 4) 3 9)))
+</code></pre></div>
+<p>This SMT solver is simply picking all input function parameter -&gt; result pairs, and making an array out of them. For every other
+parameter than the ones I've provided, the function result will be 0.</p>
+<p>This is the state of the art of SMT solvers right now. They treat unbound functions as just a set of parameter -&gt; value tuples,
+and implement them with an array. Watch what happens when I ask the solver to create a <code>squared</code> function that is correct at
+<em>every</em> integer:</p>
+<div class="highlight"><pre><span></span><code>(declare-fun squared (Int) Int)
+
+(assert (forall ((x Int))
+  (= (squared x) (* x x))))
+
+(check-sat)
+&gt; unknown
+</code></pre></div>
+<p>The <code>unknown</code> result will only appear after a very long pause and heavy CPU and memory consumption by the SMT solver process. The solver is
+trying to generate an <em>infinite</em> array graph, computing the value <code>(* x x)</code> for every integer. Eventually it runs out of time or resources,
+returning <code>unknown</code>. This response is what the solver generates when it can't decide whether a set of assertions is satisfiable (<code>sat</code>)
+or unsatisfiable (<code>unsat</code>), always because the problem just takes too many resources for it to solve.</p>
+<p>Honestly I haven't found a use for unbound functions in OSMs yet. They are useful for other SMT solver use-cases, but not
+so much when designing an operation-state model. I stick to unbound arrays with finite index types.</p>
+<h3 id="validation-predicates-for-game-sequence-values">Validation Predicates for Game Sequence Values</h3>
+<p>Let's define a two-die <code>DiceRoll</code> datatype. My first attempt is to make a type with two integer values representing each die.</p>
+<div class="highlight"><pre><span></span><code>(declare-datatype DiceRoll (
+    (roll
+        (die1 Int)
+        (die2 Int))))
+</code></pre></div>
+<p>And now I'm going to assert that each die can only be between 1 and 6:</p>
+<div class="highlight"><pre><span></span><code>(assert
+    (forall ((d DiceRoll))
+      (and
+        (&lt;= 1 (die1 d))
+        (&lt;= (die1 d) 6)
+        (&lt;= 1 (die1 d))
+        (&lt;= (die1 d) 6))))
+
+(check-sat)
+&gt; unsat
+</code></pre></div>
+<p>Oh no! What happened? All I did was make a make an obvious assertion about dice rolls, and the solver says the assertion is unsolvable!</p>
+<p>The issue here is that <strong><em>you can't make universal constraints on datatypes</em></strong>. A more obvious example: you can't say something
+like "all integers are divisible by two". That just doesn't make sense. We know some integers that are not divisible by
+two. So that assertion should always produce an <code>unsat</code> response from the solver.</p>
+<p>Similarly you can't say "all <code>DiceRoll</code> instances have a <code>die1</code> value greater than 0". We know some <code>DiceRoll</code> values <em>do</em> have a
+<code>die1</code> value less than or equal to zero. For example: <code>(roll -100 -100)</code> is a <code>DiceRoll</code> value that breaks this rule. So the
+assertion not universally satisfiable.</p>
+<p>Instead we can define a predicate function that returns <code>true</code> for <code>DiceRoll</code> values that are "valid" in our problem domain,
+and returns <code>false</code> for all others (which are by definition "invalid" in our problem domain):</p>
+<div class="highlight"><pre><span></span><code>(define-fun diceroll.valid.range ((d DieRoll)) Bool
+    (and
+        (&lt;= 1 (die1 d))
+        (&lt;= (die1 d) 6)
+        (&lt;= 1 (die1 d))
+        (&lt;= (die1 d) 6)))
+
+(check-sat)
+&gt; sat
+</code></pre></div>
+<p>I create validation predicate functions like this for each domain datatype in a game. These validation functions define the
+invariate constraints on domain values that appear in any valid game sequences. When validating an entire game sequence, I will
+ensure that each domain object in the game sequence graph passes all applicable validation functions. Thus all domain objects
+in a valid game sequence graph are automatically valid.</p>
+<h3 id="domain-optimization-using-finite-datatypes">Domain Optimization Using Finite Datatypes</h3>
+<p>The <code>DiceRoll</code> datatype above has an infinite number of values, which stems from the fact that there are an infinite number
+of values for each field.</p>
+<p>An alternative to this definition of <code>DiceRoll</code> is a finite type, one in which the only values that exist are valid.</p>
+<div class="highlight"><pre><span></span><code>(declare-datatype DieRoll (
+    roll_one
+    roll_two
+    roll_three
+    roll_four
+    roll_five
+    roll_six))
+
+(declare-datatype FiniteDiceRoll (
+    (roll
+        (die1 DieRoll)
+        (die2 DieRoll))))
+</code></pre></div>
+<p>All <code>DieRoll</code> values are "valid". Each die roll can only represent a roll of one through six, because those are the only die rolls
+that exist. There are therefore only 36 possible <code>FiniteDiceRoll</code> values, and all of them are "valid" as well.</p>
+<p>Of course I've lost the association of a <code>DieRoll</code> to any actual number. There's nothing saying a <code>roll_one</code> represents
+the number 1. I can't add two <code>DieRoll</code> values together either; I have no way to know what the total pip value of
+a <code>FiniteDiceRoll</code> is, since there is no number associated with constituent values. This is easy to solve though. Since 
+<code>FiniteDiceRoll</code> is finite in size, we can create an array and associated function that maps each <code>FiniteDiceRoll</code> to a total
+pip value:</p>
+<div class="highlight"><pre><span></span><code>(define-const dieroll.pips.array (Array DieRoll Int)
+  (store
+  (store
+  (store
+  (store
+  (store
+  (store ((as const (Array DieRoll Int)) 0)
+    roll_one 1)
+    roll_two 2)
+    roll_three 3)
+    roll_four 4)
+    roll_five 5)
+    roll_six 6))
+
+(define-fun dieroll.pips ((d DieRoll)) Int
+  (select dieroll.pips.array d))
+
+(define-fun diceroll.pips ((d FiniteDiceRoll)) Int
+  (+ (dieroll (die1 d)) (dieroll (die2 d))))
+</code></pre></div>
+<p>The key goal is avoiding quantifying over infinite datatypes in order to define constraints over finite ranges. This
+is an optmization to help your solver figuring things out in finite time. It's going to take some practice to understand
+the payoffs and benefits of different domain design decisions when creating your own smtlib2 OSMs. Experience with
+imperative and functional computing languages sometimes leads you astray.</p>
+<h3 id="defining-operation-datatypes">Defining Operation Datatypes</h3>
+<p>An OSM operation value represents an atomic state change in the system being modeled. In a table-top game this would typically
+be a "move". In a multi-step distributed function, this would be the state change associated with processing an event. In a time-sequenced
+system, this might just be a state change associated with the passage of a unit of time.</p>
+<p>All operation datatypes are tuples with these common features:</p>
+<ul>
+<li><strong>a <code>prior_state</code> member</strong>. This is a domain value representing the full state of the system prior to the operation application.</li>
+<li><strong>a <code>post_state</code> member</strong>. This is a domain value representing the full state of the system after the operation application.</li>
+<li>zero or more <strong>operation input values</strong>. These are parameters to the type of operation being performed.</li>
+<li>zero or more <strong>operation output values</strong>. When defining a larger OSM from smaller component OSMs, these values
+  communicate information between sub-components. (Beyond the scope of this repo.)</li>
+</ul>
+<p>Consider a game of bowling. The only operation in this system is a "throw": the act of rolling a ball down an alley and (hopefully)
+knocking some pins over. Imagine I've already defined a <code>Game</code> domain datatype representing a snapshot of game state, and a
+<code>Throw</code> datatype representing a single throw. I would have an <code>ApplyThrowOp</code> datatype defined like so describing the act
+of updating a game with the result of a throw:</p>
+<div class="highlight"><pre><span></span><code>(declare-datatype Game.ApplyThrowOp (
+    game.apply-throw-op (
+      (prior_game Game)
+      (post_game Game)
+      (throw Throw))))
+</code></pre></div>
+<p>The definition of the mechanics of the game are all inside the operation validation predicate. This is the validation function that
+defines a "valid" throw operation. This function returns <code>true</code> when:</p>
+<ul>
+<li><strong><code>prior_game</code> is valid</strong>. This is, the validation function I've defined for <code>Game</code> objects applied to the <code>prior_game</code> value is <code>true</code>.</li>
+<li><strong><code>post_game</code> is valid</strong>. The same validation function applied to the <code>post_game</code> value is <code>true</code>.</li>
+<li><strong><code>throw</code> is valid</strong>. The validation function I've defined for <code>Throw</code> objects applied to the <code>throw</code> value is <code>true</code>.</li>
+<li><strong>the post_game value is equal to the prior_game value with the throw applied</strong>. This is where the mechanics of game play are encoded.
+  This is a validation function that "entangles" the prior and post game states through a set of equations, equating specific
+  frame and throw values in the post game state to values in the prior game state, and also equating the "latest" throw space
+  in the post game state to the <code>throw</code> value.</li>
+</ul>
+<p>The initial few lines of the <code>ApplyThrowOp</code> value validation function are going to look like this:</p>
+<div class="highlight"><pre><span></span><code>(define-fun game.apply-throw-op.valid ((op Game.ApplyThrowOp)) Bool
+    (and
+        (game.valid (prior_game op))
+        (game.valid (post_game op))
+        (throw.valid (throw op))
+        ... additional validation function references, validating the throw applied
+            to the prior game is equal to the post game ...
+        ))
+</code></pre></div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>It is mildly surprising to realize C is a "single source" language. The C compiler can actually only compile a single,
+monolithic source file at a time. The C pre-processor is key to enabling C language code to be modularized into separate files
+and re-used in functional pieces.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>I try to use TDD when developing an OSM. I will often first write test assertions proving the properies I want in the OSM, then
+write the OSM domain objects, operations, and predicates that make the property assertions satisfiable by an SMT solver.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>This example demonstrates my preferred <code>smtlib2</code> style. I use newlines and indentation in inter-term whitespace to mimic the
+indentation style of languages like Scala 3 and Python. I place the closing parens of each parens-enclosed expression
+immediately after the final term to keep the indented style.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="assets/mkdocs_puml/puml.js"></script>
+      
+        <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+      
+        <script src="assets/mkdocs_puml/interaction.js"></script>
+      
+    
+  </body>
+</html>

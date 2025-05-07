@@ -1,0 +1,2894 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://bmaso.github.io/osm-games/bowling/OSM-Episode.html">
+      
+      
+        <link rel="prev" href="../index.html">
+      
+      
+        <link rel="next" href="../osm-specs-in-smtlib2.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>An Equational Thinking Episode - OSM Games</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/mkdocs_puml/puml.css">
+    
+      <link rel="stylesheet" href="../assets/mkdocs_puml/interaction.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-bowling-game-an-example-of-equational-theory-development" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OSM Games" class="md-header__button md-logo" aria-label="OSM Games" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OSM Games
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              An Equational Thinking Episode
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OSM Games" class="md-nav__button md-logo" aria-label="OSM Games" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OSM Games
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    An Equational Thinking Episode
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="OSM-Episode.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    An Equational Thinking Episode
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-bowling-score-card-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Bowling Score Card Standard
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developing-equations-for-a-bowling-score-card" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developing Equations for a bowling score card
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Developing Equations for a bowling score card">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#representing-a-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Representing a Throw
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#foul-throws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Foul throws
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#splits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Splits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#representing-a-frame-and-a-frame-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Representing a Frame and a Frame in Progress
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Representing a Frame and a Frame in Progress">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-frame-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      A frame in progress
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-frames-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      A frame's score
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validating-a-frame-is-in-a-valid-game-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validating a frame is in a valid game state
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validating a frame is in a valid game state">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#representing-unused-throws-within-a-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      Representing unused throws within a frame
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-scratch-frame-with-either-one-or-two-throws-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      A scratch frame, with either one or two throws complete
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-partially-and-completed-spare-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      The partially and completed spare states
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-strike-and-bonus-throws-completing-a-strike-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      A strike and bonus throws completing a strike frame
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throws-completed-in-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Throws completed in order
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incrementally-accumulating-throws-in-a-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incrementally accumulating throws in a frame
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scratch-throw-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scratch throw validation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scratch throw validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refining-failed-tests-by-discovering-negative-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Refining failed tests by discovering negative examples
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-scratch-throw-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second scratch throw validation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-throw-resulting-in-a-spare" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second throw resulting in a spare
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Second throw resulting in a spare">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spare-bonus-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spare bonus throw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-throw-is-a-strike" class="md-nav__link">
+    <span class="md-ellipsis">
+      First throw is a strike
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="First throw is a strike">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recording-a-strikes-first-and-second-bonus-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recording a strike's first and second bonus throw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#representing-a-game-and-a-game-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Representing a Game and a Game in progress
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Representing a Game and a Game in progress">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validating-game-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validating game state
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validating game state">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-empty-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      The empty game
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frames-are-completed-sequentially" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frames are completed sequentially
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entanglement-of-mark-first-bonus-frame-x-to-first-throw-of-frame-x1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entanglement of mark first bonus frame X to first throw of frame X+1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entanglement-of-strike-second-bonus-frame-to-second-next-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entanglement of strike second bonus frame to second-next throw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incrementally-accumulating-throws-in-a-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incrementally accumulating throws in a game
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#footnotes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Footnotes
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osm-specs-in-smtlib2.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OSM Specs in smtlib2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connect4/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connect Four OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bowling OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backgammon/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Backgammon OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spades/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spades OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-bowling-score-card-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Bowling Score Card Standard
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developing-equations-for-a-bowling-score-card" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developing Equations for a bowling score card
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Developing Equations for a bowling score card">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#representing-a-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Representing a Throw
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#foul-throws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Foul throws
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#splits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Splits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#representing-a-frame-and-a-frame-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Representing a Frame and a Frame in Progress
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Representing a Frame and a Frame in Progress">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-frame-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      A frame in progress
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-frames-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      A frame's score
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validating-a-frame-is-in-a-valid-game-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validating a frame is in a valid game state
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validating a frame is in a valid game state">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#representing-unused-throws-within-a-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      Representing unused throws within a frame
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-scratch-frame-with-either-one-or-two-throws-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      A scratch frame, with either one or two throws complete
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-partially-and-completed-spare-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      The partially and completed spare states
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-strike-and-bonus-throws-completing-a-strike-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      A strike and bonus throws completing a strike frame
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throws-completed-in-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Throws completed in order
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incrementally-accumulating-throws-in-a-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incrementally accumulating throws in a frame
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scratch-throw-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scratch throw validation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scratch throw validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refining-failed-tests-by-discovering-negative-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Refining failed tests by discovering negative examples
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-scratch-throw-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second scratch throw validation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-throw-resulting-in-a-spare" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second throw resulting in a spare
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Second throw resulting in a spare">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spare-bonus-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spare bonus throw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-throw-is-a-strike" class="md-nav__link">
+    <span class="md-ellipsis">
+      First throw is a strike
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="First throw is a strike">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recording-a-strikes-first-and-second-bonus-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recording a strike's first and second bonus throw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#representing-a-game-and-a-game-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Representing a Game and a Game in progress
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Representing a Game and a Game in progress">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validating-game-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validating game state
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validating game state">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-empty-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      The empty game
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frames-are-completed-sequentially" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frames are completed sequentially
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entanglement-of-mark-first-bonus-frame-x-to-first-throw-of-frame-x1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entanglement of mark first bonus frame X to first throw of frame X+1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entanglement-of-strike-second-bonus-frame-to-second-next-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entanglement of strike second bonus frame to second-next throw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incrementally-accumulating-throws-in-a-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incrementally accumulating throws in a game
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#footnotes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Footnotes
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="the-bowling-game-an-example-of-equational-theory-development">The Bowling Game: An Example of Equational Theory Development</h1>
+<p><strong>Engineer's Notebook: An Equational Thinking Episode</strong></p>
+<p>| "The person who says he knows what he thinks but cannot express it usually does not know what he thinks."
+    ― Mortimer J. Adler, How to Read a Book: The Classic Guide to Intelligent Reading</p>
+<h2 id="introduction">Introduction</h2>
+<p>In 2000 Robert "Uncle Bob" Martin published <a href="https://sites.google.com/site/unclebobconsultingllc/uncle-bob-consulting-llc/articles/the-bowling-game-an-example-of-test-first-pair-programming?authuser=0"><em>The Bowling Game: An example of test-first pair programming</em></a>,
+memorializing a TDD pair-programming session between Bob Koss and Bob Martin, during which the Bobs endeavor to
+implement a set of Java classes were that combine to score a game of bowling.</p>
+<p>Distinctly missing from the narrative: any actual definition of "the game of bowling". Here's Bob Martin's description
+of what they set out to build, which is the best indication of what they were trying to accomplish:</p>
+<blockquote>
+<p>RCM: "It seems to me that the inputs are simply a sequence of throws. A throw is just an integer that tells how
+many pins were knocked down by the ball. The output is the data on a <strong><em>standard bowling score card</em></strong>, a set of frames
+populated with the pins knocked down by each throw, and marks denoting spares and strikes. The most important
+number in each frame is the current game score." <em>[Emphasis mine]</em></p>
+</blockquote>
+<p>What's missing is any "standard" that the solution can be verified against. In effect what the Bobs end up doing is defining their own axiomatic standard -- their code <em>is</em> the standard, so of course it does what it is supposed
+to do. Does it correctly score the definition of "the game of bowling" that the Bobs were trying to implement?
+We don't know. Neither actor produces a definition of "bowling". Bob Martin refers to <em>"a standard bowling score
+card"</em>, but fails to reference an actual standard that he is working from.</p>
+<p>What's missing is a logical definition of the bowling standard that Bob alludes to. Armed with such a tool, the
+development process in the narrative would have gone more smoothly and quickly, and it would have produced a
+provably correct (or provably incorrect) final software package. I imagine they also would have identified possible
+failures of the software they produced (described below).</p>
+<p>Instead of a provably correct result, what the Bobs produced is software that self-asserts to conform to <em>some</em> standard,
+implemented internally by a set of inter-reliant Java classes. Most of the narrative concerns incremental development
+of the Java classes. The reader follows the internal intricacies and nitty-gritty of the Bobs' domain and problem space
+exploration with interest, but after all is said and done the reader cannot ratify or deny the assertion "a conforming
+implementation of the bowling score algorithm has been produced".</p>
+<p>As with most produced software, there's no way to determine whether the final product actually fulfills its
+specification, because the specification is imprecise, collectively assumed, or perhaps never really existed in the
+first place. There's no way to verify that such software conforms with the standard it is intended to
+implement.</p>
+<p>And like many software projects, this one ends at the terminus of exhaustion rather than at the provable completion of
+its stated task. Such projects end when the stakeholders are exhausted of resources, and someone with adequate
+authority can persuasively argue that the project is complete. In this case, the Bobs and the reader stand in for
+stakeholders, and the resource that is exhausted is creative imagination (and attention span). The end of the
+narrative expresses this state:</p>
+<blockquote>
+<p>RSK: "That pretty much covers it. Can you think of any more meaningful test cases?"</p>
+<p>RCM: "No, I think that's the set. There aren't any there that I'd be comfortable removing at this point."</p>
+<p>RSK: "Then we're done."</p>
+<p>RCM: "I'd say so. Thanks a lot for you help."</p>
+<p>RSK: "No problem, it was fun."</p>
+</blockquote>
+<p>A much more convincing TDD episode would have started with a logical, objectively provable definition of
+the target algorithm, and incrementally developed a Java implementation with individual test cases proven to meet the
+standard.</p>
+<p>In this article I will develop a definition of "bowling". That is, a definition of the standard against which any integer
+sequence reduce function can be applied to verify the function agrees with the standard <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. I will use the smtlib2
+language and follow the techniques I describe in the companion article <a href="../../osm-specs-in-smtlib2.html"><em>"OSM specs in smtlib2"</em></a>.</p>
+<h3 id="the-bowling-score-card-standard">The Bowling Score Card Standard</h3>
+<p>The governing body for bowling in the US is the United States Bowling Congress (<a href="https://bowl.com">USBC</a>). This
+organization publishes <a href="assets/ScoreHowto.2024-11-11.pdf">a standard for scoring a game of bowling</a>, which somewhat
+matches the Bobs' internal understanding of the game, with some key differences:</p>
+<ol>
+<li>
+<p>The official version does not support the concept of an <em>incomplete</em> game. A game consists of all necessary
+  throws <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> to complete 10 frames: up to 2 throws plus up to two bonus throws forms a frame. The bonus throws for frame
+  <code>N</code> are synonymous with the normal throws of the <code>N+1</code>-th frame. Legal games can be produced from as few as 12 throws
+  (12 consecutive strikes), and as many as 21 throws (any sequence of 21 throws that includes no strikes).</p>
+</li>
+<li>
+<p>In the official version of bowling, a throw cannot be represented by a single integer. In the TDD narrative,
+  Robert Koss and Bob Martin quickly convince themselves, incorrectly, that a single integer is sufficient to store
+  the information of throw. Here's Bob Martin's words from above, again repeated to show where the unchallenged
+  assertion is made very early in the narrative:</p>
+<blockquote>
+<p>RCM: "It seems to me that the inputs are simply a sequence of throws. A throw is just an integer that tells how
+many pins were knocked down by the ball. The output is the data on a standard bowling score card, a set of frames
+populated with the pins knocked down by each throw, and marks denoting spares and strikes. The most important
+number in each frame is the current game score."</p>
+</blockquote>
+<p>Again a little later, the assumption is reinforced:</p>
+<blockquote>
+<p>RSK: "Do you have a clue what the behavior of a Throw object should be?"</p>
+<p>RCM: "It holds the number of pins knocked down by the player."</p>
+</blockquote>
+<p>The USBC standard supports a legal throw, for which the number of pins knocked down would be a valid
+representation. The standard also says that a throw may be a <em>foul</em>, recorded on the score card with the letter
+"F", and adding no pins the the accumulate score. The Bobs' model is inadequate to produce a score card for all
+valid bowling games, because some valid games include fouls.</p>
+<p>This may seem like persnickety special-casery, and perhaps it is, but it is evidence that the Bobs' were
+not developing any objectively provable implementation of a standard, but instead were simply encoding a
+subjectively-derived psuedostandard. This will be the case with all software developed without an objectively
+verifiable logical model -- today this includes virtually <em>all software</em>. There is no practice of developing
+software to meet a mechanically verifiable model.</p>
+</li>
+<li>
+<p>The official version supports, though does not require, a "split" significator associated with the first throw
+   in a frame. This is a special demarcation indicating the remaining upright pins after a first throw are in
+   a configuration that meets a specific "split" rule. A split is basically a configuration of pins that can be
+   particularly difficult to knock down in the frame's second throw.</p>
+</li>
+</ol>
+<p>The TDD narrative's technique for developing a test suite, by constructing partially-complete games and testing
+the state of those games, coincidentally mimics the way that the USBC official scoring standard is written. This is
+a constructivist pattern, describing how to incrementally accumulate a single throw into a game in progress. The
+standard also implies a terminal condition which ends the process, producing a completed game. The constructivist
+description ensures that if you apply the incremental accumulation rules to a sufficient number of throws, you will
+end up with a valid, completed game.</p>
+<p>In the TDD narrative, most of the Bobs' test cases score incomplete games -- games in progress. We can see Bob
+Martin briefly wrestle with the issue of game incompleteness at one point:</p>
+<blockquote>
+<p>RSK: "Hmmmm... if we call add(10) to represent a strike, what should getScore return? I don't know how to write
+the assertion, so maybe we're asking the wrong question. Or we're asking the right question to the wrong object."</p>
+<p>RCM: "When you call add(10), or add(3) followed by add(7), then calling getScore on the Frame is meaningless. The
+frame would have to look ahead at later frames to calculate its score. If those later frames don't exist, then it
+would have to return something ugly like -1. I don't want to return -1."</p>
+</blockquote>
+<p>The USBC standard does not specify the "value" of an incomplete frame or an incomplete game, either. I would argue
+the Bobs were chasing an illusion -- there is no correct nor incorrect value for an incomplete frame according to any
+standard. Any assertion about the "correct" value is perfectly undecidable. The entire question of whether or not
+the Bobs' bowling implementation conforms to any standard is also perfectly undecidable.</p>
+<h2 id="developing-equations-for-a-bowling-score-card">Developing Equations for a bowling score card</h2>
+<p>The missing piece in Bob Martin's TDD narrative is a verifiable logic model. Armed with such a model, any input
+and any output, even intermediate state output, can be verified to be in or out of compliance using an automated
+logic solver. SMTLIB2 is a capable language for logic modeling, readily understandable to software professionals
+because it is very Lisp-like. Several logic solvers exist that accept smtlib2 models, such as <a href="https://github.com/Z3Prover/z3/wiki">Microsoft's Z3</a>,
+<a href="http://cs.nyu.edu/acsys/cvc5/">CVC5</a>, and several <a href="https://smt-lib.org/solvers.shtml">others</a>.</p>
+<p>Let's start by reviewing a bowling score card, and develop a logical model of a bowling game from it.</p>
+<p><img alt="Example bowling scorecard" src="assets/bowling-scorecard.drawio.png" /></p>
+<p>The score card reflects how the game of bowling structured: there are 10 "frames", or what might be called "turns" in
+other games. A player scores from 0-30 points in each frame. The score card represents each frame in the game as
+one of 10 squares, read from left to right.</p>
+<p>In the square for each frame we traditionally write the <em>accumlated total points</em> (the sum of points in all
+previous frames plus the points scored in the current frame) rather than the points scored in each frame individually.
+This is a convention, arising from the fact that game used to be scored manually. The final game score is the
+same whether we score each frame individually and sum at the end or accumulate as the game progresses.</p>
+<p>There are areas towards the top of each frame's square for representing the 1 or 2 normal throws that are part of each
+frame. Each frame's score also includes the value of 0, 1 or 2 additional bonus throws <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. The standard score card
+does not represent the bonus throws, as the bonus throws in one frame are synonymous with the normal throws of the
+subsequent frame. This is true for all frames except the 10th. The 10th frame has no subsequent, so the 10th frame
+does have extra space to represent its bonus throws.</p>
+<p>The rules and traditions for where and how to display each throw in a frame, as well as the tradition of displaying a
+running sum, are <em>visualization</em> rules. The formal logical model we now develop is easily transformed into this
+kind of representation, but the model is actually a bit simpler. We will define the model of a "game in progress"
+-- a more relaxed model than a "completed game" model, allowing for incompleted frames.</p>
+<h3 id="representing-a-throw">Representing a Throw</h3>
+<p>Let's begin with the simplest concept: a single throw. Primarily we would want to represent a set of pins knocked down. We
+could either represent this as an integer value (the total number of pins knocked down), or a bitvector of width 10 representing the
+standing-up/knocked-down state of each individual pin <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>.</p>
+<p>There is a very good reason to choose bitvector over integer: SMT solvers don't deal wonderfully with inifinite value ranges, and
+integer is an infinitely-valued type, while bitvector is not. SMT solvers are great at deducing from first principals, but they aren't great
+at exploring bespoke value ranges, such as "the infinite set of integers, where the values between 0-10 are treated differently than
+the rest of the range", especially if the range disjuncture boundaries get obscured in multiple levels of logic.</p>
+<p>The general rule I've learned with SMT solvers: always opt for a finite-valued type when you can. When the SMT solver has to
+consider complicated, bespoke rules (like the rules of a game of bowling), it can always decide to "brute force" a proof by trying
+all possible values in a range, or all possible branches in a logic tree. But if the range is infinite, then it has to rely
+on hueristics and deduction from first principals only, which can lead to infinite loops, exploration of very sparsely populated
+ranges, and other problems that lead a proof engine astray.</p>
+<p>I will use a bit value "0" to represent a standing pin, and "1" to represent a knocked-down pin.</p>
+<p>File "throw.smt2"
+<div class="highlight"><pre><span></span><code>(declare-datatype Throw (
+    (throw
+      (pins (_ BitVec 10)))))
+</code></pre></div></p>
+<blockquote>
+<p><strong>Note</strong>: the syntax <code>(_ BitVec 10)</code> means "a bitvector of width 10". smtib2 has a convenience representation for static bitvector
+values: <code>#b0011001011</code> -- this is a 10-bit wide bitvector with values "0011001011" for the 10 bits, respectively. There are also
+a bunch of bitvector operators available: <code>bvand</code>, <code>bvor</code>, and other bit-by-bit operators; <code>bv2nat</code> to convert a bitvector to a binary
+numeric value; <code>zero-extend</code> and <code>extract</code> round out the operators we will need to convert a bitvector to a count of fallen pins.</p>
+</blockquote>
+<p>There are 2 functions I know I'm going to be writing, and I will want to start throwing down test-cases <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> that rely on  the behavior of these
+functions soon.</p>
+<ul>
+<li><code>throw.points</code>: a function computing the point score of any throw. This is just the count of "1" bits in the bitvector.</li>
+<li><code>throw.valid</code>: a predicate differentiating valid throws from invalid ones. The way it is written now, I don't think an invalid
+  instance of <code>Throw</code> exists, but I'm going to need to add foul throws and incomplete throws shortly. Validation will be necessary,
+  so best to get the scaffolding of that down.</li>
+</ul>
+<p>File "test-case.throw.validation.throw.points-fun.smt2":
+<div class="highlight"><pre><span></span><code>#include &quot;throw.smt2&quot;
+
+(define-const test-data.throw.all-zeros      Throw (throw #b0000000000))
+(define-const test-data.throw.all-ones       Throw (throw #b1111111111))
+(define-const test-data.throw.all-but-lsb-0  Throw (throw #b0000000001))
+(define-const test-data.throw.all-but-lsb-1  Throw (throw #b1111111110))
+(define-const test-data.throw.all-but-msb-0  Throw (throw #b1000000000))
+(define-const test-data.throw.all-but-msb-1  Throw (throw #b0111111111))
+(define-const test-data.throw.lower-half-0   Throw (throw #b1111100000))
+(define-const test-data.throw.upper-half-0   Throw (throw #b0000011111))
+(define-const test-data.throw.alt-bits-0     Throw (throw #b1010101010))
+(define-const test-data.throw.alt-bits-1     Throw (throw #b0101010101))
+(define-const test-data.throw.random-dense   Throw (throw #b1101110111))
+(define-const test-data.throw.random-sparse  Throw (throw #b0001001010))
+
+;; prove all these throws are valid
+(assert
+  (and
+    (throw.valid test-data.throw.all-zeros)
+    (throw.valid test-data.throw.all-ones)
+    (throw.valid test-data.throw.all-but-lsb-0)
+    (throw.valid test-data.throw.all-but-lsb-1)
+    (throw.valid test-data.throw.all-but-msb-0)
+    (throw.valid test-data.throw.all-but-msb-1)
+    (throw.valid test-data.throw.lower-half-0)
+    (throw.valid test-data.throw.upper-half-0)
+    (throw.valid test-data.throw.alt-bits-0)
+    (throw.valid test-data.throw.alt-bits-1)
+    (throw.valid test-data.throw.random-dense)
+    (throw.valid test-data.throw.random-sparse)))
+
+;; prove throw.points function computes expected value for all cases 
+(assert
+  (and
+    (= (throw.points test-data.throw.all-zeros) 0)
+    (= (throw.points test-data.throw.all-ones) 10)
+    (= (throw.points test-data.throw.all-but-lsb-0) 1)
+    (= (throw.points test-data.throw.all-but-lsb-1) 9)
+    (= (throw.points test-data.throw.all-but-msb-0) 1)
+    (= (throw.points test-data.throw.all-but-msb-1) 9)
+    (= (throw.points test-data.throw.lower-half-0) 5)
+    (= (throw.points test-data.throw.upper-half-0) 5)
+    (= (throw.points test-data.throw.alt-bits-0) 5)
+    (= (throw.points test-data.throw.alt-bits-1) 5)
+    (= (throw.points test-data.throw.random-dense) 8)
+    (= (throw.points test-data.throw.random-sparse) 3)
+    (= (throw.points foul-throw) 0)
+    (= (throw.points unused-throw) 0)
+    (= (throw.points incomplete-throw) 0)))
+
+(check-sat)
+</code></pre></div></p>
+<p>The <code>throw.valid</code> predicate is trivial at this point, since there are no invalid throws.</p>
+<p>The <code>throw.points</code> function counts the number of "1" bits in the throw's bitvector. Honestly this would be a
+challenge for me as my smtlib2-fu isn't top grade, but my AI sidecar assistant helped me whip it out pretty quickly.
+The details aren't important so long as the test-cases can be proven. The curious reader can look at the comments in the source
+code, which explains how this function works.</p>
+<p>From file <code>throw.smt2</code>
+<div class="highlight"><pre><span></span><code>(define-fun throw.valid ((t Throw)) Bool
+  true)
+
+(define-fun throw.points ((t Throw)) Int
+  (bv2nat
+    (bvadd
+      ((_ zero_extend 3) ((_ extract 0 0) (pins t)))
+      ((_ zero_extend 3) ((_ extract 1 1) (pins t)))
+      ((_ zero_extend 3) ((_ extract 2 2) (pins t)))
+      ((_ zero_extend 3) ((_ extract 3 3) (pins t)))
+      ((_ zero_extend 3) ((_ extract 4 4) (pins t)))
+      ((_ zero_extend 3) ((_ extract 5 5) (pins t)))
+      ((_ zero_extend 3) ((_ extract 6 6) (pins t)))
+      ((_ zero_extend 3) ((_ extract 7 7) (pins t)))
+      ((_ zero_extend 3) ((_ extract 8 8) (pins t)))
+      ((_ zero_extend 3) ((_ extract 9 9) (pins t))))))
+</code></pre></div></p>
+<p>The test cases are provable: the response to the test's <code>(check-sat)</code> directive is <code>sat</code>.</p>
+<h3 id="foul-throws">Foul throws</h3>
+<p>There are a couple ways to represent foul throws vs legal throws. One is to use an algebraic constant, and the other is to just use a boolean field, with a constant value we can use to represent all foul throws.</p>
+<div class="highlight"><pre><span></span><code>;; Algebraic constant option
+(declare-datatype Throw (
+    foul                   ;; &lt;-- &quot;foul&quot; is a distinct Throw instance
+    (throw
+      (pins (_ BitVec 10)))))
+
+;; Boolean field option
+(declare-datatype Throw (
+    (throw
+      (pins (_ BitVec 10))
+      (foul Bool))))       ;; every throw has a boolean foul flag
+
+;; a single &quot;foul&quot; throw instance
+(declare-const foul-throw Throw
+  (throw
+    #b0000000000  ;; no pins knocked down
+    true))        ;; foul flag is true
+</code></pre></div>
+<p>This is a stylistic choice. I'm going with the boolean <code>foul</code> field and separate <code>foul-throw</code> constant. This just seems
+simpler to me.</p>
+<p>I need test-cases to show that:</p>
+<ul>
+<li>the <code>foul-throw</code> is valid</li>
+<li>any valid throw that knocks any pins down cannot be a foul throw</li>
+</ul>
+<p>Test-case in file "test-case.throw.validation.foul-throw.smt2"
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((t Throw))
+  (and
+    (foul t)
+    (throw.valid t)
+    (not (= #b0000000000 (pins t)))))
+)) :named test-case.throw.valid.foul-throw))
+
+(check-sat)
+</code></pre></div></p>
+<ul>
+<li>I like writing tests using the "there are no..." form, like this one. This test says "there are no throws that are
+  simultaneously a foul, and valid, and a have a non-zero set of pins knocked down." I use the mnemonic "TAN" --
+  "There Are No...". The real power of using a logic language and and SMT solver is the ability to cover <em>all possible</em>
+  cases in a single statement. This is the opposite of declarative unit tests, where you are simply stating a single
+  case that is true. Instead we can state the universe of all cases that must, or must not, be true.</li>
+<li>This case initially fails until we update the definition of the <code>throw.valid</code> predicate.</li>
+<li>We also need to update the various throw constant values defined previously to include a false <code>foul</code> field</li>
+</ul>
+<p>Update to the <code>throw.valid</code> predicate in file "throw.smt2":
+<div class="highlight"><pre><span></span><code>(define-fun throw.valid ((t Throw)) Bool
+  (or
+    (= foul-throw t)
+    (not (foul t))))
+</code></pre></div></p>
+<ul>
+<li>A throw is <em>either</em> the foul throw instance, <em>or</em> the <code>foul</code> flag is false. That is, the <em>only</em> valid foul throw is
+  <code>foul-throw</code>.</li>
+<li>Once we make this update and update the throw constants, the test-case above proves satisifiable.</li>
+</ul>
+<h3 id="splits">Splits</h3>
+<p>The USBC rules that define a "split" can be encoded as a utility function. In fact, the rule is so specific it
+makes more sense to just list out all the possible split combos rather than encode as a set of logical rules:</p>
+<div class="highlight"><pre><span></span><code>(define-fun is-split-pins ((pins (_ BitVec 10))) Bool
+  (or
+    (= #b0100001000 pins)   ;; &quot;2-7&quot; split
+    (= #b0010000001 pins)   ;; &quot;3-10&quot; split
+    (= #b0000001001 pins)   ;; &quot;7-10&quot; split
+    (= #b0100000001 pins)   ;; &quot;2-10&quot; split
+    (= #b0010001000 pins)   ;; &quot;3-7&quot; split
+    (= #b0001010000 pins)   ;; &quot;4-6&quot; split
+    (= #b0001001001 pins)   ;; &quot;4-7-10&quot; split
+    (= #b0101000001 pins)   ;; &quot;2-4-10&quot; split
+    (= #b0100001001 pins)   ;; &quot;2-7-10&quot; split
+    (= #b0010011000 pins)   ;; &quot;3-6-7&quot; split
+    (= #b0010010001 pins)   ;; &quot;3-6-10&quot; split
+    (= #b0101001000 pins)   ;; &quot;2-4-7&quot; split
+    (= #b0010010011 pins)   ;; &quot;3-6-9-10&quot; split
+    (= #b0001011001 pins)   ;; &quot;4-6-7-10&quot; split
+    (= #b0001011000 pins)   ;; &quot;4-6-7&quot; split
+    (= #b0001010001 pins))) ;; &quot;4-6-10&quot; split
+</code></pre></div>
+<ul>
+<li>Note: sometimes you'll hear a 5-6 or 6-7 configuration described as a "baby split". Neither of these
+  are "splits" by the USBC or IBF definitions.</li>
+<li>
+<p>Programmers may be attracted to defining a list or other data structure, and using an "in" operator to
+  define this function. Here why that's bad: algebraic data structures almost always imply recursion. Think
+  cons list, or tree, etc. A recursive datatype implies a possibly infinite value space. Actually, they almost <em>always</em> imply
+  an infinite value space. As stated above, SMT solvers don't do great when exploring infinite spaces. They can't
+  always reliably recognize the boundaries that seem obvious to us, and usually they (correctly) recognize potentially
+  infinite solutions that we humans instictively avoid, the same way we instinctively avoid looking at the sun. A cons
+  list node, for example, may theoretically always refer to itself as its own tail. Similarly a tree node may refer to
+  itself as its own left or right subtree. It's actually quite hard to define a recursive data structure that <em>only</em> has
+  acyclic graph values. That is, almost all recursive data types have valid cyclic graph values, and thus have an infinite
+  value space.</p>
+<p>Moral of the story: avoid recursive datatypes when first learning smtlib2 and using SMT solvers. Harken the
+bitter voice of experience, and take an easier path.</p>
+</li>
+</ul>
+<h3 id="representing-a-frame-and-a-frame-in-progress">Representing a Frame and a Frame in Progress</h3>
+<p>A frames consists of 2 throws, and up to two "bonus" throws for use when the frame includes a
+strike or a spare. We've already defined a <code>Throw</code> datatype, so we can start sketching out a <code>Frame</code>.</p>
+<blockquote>
+<p>Note: this is not how you usually think of a bowling frame, which is typically described as including "one or two
+throws, except in the case of the tenth frame which has 2 or 3 throws". <em>That</em> definition is how frames are
+represented in the <em>score card visualization</em>. The definition above is a lot simpler, and is what we use
+to define the <em>bowling algorithm</em>, which is different that the visualization. The visualization is convenient for
+humans to use. The description below makes more sense for theorem solvers.</p>
+</blockquote>
+<p>I know I will need a frame validation function as well, so I will start one. An initial definition simply requires
+all the frame's throws to be valid:</p>
+<p>File "frame.smt2":
+<div class="highlight"><pre><span></span><code>(declare-datatype Frame (
+  (frame
+    (throw_1 Throw)
+    (throw_2 Throw)
+    (bonus_1 Throw)
+    (bonus_2 Throw))))
+
+(define-fun frame.valid ((f Frame)) Bool
+  (and
+    (throw.valid (throw_1 f))
+    (throw.valid (throw_2 f))
+    (throw.valid (bonus_1 f))
+    (throw.valid (bonus_2 f))))
+</code></pre></div></p>
+<p>And just to make sure the frame validation function never strays, an assertion that there does not exist a valid frame
+whose throws are not valid:</p>
+<p>File :
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((f Frame))
+  (and
+    (frame.valid f)
+    (or
+      (not (throw.valid (throw_1 f)))
+      (not (throw.valid (throw_2 f)))
+      (not (throw.valid (bonus_1 f)))
+      (not (throw.valid (bonus_2 f)))))
+)) :named test-case.frame.validation.frame-validation-consist-with-all-throws ))
+</code></pre></div></p>
+<p>A lot of questions pop into my head immediately: how do I represent an "unthrown" throw? That is, what is the state
+of a frame's <code>throw_1</code> before the throw has been made? How do I represent unused throws; for example, the second throw
+when the first throw is a strike?</p>
+<p>I must start by defining a test-case. Otherwise, I'll be running around special-case land, distracted by
+a dozen cases each demanding my attention. Let's start with a test-case for an "empty frame". I'm not
+sure yet what an empty frame is... so I'll make an unconstrained placeholder constant, and assume test cases
+will guide me to complete it later.</p>
+<p>File "test-case.frame.validation.global-invariants.smt2":
+<div class="highlight"><pre><span></span><code>(define-const empty-frame Frame)
+
+;; Prove the empty frame is valid
+(assert
+  (frame.valid empty-frame))
+</code></pre></div></p>
+<p>I'm not saying much yet. This is really just saying "there exists a <code>Frame</code> that is valid, and we call it <code>empty-frame</code>".
+What distinguishes the empty frame from other frames? Primarily what is different is that a completely empty frame
+is a frame "in progress". It is incomplete, meaning throws can be applied to it.</p>
+<h4 id="a-frame-in-progress">A frame in progress</h4>
+<p>I realize what I need is a way to represent incomplete throws. The empty frame then is a frame consisting competely
+of incomplete throws. I'll see if I can simply add an <code>incomplete</code> flag to <code>Throw</code>, which triggers updates
+to the <code>Throw</code> constants already defined, and requires additions to <code>throw.valid</code> and the validation test cases:</p>
+<p>File "throw.smt2":
+<div class="highlight"><pre><span></span><code>(declare-datatype Throw (
+    (throw
+      (pins (_ BitVec 10))
+      (foul Bool)
+      (incomplete Bool))))   ;; every throw is either complete or incomplete
+
+;; a single &quot;incomplete&quot; throw instance
+(declare-const incomplete-throw Throw
+  (throw
+    #b0000000000  ;; no pins knocked down
+    false         ;; foul flag is false
+    true))        ;; incomplete flag is true
+
+(define-fun throw.valid ((t Throw)) Bool
+  (or
+    (= foul-throw t)
+    (= incomplete-throw t)
+    (and
+      (not (foul t)))
+      (not (incomplete t))))
+</code></pre></div></p>
+<ul>
+<li>A throw is either the foul throw, the incomplete throw, or is neither a foul nor incomplete</li>
+<li>Not shown: updates to the various throw constants defined for other throw validation test-cases. I just needed
+  to add an additional <code>false</code> param to their definitions to indicate none of them are incomplete.</li>
+</ul>
+<p>I must update the throw validation test-cases. I'm just going to make a new test case to prove the incomplete throw
+is a valid throw:</p>
+<p>File "test-case.throw.validation.incomplete-throw.smt2":
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((t Throw))
+  (and
+    (throw.valid t)
+    (incomplete t)
+    (or
+      (foul t)
+      (is-split-pins (pins t))
+      (not (= #b0000000000 (pins t)))))
+)) :named test-case.throw.validation.incomplete-throw))
+</code></pre></div></p>
+<ul>
+<li>There does not exist a valid, incomplete throw that is a foul, or is considered a "split", or that has any
+  pins knocked down at all.</li>
+</ul>
+<p>Now we're ready to define the empty frame, and it should be valid:</p>
+<p>File "frame.smt2":
+<div class="highlight"><pre><span></span><code>(define-const empty-frame Frame
+  (frame
+    incomplete-throw      ; throw_1
+    incomplete-throw      ; throw_2
+    incomplete-throw      ; bonus_1
+    incomplete-throw))    ; bonus_2
+</code></pre></div></p>
+<ul>
+<li>And indeed the previously-defined test-cases proves the empty-frame is now valid.</li>
+</ul>
+<h4 id="a-frames-score">A frame's score</h4>
+<p>A frame's score can be computed by summing the values of the frame's throws. Incomplete throws score 0.</p>
+<p>Added to file "frame.smt2":
+<div class="highlight"><pre><span></span><code>(define-fun frame.score ((f frame)) Int
+  (+
+    (throw.score (_ throw1 frame))
+    (throw.score (_ throw2 frame))
+    (throw.score (_ bonus1 frame))
+    (throw.score (_ bonus2 frame))))
+</code></pre></div></p>
+<h4 id="validating-a-frame-is-in-a-valid-game-state">Validating a frame is in a valid game state</h4>
+<p>Here is the state diagram defining the valid states and state transitions a single frame goes through
+as throws are applied to the frame.</p>
+<div class='puml-container'><div class="puml light" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="808px" preserveAspectRatio="xMidYMid meet" style="width:802px;height:808px;background:#FFFFFF;" version="1.1" viewBox="0 0 802 808" width="802px" zoomAndPan="magnify" class="diagram"><defs/><g><ellipse cx="274.19" cy="16" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/><g id="Initial"><rect fill="#F1F1F1" height="50.2656" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="98.4102" x="224.99" y="87"/><line style="stroke:#181818;stroke-width:0.5;" x1="224.99" x2="323.4002" y1="113.2969" y2="113.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="38.7393" x="254.8254" y="104.9951">Initial</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="78.4102" x="229.99" y="129.4355">empty-frame</text></g><g id="Strike"><rect fill="#F1F1F1" height="92.1719" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="240.3887" x="14" y="214.26"/><line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="254.3887" y1="240.5569" y2="240.5569"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.7422" x="113.8232" y="232.2551">Strike</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="220.3887" x="19" y="256.6955">throw_1 = valid throw, 10 pins down</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="114.6387" x="19" y="270.6643">throw_2 NOT USED</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="19" y="284.633">bonus_1 = incomplete-throw</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="19" y="298.6018">bonus_2 = incomplete-throw</text></g><g id="FirstStrikeBonus"><rect fill="#F1F1F1" height="92.1719" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="240.3887" x="7" y="383.43"/><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="247.3887" y1="409.7269" y2="409.7269"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114.4336" x="69.9775" y="401.4251">FirstStrikeBonus</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="220.3887" x="12" y="425.8655">throw_1 = valid throw, 10 pins down</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="114.6387" x="12" y="439.8343">throw_2 NOT USED</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="194.5664" x="12" y="453.803">bonus_1 = valid, not incomplete</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="12" y="467.7718">bonus_2 = incomplete-throw</text></g><g id="SecondStrikeBonus"><rect fill="#F1F1F1" height="92.1719" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="240.3887" x="7" y="627.78"/><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="247.3887" y1="654.0769" y2="654.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="135.4746" x="59.457" y="645.7751">SecondStrikeBonus</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="220.3887" x="12" y="670.2155">throw_1 = valid throw, 10 pins down</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="114.6387" x="12" y="684.1843">throw_2 NOT USED</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="194.5664" x="12" y="698.153">bonus_1 = valid, not incomplete</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="194.5664" x="12" y="712.1218">bonus_2 = valid, not incomplete</text></g><ellipse cx="409.19" cy="791.95" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/><ellipse cx="409.19" cy="791.95" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/><g id="FirstThrow"><rect fill="#F1F1F1" height="92.1719" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="254.2578" x="291.07" y="214.26"/><line style="stroke:#181818;stroke-width:0.5;" x1="291.07" x2="545.3278" y1="240.5569" y2="240.5569"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.6777" x="381.36" y="232.2551">FirstThrow</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="234.2578" x="296.07" y="256.6955">throw_1 = valid throw, &lt; 10 pins down</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="171.4395" x="296.07" y="270.6643">throw_2 = incomplete-throw</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="296.07" y="284.633">bonus_1 = incomplete-throw</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="296.07" y="298.6018">bonus_2 NOT USED</text></g><g id="Spare"><rect fill="#F1F1F1" height="92.1719" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="271.6426" x="282.37" y="383.43"/><line style="stroke:#181818;stroke-width:0.5;" x1="282.37" x2="554.0126" y1="409.7269" y2="409.7269"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.7217" x="397.8304" y="401.4251">Spare</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="234.2578" x="287.37" y="425.8655">throw_1 = valid throw, &lt; 10 pins down</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="251.6426" x="287.37" y="439.8343">throw_2 = valid throw, 10 pins down total</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="287.37" y="453.803">bonus_1 = incomplete-throw</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="287.37" y="467.7718">bonus_2 NOT USED</text></g><g id="FirstSpareBonus"><rect fill="#F1F1F1" height="92.1719" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="254.2578" x="282.07" y="627.78"/><line style="stroke:#181818;stroke-width:0.5;" x1="282.07" x2="536.3278" y1="654.0769" y2="654.0769"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114.4131" x="351.9924" y="645.7751">FirstSpareBonus</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="234.2578" x="287.07" y="670.2155">throw_1 = valid throw, &lt; 10 pins down</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="220.3887" x="287.07" y="684.1843">throw_2 = valid throw, 10 pins down</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="232.7813" x="287.07" y="698.153">bonus_1 = valid throw, not incomplete</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="287.07" y="712.1218">bonus_2 NOT USED</text></g><g id="Scratch"><rect fill="#F1F1F1" height="92.1719" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="285.5117" x="510.44" y="505.61"/><line style="stroke:#181818;stroke-width:0.5;" x1="510.44" x2="795.9517" y1="531.9069" y2="531.9069"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52.9785" x="626.7066" y="523.6051">Scratch</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="234.2578" x="515.44" y="548.0455">throw_1 = valid throw, &lt; 10 pins down</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="265.5117" x="515.44" y="562.0143">throw_2 = valid throw, &lt; 10 pins down total</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="515.44" y="575.983">bonus_1 NOT USED</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="515.44" y="589.9518">bonus_2 NOT USED</text></g><g class="link" data-entity-1="*start*" data-entity-2="Initial" data-source-line="3" data-uid="lnk4" id="link_*start*_Initial"><path d="M274.19,26.37 C274.19,40.32 274.19,61.02 274.19,80.74" fill="none" id="*start*-to-Initial" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="274.19,86.74,278.19,77.74,274.19,81.74,270.19,77.74,274.19,86.74" style="stroke:#181818;stroke-width:1;"/></g><g class="link" data-entity-1="Initial" data-entity-2="Strike" data-source-line="4" data-uid="lnk6" id="link_Initial_Strike"><path d="M250.76,137.6 C230.91,158.33 206.0687,184.2754 181.9687,209.4554" fill="none" id="Initial-to-Strike" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="177.82,213.79,186.9327,210.0539,181.2772,210.1779,181.1533,204.5224,177.82,213.79" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105.4028" x="222.19" y="180.3269">First throw = 10</text></g><g class="link" data-entity-1="Strike" data-entity-2="FirstStrikeBonus" data-source-line="6" data-uid="lnk8" id="link_Strike_FirstStrikeBonus"><path d="M132.3,306.59 C131.31,330.28 130.3526,353.2253 129.3526,376.9553" fill="none" id="Strike-to-FirstStrikeBonus" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="129.1,382.95,133.4754,374.1264,129.3105,377.9544,125.4825,373.7896,129.1,382.95" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="158.1455" x="132.19" y="349.4969">First bonus throw added</text></g><g class="link" data-entity-1="FirstStrikeBonus" data-entity-2="SecondStrikeBonus" data-source-line="7" data-uid="lnk10" id="link_FirstStrikeBonus_SecondStrikeBonus"><path d="M127.19,476.1 C127.19,519.43 127.19,578.23 127.19,621.49" fill="none" id="FirstStrikeBonus-to-SecondStrikeBonus" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="127.19,627.49,131.19,618.49,127.19,622.49,123.19,618.49,127.19,627.49" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="177.6836" x="128.19" y="556.2569">Second bonus throw added</text></g><g class="link" data-entity-1="SecondStrikeBonus" data-entity-2="*end*" data-source-line="8" data-uid="lnk12" id="link_SecondStrikeBonus_*end*"><path d="M237.84,720.41 C301.1,746.45 367.3822,773.735 393.4822,784.485" fill="none" id="SecondStrikeBonus-to-*end*" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="399.03,786.77,392.2316,779.6439,394.4068,784.8658,389.1849,787.041,399.03,786.77" style="stroke:#181818;stroke-width:1;"/></g><g class="link" data-entity-1="Initial" data-entity-2="FirstThrow" data-source-line="10" data-uid="lnk14" id="link_Initial_FirstThrow"><path d="M303.89,137.73 C314.36,146.75 326.04,157.21 336.19,167.26 C350.95,181.87 362.3226,194.1289 375.7026,209.3089" fill="none" id="Initial-to-FirstThrow" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="379.67,213.81,376.7197,204.4134,376.3639,210.0591,370.7182,209.7033,379.67,213.81" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105.4028" x="353.19" y="180.3269">First throw &lt; 10</text></g><g class="link" data-entity-1="FirstThrow" data-entity-2="Spare" data-source-line="11" data-uid="lnk16" id="link_FirstThrow_Spare"><path d="M418.19,306.59 C418.19,330.28 418.19,353.22 418.19,376.95" fill="none" id="FirstThrow-to-Spare" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="418.19,382.95,422.19,373.95,418.19,377.95,414.19,373.95,418.19,382.95" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64.854" x="419.19" y="349.4969">Sum = 10</text></g><g class="link" data-entity-1="Spare" data-entity-2="FirstSpareBonus" data-source-line="12" data-uid="lnk18" id="link_Spare_FirstSpareBonus"><path d="M379.74,475.8 C373.75,485.12 368.48,495.26 365.19,505.61 C352.8,544.65 354.46,558.24 365.19,597.78 C367.93,607.84 369.5357,612.647 374.5857,622.027" fill="none" id="Spare-to-FirstSpareBonus" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="377.43,627.31,376.6856,617.4893,375.0598,622.9075,369.6416,621.2817,377.43,627.31" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="126.3755" x="366.19" y="556.2569">Bonus throw added</text></g><g class="link" data-entity-1="FirstSpareBonus" data-entity-2="*end*" data-source-line="13" data-uid="lnk19" id="link_FirstSpareBonus_*end*"><path d="M409.19,720.41 C409.19,742.52 409.19,761.16 409.19,774.68" fill="none" id="FirstSpareBonus-to-*end*" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="409.19,780.68,413.19,771.68,409.19,775.68,405.19,771.68,409.19,780.68" style="stroke:#181818;stroke-width:1;"/></g><g class="link" data-entity-1="FirstThrow" data-entity-2="Scratch" data-source-line="15" data-uid="lnk21" id="link_FirstThrow_Scratch"><path d="M487.89,306.74 C516.25,327.65 547.79,354.29 571.19,383.43 C600.86,420.38 621.2481,464.2208 635.1181,499.7508" fill="none" id="FirstThrow-to-Scratch" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="637.3,505.34,637.7533,495.5016,635.4818,500.6823,630.301,498.4108,637.3,505.34" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64.854" x="543.19" y="349.4969">Sum &lt; 10</text></g><g class="link" data-entity-1="Scratch" data-entity-2="*end*" data-source-line="16" data-uid="lnk22" id="link_Scratch_*end*"><path d="M635.12,598.04 C618.6,634.77 591.12,685.83 554.19,719.95 C512.4,758.56 451.4736,778.9125 425.6536,786.3825" fill="none" id="Scratch-to-*end*" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="419.89,788.05,429.6471,789.3912,424.693,786.6604,427.4238,781.7064,419.89,788.05" style="stroke:#181818;stroke-width:1;"/></g></g></svg></div><div class="puml dark" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="808px" preserveAspectRatio="xMidYMid meet" style="width:802px;height:808px;background:#1B1B1B;" version="1.1" viewBox="0 0 802 808" width="802px" zoomAndPan="magnify" class="diagram"><defs/><g><rect fill="#1B1B1B" height="808" style="stroke:none;stroke-width:1;" width="802" x="0" y="0"/><ellipse cx="274.19" cy="16" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/><g id="Initial"><rect fill="#313139" height="50.2656" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="98.4102" x="224.99" y="87"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="224.99" x2="323.4002" y1="113.2969" y2="113.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="38.7393" x="254.8254" y="104.9951">Initial</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="78.4102" x="229.99" y="129.4355">empty-frame</text></g><g id="Strike"><rect fill="#313139" height="92.1719" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="240.3887" x="14" y="214.26"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="14" x2="254.3887" y1="240.5569" y2="240.5569"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.7422" x="113.8232" y="232.2551">Strike</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="220.3887" x="19" y="256.6955">throw_1 = valid throw, 10 pins down</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="114.6387" x="19" y="270.6643">throw_2 NOT USED</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="19" y="284.633">bonus_1 = incomplete-throw</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="19" y="298.6018">bonus_2 = incomplete-throw</text></g><g id="FirstStrikeBonus"><rect fill="#313139" height="92.1719" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="240.3887" x="7" y="383.43"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="7" x2="247.3887" y1="409.7269" y2="409.7269"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114.4336" x="69.9775" y="401.4251">FirstStrikeBonus</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="220.3887" x="12" y="425.8655">throw_1 = valid throw, 10 pins down</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="114.6387" x="12" y="439.8343">throw_2 NOT USED</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="194.5664" x="12" y="453.803">bonus_1 = valid, not incomplete</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="12" y="467.7718">bonus_2 = incomplete-throw</text></g><g id="SecondStrikeBonus"><rect fill="#313139" height="92.1719" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="240.3887" x="7" y="627.78"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="7" x2="247.3887" y1="654.0769" y2="654.0769"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="135.4746" x="59.457" y="645.7751">SecondStrikeBonus</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="220.3887" x="12" y="670.2155">throw_1 = valid throw, 10 pins down</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="114.6387" x="12" y="684.1843">throw_2 NOT USED</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="194.5664" x="12" y="698.153">bonus_1 = valid, not incomplete</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="194.5664" x="12" y="712.1218">bonus_2 = valid, not incomplete</text></g><ellipse cx="409.19" cy="791.95" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/><ellipse cx="409.19" cy="791.95" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/><g id="FirstThrow"><rect fill="#313139" height="92.1719" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="254.2578" x="291.07" y="214.26"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="291.07" x2="545.3278" y1="240.5569" y2="240.5569"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.6777" x="381.36" y="232.2551">FirstThrow</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="234.2578" x="296.07" y="256.6955">throw_1 = valid throw, &lt; 10 pins down</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="171.4395" x="296.07" y="270.6643">throw_2 = incomplete-throw</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="296.07" y="284.633">bonus_1 = incomplete-throw</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="296.07" y="298.6018">bonus_2 NOT USED</text></g><g id="Spare"><rect fill="#313139" height="92.1719" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="271.6426" x="282.37" y="383.43"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="282.37" x2="554.0126" y1="409.7269" y2="409.7269"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.7217" x="397.8304" y="401.4251">Spare</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="234.2578" x="287.37" y="425.8655">throw_1 = valid throw, &lt; 10 pins down</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="251.6426" x="287.37" y="439.8343">throw_2 = valid throw, 10 pins down total</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="173.4609" x="287.37" y="453.803">bonus_1 = incomplete-throw</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="287.37" y="467.7718">bonus_2 NOT USED</text></g><g id="FirstSpareBonus"><rect fill="#313139" height="92.1719" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="254.2578" x="282.07" y="627.78"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="282.07" x2="536.3278" y1="654.0769" y2="654.0769"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114.4131" x="351.9924" y="645.7751">FirstSpareBonus</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="234.2578" x="287.07" y="670.2155">throw_1 = valid throw, &lt; 10 pins down</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="220.3887" x="287.07" y="684.1843">throw_2 = valid throw, 10 pins down</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="232.7813" x="287.07" y="698.153">bonus_1 = valid throw, not incomplete</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="287.07" y="712.1218">bonus_2 NOT USED</text></g><g id="Scratch"><rect fill="#313139" height="92.1719" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="285.5117" x="510.44" y="505.61"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="510.44" x2="795.9517" y1="531.9069" y2="531.9069"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52.9785" x="626.7066" y="523.6051">Scratch</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="234.2578" x="515.44" y="548.0455">throw_1 = valid throw, &lt; 10 pins down</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="265.5117" x="515.44" y="562.0143">throw_2 = valid throw, &lt; 10 pins down total</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="515.44" y="575.983">bonus_1 NOT USED</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="116.6602" x="515.44" y="589.9518">bonus_2 NOT USED</text></g><g class="link" data-entity-1="*start*" data-entity-2="Initial" data-source-line="3" data-uid="lnk4" id="link_*start*_Initial"><path d="M274.19,26.37 C274.19,40.32 274.19,61.02 274.19,80.74" fill="none" id="*start*-to-Initial" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="274.19,86.74,278.19,77.74,274.19,81.74,270.19,77.74,274.19,86.74" style="stroke:#E7E7E7;stroke-width:1;"/></g><g class="link" data-entity-1="Initial" data-entity-2="Strike" data-source-line="4" data-uid="lnk6" id="link_Initial_Strike"><path d="M250.76,137.6 C230.91,158.33 206.0687,184.2754 181.9687,209.4554" fill="none" id="Initial-to-Strike" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="177.82,213.79,186.9327,210.0539,181.2772,210.1779,181.1533,204.5224,177.82,213.79" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105.4028" x="222.19" y="180.3269">First throw = 10</text></g><g class="link" data-entity-1="Strike" data-entity-2="FirstStrikeBonus" data-source-line="6" data-uid="lnk8" id="link_Strike_FirstStrikeBonus"><path d="M132.3,306.59 C131.31,330.28 130.3526,353.2253 129.3526,376.9553" fill="none" id="Strike-to-FirstStrikeBonus" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="129.1,382.95,133.4754,374.1264,129.3105,377.9544,125.4825,373.7896,129.1,382.95" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="158.1455" x="132.19" y="349.4969">First bonus throw added</text></g><g class="link" data-entity-1="FirstStrikeBonus" data-entity-2="SecondStrikeBonus" data-source-line="7" data-uid="lnk10" id="link_FirstStrikeBonus_SecondStrikeBonus"><path d="M127.19,476.1 C127.19,519.43 127.19,578.23 127.19,621.49" fill="none" id="FirstStrikeBonus-to-SecondStrikeBonus" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="127.19,627.49,131.19,618.49,127.19,622.49,123.19,618.49,127.19,627.49" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="177.6836" x="128.19" y="556.2569">Second bonus throw added</text></g><g class="link" data-entity-1="SecondStrikeBonus" data-entity-2="*end*" data-source-line="8" data-uid="lnk12" id="link_SecondStrikeBonus_*end*"><path d="M237.84,720.41 C301.1,746.45 367.3822,773.735 393.4822,784.485" fill="none" id="SecondStrikeBonus-to-*end*" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="399.03,786.77,392.2316,779.6439,394.4068,784.8658,389.1849,787.041,399.03,786.77" style="stroke:#E7E7E7;stroke-width:1;"/></g><g class="link" data-entity-1="Initial" data-entity-2="FirstThrow" data-source-line="10" data-uid="lnk14" id="link_Initial_FirstThrow"><path d="M303.89,137.73 C314.36,146.75 326.04,157.21 336.19,167.26 C350.95,181.87 362.3226,194.1289 375.7026,209.3089" fill="none" id="Initial-to-FirstThrow" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="379.67,213.81,376.7197,204.4134,376.3639,210.0591,370.7182,209.7033,379.67,213.81" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105.4028" x="353.19" y="180.3269">First throw &lt; 10</text></g><g class="link" data-entity-1="FirstThrow" data-entity-2="Spare" data-source-line="11" data-uid="lnk16" id="link_FirstThrow_Spare"><path d="M418.19,306.59 C418.19,330.28 418.19,353.22 418.19,376.95" fill="none" id="FirstThrow-to-Spare" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="418.19,382.95,422.19,373.95,418.19,377.95,414.19,373.95,418.19,382.95" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64.854" x="419.19" y="349.4969">Sum = 10</text></g><g class="link" data-entity-1="Spare" data-entity-2="FirstSpareBonus" data-source-line="12" data-uid="lnk18" id="link_Spare_FirstSpareBonus"><path d="M379.74,475.8 C373.75,485.12 368.48,495.26 365.19,505.61 C352.8,544.65 354.46,558.24 365.19,597.78 C367.93,607.84 369.5357,612.647 374.5857,622.027" fill="none" id="Spare-to-FirstSpareBonus" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="377.43,627.31,376.6856,617.4893,375.0598,622.9075,369.6416,621.2817,377.43,627.31" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="126.3755" x="366.19" y="556.2569">Bonus throw added</text></g><g class="link" data-entity-1="FirstSpareBonus" data-entity-2="*end*" data-source-line="13" data-uid="lnk19" id="link_FirstSpareBonus_*end*"><path d="M409.19,720.41 C409.19,742.52 409.19,761.16 409.19,774.68" fill="none" id="FirstSpareBonus-to-*end*" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="409.19,780.68,413.19,771.68,409.19,775.68,405.19,771.68,409.19,780.68" style="stroke:#E7E7E7;stroke-width:1;"/></g><g class="link" data-entity-1="FirstThrow" data-entity-2="Scratch" data-source-line="15" data-uid="lnk21" id="link_FirstThrow_Scratch"><path d="M487.89,306.74 C516.25,327.65 547.79,354.29 571.19,383.43 C600.86,420.38 621.2481,464.2208 635.1181,499.7508" fill="none" id="FirstThrow-to-Scratch" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="637.3,505.34,637.7533,495.5016,635.4818,500.6823,630.301,498.4108,637.3,505.34" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64.854" x="543.19" y="349.4969">Sum &lt; 10</text></g><g class="link" data-entity-1="Scratch" data-entity-2="*end*" data-source-line="16" data-uid="lnk22" id="link_Scratch_*end*"><path d="M635.12,598.04 C618.6,634.77 591.12,685.83 554.19,719.95 C512.4,758.56 451.4736,778.9125 425.6536,786.3825" fill="none" id="Scratch-to-*end*" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="419.89,788.05,429.6471,789.3912,424.693,786.6604,427.4238,781.7064,419.89,788.05" style="stroke:#E7E7E7;stroke-width:1;"/></g></g></svg></div></div>
+
+<p>There are a bunch of states there, and I expect the <code>frame.valid</code> predicate is
+going to reflect that. I expect it will eventually take the shape of a large disjuncture, with one subclause each
+per state. It will end up being shaped something like this:</p>
+<p>Sketch of <code>frame.valid</code> predicate
+<div class="highlight"><pre><span></span><code>(define-fun frame.valid ((f Frame)) Bool
+  (and
+    ;; invariant conditions, such as
+    ;; - member throws are all valid
+    ;; - two normal throws in the same frame can&#39;t knock down the same pin
+    ;; - two bonus throws in the same frame can&#39;t knock down the same pin UNLESS the
+    ;;   first throw is a strike
+    ;; ...
+
+    ;; state-specific conditions
+    (or
+      ;; Initial state
+      (the frame is equal to the empty-frame)
+
+      ;; FirstThrow state
+      (and
+        (throw_1 is not incomplete)
+        (throw_1 is not a strike)
+        (throw_2 is incomplete
+        (bonus_1 is incomplete)
+        (bonus_2 is UNUSED))
+
+      ;; Scratch state
+      (and
+        (throw_1 is not incomplete)
+        (throw_1 is not a strike)
+        (throw_2 is not incomplete)
+        (throw_2 and throw_1 together don&#39;t make a spare)
+        (bonus_1 is UNUSED)
+        (bonus_2 is UNUSED))
+
+      ...))))
+</code></pre></div></p>
+<ul>
+<li>the invariant conditions apply no matter what</li>
+<li>for each state I define all the conditions that prove the frame is in that state and in no other state</li>
+<li>I also require additional conditions that apply to that specific state</li>
+</ul>
+<p>If smtlib2 had a pattern-matching syntax (like Scala's <code>match</code> or Haskell's <code>case</code> statements) this would be the perfect
+place to apply it. But smtlib2 doesn't have anything like that in the current version (version 2.7 as of the time
+this text is written), so we have to "roll our own" using explicit conditional logic.</p>
+<h5 id="representing-unused-throws-within-a-frame">Representing unused throws within a frame</h5>
+<p>Initially in all frames <code>throw1</code> and <code>throw2</code> are <code>incomplete</code>, and the bonus throws are also <code>incomplete</code>. Consider the
+case of a frame after applying a throw of &lt; 10 pins (<code>FirstThrow</code> in diagram above):</p>
+<ul>
+<li>The <code>throw1</code> field captures the throw</li>
+<li>The <code>throw2</code> field remains <code>incomplete</code>. We need at least 1 more throw to complete this frame.</li>
+<li><code>bonus1</code> remains <code>incomplete</code>. The frame <em>may</em> ultimately contain a spare, in which case <code>bonus1</code> will need to get
+  filled in. </li>
+<li><code>bonus2</code> field becomes somehow "unused" -- we know for sure at this point that <code>bonus2</code> will be unused.</li>
+</ul>
+<p>I'm going to need to be able to represent an "unused" throw, which is different than an incomplete throw. An incomplete
+throw is a placeholder for a frame's throw happening in the future. An <em>unused</em> throw is a throw we definitely
+known will <em>not</em> be used, such as <code>bonus_2</code> when the first throw is not a strike.</p>
+<p>I've had little problems thus far adding boolean fields to the <code>Throw</code> datatype, so I'm going to try that again.
+I am adding an <code>unused</code> boolean field to <code>Throw</code> and a constant <code>unused-throw</code>, with associated updates to the
+<code>throw.valid</code> predicate.</p>
+<p>File "throw.smt2":
+<div class="highlight"><pre><span></span><code>(declare-datatype Throw (
+  (throw
+    (pins (_ BitVec 10))
+    (foul Bool)
+    (unused Bool)
+    (incomplete Bool))))
+
+(declare-const unused-throw Throw
+  (throw
+    #b0000000000  ;; no pins knocked down
+    false         ;; foul flag is false
+    true          ;; unused flag is true
+    false))       ;; incomplete flag is false
+
+(define-fun throw.valid ((t Throw)) Bool
+  (or
+    (= foul-throw t)
+    (= unused-throw t)
+    (= incomplete-throw t)
+    (and
+      (not (foul t))
+      (not (unused t))
+      (not (incomplete t)))))
+</code></pre></div></p>
+<ul>
+<li>a throw is either the foul throw, the unused throw, the incomplete throw, or is neither a foul nor unused nor incomplete</li>
+</ul>
+<p>I add a test-case proving the <code>unused-throw</code> is valid.</p>
+<p>File "test-case.throw.validation.unused-throw.smt2"
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((t Throw))
+  (and
+    (throw.valid t)
+    (unused t)
+    (or
+      (foul t)
+      (incomplete t)
+      (is-split-pins (pins t))
+      (not (= #b0000000000 (pins t)))))
+)) :named test-case.throw.validation.unused-throw))
+</code></pre></div></p>
+<p>After making sure all test-cases are satisfiable, I believe I'm ready to define the validation rules for all those frame
+states.</p>
+<h5 id="a-scratch-frame-with-either-one-or-two-throws-complete">A scratch frame, with either one or two throws complete</h5>
+<p>I'm going to define the test-cases proving the assertions we expect to be true about scratch (non-strike, non-spare) frames.
+These tests prove that <code>frame.valid</code> assumptions hold for frames in either the <code>FirstThrow</code> or <code>Scratch</code> states. I can use
+the "There Are No..." test-case pattern to prove the following conditions cannot exist in in a valid frame
+that is neither a strike nor a spare. </p>
+<ul>
+<li>the first throw is unused</li>
+<li>the second throw is unused</li>
+<li>the first throw is complete AND the second bonus throw is not unused, OR the first throw
+  is incomplete AND the second bonus throw is not incomplete</li>
+<li>Or stated oppositely IF the first throw is complete, THEN the second bonus throw must be unused; and IF then first throw
+    is incomplete, THEN the second bonus throw must also be incomplete</li>
+<li>the second throw is complete AND the first bonus throw is not unused, OR the second throw
+  is incomplete AND the first bonus throw is not incomplete</li>
+<li>Or stated oppositely IF the second throw is complete, THEN the first bonus throw must be unused; and I the second
+    throw is incomplete, THEN the first bnus throw must be incomplete</li>
+</ul>
+<p>File "test-case.frame.validation.scratch-invariants.smt2":
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((f Frame))
+  (and
+    (frame.valid f)
+    (not (= #b1111111111 (bvor (pins (throw_1 f)) (pins (throw_2 f)))))
+    (or
+      (unused (throw_1 f))
+      (unused (throw_2 f))
+      (or
+        (and
+          (not (incomplete (throw_1 f)))
+          (not (unused (bonus_2 f))))
+        (and
+          (incomplete (throw_1 f))
+          (not (incomplete (bonus_2 f)))))
+      (or
+        (and
+          (not (incomplete (throw_2 f)))
+          (not (unused (bonus_1 f))))
+        (and
+          (incomplete (throw_2 f))
+          (not (incomplete (bonus_1 f)))))))
+)) :named test-case.frame.validation.scratch-invariants ))
+</code></pre></div></p>
+<p>And now I need to define <code>frame.valid</code> to make these conditions hold. These are the guard conditions and assertions in
+<code>frame.valid</code> that cause this assertion to be satified:</p>
+<div class="highlight"><pre><span></span><code>      ;; &quot;FirstThrow&quot; state
+      (and
+        (not (incomplete (throw_1 f)))
+        (not (unused (throw_1 f)))
+        (not (= #b1111111111 (pins (throw_1 f))))
+        (incomplete (throw_2 f))
+        (incomplete (bonus_1 f))
+        (unused (bonus_2 f)))
+
+      ;; &quot;Scratch&quot; state
+      (and
+        (not (incomplete (throw_1 f)))
+        (not (unused (throw_1 f)))
+        (not (= #b1111111111 (pins (throw_1 f))))
+        (not (incomplete (throw_2 f)))
+        (not (unused (throw_2 f)))
+        (= #b1111111111 (bvor (pins (throw_1 f)) (pins (throw_2 f))))
+        (not (unused (bonus_1 f)))
+        (unused (bonus_2 f)))
+</code></pre></div>
+<ul>
+<li>I am just combining both the conditions that distinguish the "FirstThrow" and "Scratch" states from other states,
+  and also the conditions that must be true in each of those states</li>
+<li>After updating the definition of <code>frame.valid</code> with these clauses, the tet-case is satisfiable, meaning <code>frame.valid</code>
+  will correctly validate frames in either state.</li>
+</ul>
+<h5 id="the-partially-and-completed-spare-states">The partially and completed spare states</h5>
+<p>I then move on to validating the <code>Spare</code> and <code>FirstSpareBonus</code> states state in the diagram above.</p>
+<p>The conditions that define both states:
+- <code>throw_1</code> is not incomplete or unused, and is not a strike
+- <code>throw_2</code> also is not incomplete or unused
+- the pins knocked down by <code>throw_1</code> and <code>throw_2</code> combined knock down all 10 pins</p>
+<p>In the <code>Spare</code> state, the following must also be true:
+- <code>bonus_1</code> is incomplete
+- <code>bonus_2</code> is unused</p>
+<p>And in the <code>FirstSpareBonus</code> state, the following must be true:
+- <code>bonus_1</code> is not incomplete and not unused
+- <code>bonus_2</code> is unused</p>
+<p>I can make a single "There Are No" test-case verifying there are no valid frames where the common conditions are met and the
+state-specific conditions are not met:</p>
+<p>File "test-case.frame.validation.spare-invariants.smt2"
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((f Frame))
+  (and
+    (frame.valid f)
+    (not (= strike-throw (throw_1 f)))
+    (= #b1111111111 (bvor (pins (throw_1 f)) (pins (throw_2 f))))
+    (or
+      (= strike-throw (throw_1 f))
+      (incomplete (throw_1 f))
+      (incomplete (throw_2 f))
+      (not (= 10 (+ (throw.points (throw_1 f)) (throw.points (throw_2 f)))))
+      (= unused-throw (bonus_1 f))
+      (not (= unused-throw (bonus_2 f)))))
+)) :named test-case.frame.validation.spare-invariants ))
+</code></pre></div></p>
+<p>Initially this assertion cannot be satisfied. We need to augment <code>frame.valid</code> to make this assertion hold.</p>
+<div class="highlight"><pre><span></span><code>      ;; Spare and FirstSpareBonus states
+      (and
+        (not (incomplete (throw_1 f)))
+        (not (unused (throw_1 f)))
+        (not (= #b1111111111 (pins (throw_1 f))))
+        (not (incomplete (throw_2 f)))
+        (not (unused (throw_2 f)))
+        (= #b1111111111 (bvor (pins (throw_1 f)) (pins (throw_2 f))))
+        (not (unused (bonus_1 f)))
+        (unused (bonus_2 f)))
+</code></pre></div>
+<h5 id="a-strike-and-bonus-throws-completing-a-strike-frame">A strike and bonus throws completing a strike frame</h5>
+<p>The three states not yet defined by <code>frame.valid</code> include <code>Strike</code>, <code>FirstStrikeBonus</code>, and <code>SecondStrikeBonus</code>.
+The common conditions to all three states:</p>
+<ul>
+<li><code>throw_1</code> is a strike</li>
+<li><code>throw_2</code> is unused</li>
+<li><code>bonus_1</code> and <code>bonus_2</code> are both not unused</li>
+</ul>
+<p>I plan on creating a single test-case proving all valid frames have throws completed in the correct order next, so I'm
+not going to duplicately encode the conditions that <code>bonus_1</code> and <code>bonus_2</code> are strictly completed in order here as well.
+So without that requirement, the test-case that covers all 3 of these states can be stated pretty succinctly.</p>
+<p>File "test-case.frame.validation.strike-invariants.smt2":
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((f Frame))
+  (and
+    (frame.valid f)
+    (= #b1111111111 (pins (throw_1 f)))
+    (or
+      (not (= unused-throw (throw_2 f)))
+      (= unused-throw (bonus_1 f))
+      (= unused-throw (bonus_2 f))))
+)) :named test-case.frame.validation.strike-invariants ))
+</code></pre></div></p>
+<p>The <code>frame.valid</code> condition augmentation the makes this clause satisfiable looks like a cheat. I'm just stating the same
+thing a little differently.</p>
+<div class="highlight"><pre><span></span><code>      (and
+        (= #b1111111111 (pins (throw_1 f)))
+        (unused (throw_2 f))
+        (not (unused (bonus_1 f)))
+        (not (unused (bonus_2 f))))
+</code></pre></div>
+<h5 id="throws-completed-in-order">Throws completed in order</h5>
+<p>Whether the frame is a scratch, spare or strike, the throws all need to be completed in-order. There are no valid
+frames where, for example, the second throw not incomplete while the first is incomplete.</p>
+<p>I can define a test-case assertion that verifies there are no valid frames where a later throw is completed
+before an earlier throw. I find this set of conditions is easier to think about together, rather than spread these
+conditions out amongst the state verification tests and validation conditions.</p>
+<p>I've create a single test-case and a single validation clause that makes the test-case satisfiable. This test-case asserts
+that there are no valid frames where</p>
+<ul>
+<li>the second throw is complete and the first throw is not complete</li>
+<li>the first bonus throw is complete and the second regular throw is not</li>
+<li>the second bonus throw is complete and the first bonus throw is not complete</li>
+<li>the second bonus throw is incomplete and the first regular throw is incomplete</li>
+</ul>
+<p>File "test-case.frame.validation.throws-completed-in-order.smt2":
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((f Frame))
+  (and
+    (frame.validation f)
+    (or
+      (and (not (incomplete (throw_2 f))) (incomplete (throw_1 f)))
+      (and (not (incomplete (bonus_1 f))) (incomplete (throw_2 f)))
+      (and (not (incomplete (bonus_2 f)))
+        (or
+          (and
+            (= strike-throw (throw_1 f))
+            (incomplete (bonus_1 f)))
+          (and
+            (not (= strike-throw (throw_1 f)))
+            (incomplete (throw_1 f)))))))
+)) :named test-case.frame.validation.throws-completed-in-order ))
+</code></pre></div></p>
+<p>Additional condition in "frame.smt2" making this test satisifable:
+<div class="highlight"><pre><span></span><code>(and
+    (=&gt; (not (incomplete (throw_2 f))) (not (incomplete (throw_1 f))))
+    (=&gt; (not (incomplete (bonus_1 f))) (not (incomplete (throw_2 f))))
+    (=&gt; (not (incomplete (bonus_2 f)))
+      (or
+        (and
+          (not (= #b1111111111 (pins (throw_1 f))))
+          (not (incomplete (throw_1 f))))
+        (and
+          (= #b1111111111 (pins (throw_1 f)))
+          (not (incomplete (bonus_1 f)))))))
+</code></pre></div></p>
+<ul>
+<li>Note: the <code>=&gt;</code> operator is the "implies" operator. If the left clause is true, then the right clause must also be true
+  (the inverse is not necessarily true).</li>
+</ul>
+<h4 id="incrementally-accumulating-throws-in-a-frame">Incrementally accumulating throws in a frame</h4>
+<p>Apply a throw to a frame transitions the frame from one state to another in the diagram above. As in all OSMs, we define
+an <em>operation</em> datatype and associated value validation predicate to encode a state change.</p>
+<p>An OSM operation always includes a <em>prior</em> state value, a <em>post</em> state value, and any <em>input</em> values that parameterize
+the transition. Here's my definition of <code>Frame.ApplyThrowOp</code>:</p>
+<p>File "frame-ops.smt2":
+<div class="highlight"><pre><span></span><code>(declare-datatype Frame.ApplyThrowOp (
+  (frame.apply-throw
+    (prior_frame Frame)
+    (post_frame Frame)
+    (throw Throw))))
+</code></pre></div></p>
+<p>The validation predicate <code>frame.apply-throw-op.valid</code> verifies that a throw application is valid. That is,
+it returns <code>true</code> if the post frame is equal to the prior frame with the throw applied to it.</p>
+<p>I'm going to start by defining the predicate to only require the member values are valid. This implementation is going
+to be far too accepting, as it will evaluate to <code>true</code> for far too many cases. Then I will define a series of
+test-cases that prove the predicate is constrained to behave like I expect it to, and update the predicate to
+pass the test cases.</p>
+<p>File "frame-ops.smt2":
+<div class="highlight"><pre><span></span><code>(define-fun frame.apply-throw-op.valid ((op Frame.ApplyThrowOp)) Bool
+  (and
+    (frame.valid (prior_frame op))
+    (frame.valid (post_frame op))
+    (frame.valid (throw op))))
+</code></pre></div></p>
+<p>I am switching to the <em>positive</em> test-case style, rather than the "There Are No" style, for operation test-cases.
+I find it easier to read for operations for some reason -- there's probably some cognitive theory that I could
+wave my hands at to explain why, but honestly I find I just like it better for describing state-changing operations.</p>
+<h4 id="scratch-throw-validation">Scratch throw validation</h4>
+<p>Let's prove this first: IF the first throw to an empty frame is <em>not</em> a strike, THEN the resultant frame
+has these constraints:</p>
+<ul>
+<li>the first throw of the post frame is equal to the applied throw</li>
+<li>the second throw is incomplete</li>
+<li>the first bonus throw is incomplete -- the frame may turn out to be a spare, in which case the first bonus
+  will eventually be complete</li>
+<li>the second bonus is unused</li>
+</ul>
+<p>All I need to do is encode these conditions in a single assertion as a test-case. Since the constraints are
+described by an "IF... THEN..." proposition, I know I will be using an "implies" operator to join the
+preconditions to the postconditions.</p>
+<p>File "test-case.frame-ops.validation.scratch-throw-application.smt2":
+<div class="highlight"><pre><span></span><code>(assert (forall ((op Frame.ApplyThrowOp))
+  (=&gt;
+    (and
+      (frame.apply-throw-op.valid op)
+      (= empty-frame (prior_frame op))
+      (not (= strike-throw (throw op))))
+    (and
+      (frame.is-incomplete (post_frame op))
+      (= (throw op) (throw_1 (post_frame op)))
+      (incomplete (throw_2 (post_frame op)))
+      (incomplete (bonus_1 (post_frame op)))
+      (unused (bonus_2 (post_frame op)))))))
+</code></pre></div></p>
+<p>Initially the SMT solver's <code>(check-sat)</code> response is <code>unsat</code>, because there's nothing in <code>frame.apply-throw-op.valid</code>
+requiring this assertion is true. My first pass at updating the validation predicate more or less mirrors this
+assertion. I figure encoding this logic will work: IF the first throw is incomplete in the prior frame, THEN
+in the post frame the first throw is equal to the operation's throw, the second throw and first bonus throw are
+incomplete and the second bonus throw is unused. In fact this is pretty much exactly what the assertion says, so
+it really should work.</p>
+<p>File "frame-ops.smt2"
+<div class="highlight"><pre><span></span><code>(define-fun frame.apply-throw-op.valid ((op Frame.ApplyThrowOp)) Bool
+  (and
+    (frame.valid (prior_frame op))
+    (frame.valid (post_frame op))
+    (frame.valid (throw op)))
+
+    (or
+      (and
+        (incomplete (throw_1 (prior_frame op)))
+        (= (throw op) (throw_1 (post_frame op)))
+        (incomplete (throw_2 (post_frame op)))
+        (incomplete (bonus_1 (post_frame op)))
+        (unused (bonus_2 (post_frame op))))
+
+      false))  ;; placeholder -- there will be more cases, and they will replace this &quot;false&quot;
+</code></pre></div></p>
+<p>Suprise! When I try to very the test-case assertion, my solver still replies <code>unsat</code>!</p>
+<p>How is this possible? The <code>frame.apply-throw-op.valid</code> predicate mirrors the assertion almost exactly. How
+could there possibly be a case where this predicate function doesn't work?</p>
+<h5 id="refining-failed-tests-by-discovering-negative-examples">Refining failed tests by discovering negative examples</h5>
+<p>This assertion failing literally means that the SMT solver knows there <em>is</em> <code>Frame.ApplyThrowOp</code> that my validation
+predicate says is valid, but which doesn't match the test-case assertions. Obviously I'm surprised by that,
+but I don't have to fret. Clearly I missed a corner case. All I need to do is to figure out what the value
+of this corner case is, and adjust my validation predicate to say this operation value is <em>not</em> valid. </p>
+<p>My favorite part about doing TDD with an SMT solver is that <em>the SMT solver can generate a negative example
+for a failing assertion</em>. I don't need to puzzle over what this mysterious corner case is, hunting around until I
+happen upon it. This is exactly what the SMT solver does! It computes values that match constraints. All
+I need to do is ask the SMT solver for a <code>Frame.ApplyThrowOp</code> value that meets the preconditions for my assertion, and
+<em>doesn't</em> meet at least one post condition of my assertion.</p>
+<p>I pipe the "frame-ops.smt2" file into Z3 (through the <code>cpp</code> pre-processor) using this command line:</p>
+<p><code>cpp -w -P -iquote./formula/main ./formula/main/frame-ops.smt2 &amp;&amp; cat) | z3 -smt2 -in</code></p>
+<p>and then I type in exactly what I require:
+<div class="highlight"><pre><span></span><code>(declare-const op Frame.ApplyThrowOp)   ;; initially unconstrained Frame op
+
+(assert
+  ;; the operation meets my test-case preconditions
+  (and
+    (frame.apply-throw-op.valid op)
+    (= empty-frame (prior_frame op))
+    (not (= strike-throw (throw op))))
+
+  ;; AND the operaton does not meet at least one of the test-case post conditions.
+  ;; Note: using De Morgan&#39;s Law here to state the opposite of the post conditions
+  (or
+    (not (incomplete (throw_1 (prior_frame op))))
+    (not (= (throw op) (throw_1 (post_frame op))))
+    (not (incomplete (throw_2 (post_frame op))))
+    (not (incomplete (bonus_1 (post_frame op))))
+    (not (unused (bonus_2 (post_frame op))))))
+
+(check-sat)
+&gt; sat
+</code></pre></div></p>
+<p>The solver has identified a "valid" operation that meets the pre-conditions and does <em>not</em> meet the post conditions.</p>
+<div class="highlight"><pre><span></span><code>(get-value ((throw op)))
+&gt; (((throw op) (throw #b0000000000 false true false)))
+</code></pre></div>
+<p>That's <code>unused-throw</code>. My pre-conditions include the requirement that a throw is <em>valid</em>, but I forgot
+that both unused and incomplete throws are valid. I need to add exclusion of these types of throws in
+my definition of a valid throw operation.</p>
+<p>The following new definition of <code>frame.apply-throw-op.valid</code> makes the test-case satisfiable:</p>
+<div class="highlight"><pre><span></span><code>(define-fun frame.apply-throw-op.valid ((op Frame.ApplyThrowOp)) Bool
+  (and
+    (frame.valid (prior_frame op))
+    (frame.valid (post_frame op))
+    (frame.valid (throw op)))
+    (not (incompete (throw op)))
+    (not (unused (throw op)))
+
+    (or
+      (and
+        (incomplete (throw_1 (prior_frame op)))
+        (= (throw op) (throw_1 (post_frame op)))
+        (incomplete (throw_2 (post_frame op)))
+        (incomplete (bonus_1 (post_frame op)))
+        (unused (bonus_2 (post_frame op))))
+
+      false))  ;; placeholder -- there will be more cases, and they will replace this &quot;false&quot;
+</code></pre></div>
+<h5 id="second-scratch-throw-validation">Second scratch throw validation</h5>
+<p>The second throw of a scratch frame (a non-strike, non-spare frame) has these constraints, which I plan on
+encoding as a second test-case assertion:</p>
+<ul>
+<li>the post frame will not be incomplete</li>
+<li>the prior frame's first throw will be equal to the post frame's first throw</li>
+<li>the post frame's second throw will be equal to the operation throw</li>
+<li>both the first and second bonus throws in the post frame will be unused</li>
+<li>For good measure I will verify that the frame's score is equal to the sum of the first and second throw</li>
+</ul>
+<p>I'm going to encode this as a series of two throws. A first throw applied to the empty frame, and a second
+throw applied to the result of that throw. I'm tying the two throw operations thogether by stating the post frame
+of the first operation is equal to the prior frame of the second throw. I'm writing a test case that proves
+the test-case for every valid series of two throws where there is no strike or spare:</p>
+<p>File "test-case.frame-ops.validation.scratch-throw-application.smt2":
+<div class="highlight"><pre><span></span><code>(assert (forall ((op1 Frame.ApplyThrowOp) (op2 Frame.ApplyThrowOp))
+  (=&gt;
+    (and
+      (frame.apply-throw.valid op1)
+      (frame.apply-throw.valid op2)
+      (= empty-frame (prior_frame op1))
+      (= (post_frame op1) (prior_frame op2))
+      (not (= #b1111111111 (bvor (pins (throw op1)) (pins (throw op2))))))  ; &lt;-- throws do not form a mark (strike or spare)
+    (and
+      (not (frame.is-incomplete (post_frame op2)))
+      (= (throw op1) (throw_1 (post_frame op2)))
+      (= (throw op2) (throw_2 (post_frame op2)))
+      (unused (bonus_1 (post_frame op2)))
+      (unused (bonus_2 (post_frame op2)))
+      (= (frame.points (post_frame op2)) (+ (throw.points (throw op1)) (throw.points (throw op2))))))))
+
+(check-sat)
+&gt; unsat
+</code></pre></div></p>
+<p>The test-case immediately proves unsatisfiable, which is expected since I haven't updated the operation
+validation predicate yet. I'm adding this clause to the validation function:</p>
+<div class="highlight"><pre><span></span><code>      (and
+        (incomplete (throw_2 (prior_frame op)))
+        (= (throw_2 (post_frame op)) (throw op))
+        (= (throw_1 (prior_frame op)) (throw_1 (post_frame op)))
+        (unused (bonus_1 (post_frame op)))
+        (unused (bonus_2 (post_frame op))))
+</code></pre></div>
+<p>The test-case proves satisfiable once I add this clause to <code>frame.apply-throw-op.valid</code>.</p>
+<p>I've successfully encoded the rules for the transition of <code>Initial --&gt; FirstThrow</code> and <code>FirstThrow --&gt; Scratch</code>.
+Next I move on to the transitions that terminate in the <code>Spare</code> frame state.</p>
+<h4 id="second-throw-resulting-in-a-spare">Second throw resulting in a spare</h4>
+<p>When the second throw after a non-strike results in a spare, the frame transfers to the <code>Spare</code> state, which differs
+from the <code>Scratch</code> state by the first bonus throw being incomplete. We start with a test-case, which is initially
+unsatifiable.</p>
+<p>File "test-case.frame-ops.validation.spare-application.smt2":
+<div class="highlight"><pre><span></span><code>(assert (forall ((op1 Frame.ApplyThrowOp) (op2 Frame.ApplyThrowOp))
+  (=&gt;
+    (and
+      (frame.apply-throw.valid op1)
+      (frame.apply-throw.valid op2)
+      (= empty-frame (prior_frame op1))
+      (= (post_frame op1) (prior_frame op2))
+      (not (= strike-throw (throw op1)))
+      (= #b1111111111 (bvor (pins (throw op1)) (pins (throw op2)))))  ; &lt;-- throws form a spare and not a strike
+    (and
+      (frame.is-incomplete (post_frame op2))
+      (= (throw op1) (throw_1 (post_frame op2)))
+      (= (throw op2) (throw_2 (post_frame op2)))
+      (incomplete (bonus_1 (post_frame op2)))
+      (unused (bonus_2 (post_frame op2)))
+      (= (frame.points (post_frame op2)) (+ (throw.points (throw op1)) (throw.points (throw op2))))))))
+
+(check-sat)
+</code></pre></div></p>
+<p>I have to alter <code>frame.apply-throw-op.valid</code> to cover this case. There already is a clause covering the
+second throw in a frame, but it assumes the frame is a scratch. I need to refine this clause to include different
+logic in the case where the second throw forms a spare.</p>
+<p>File "frame-ops.smt2":
+<div class="highlight"><pre><span></span><code>      (and
+        (incomplete (throw_2 (prior_frame op)))
+        (= (throw_2 (post_frame op)) (throw op))
+        (= (throw_1 (prior_frame op)) (throw_1 (post_frame op)))
+        (=&gt;
+          (= #b1111111111 (bvor (pins (throw_1 (post_frame op))) (pins (throw_2 (post_frame op)))))
+          (and
+            (incomplete (bonus_1 (post_frame op)))
+            (unused (bonus_2 (post_frame op)))))
+        (=&gt;
+          (not (= #b1111111111 (bvor (pins (throw_1 (post_frame op))) (pins (throw_2 (post_frame op))))))
+          (and
+            (unused (bonus_1 (post_frame op)))
+            (unused (bonus_2 (post_frame op))))))
+</code></pre></div></p>
+<p>I have created two mutually exclusive subclauses:</p>
+<ul>
+<li>one that describes to post conditions if a spare is formed by the first two throws</li>
+<li>the other that describes the post conditions if a spare is <em>not</em> formed by the first two throws</li>
+</ul>
+<blockquote>
+<p>Note: there is a common condition in both clauses <code>(unused (bonus_2 (post_frame op)))</code>. I find it
+easier to understand the statement when I repeat this condition, rather than having just a single copy
+one level higher in the <code>and</code> conjunction. The SMT solver I am betting recognizes the repeated clause and
+optimizes the duplication away, so this is really just a stylistic choice.</p>
+</blockquote>
+<h5 id="spare-bonus-throw">Spare bonus throw</h5>
+<p>The next state transfer to cover is <code>Spare --&gt; FirstSpareBonus</code>. In any frame where the first two throws
+form a spare, the third throw is the bonus throw. In the post frame this will be the value of the <code>bonus_1</code>
+field. The first two throws in the prior frame are exactly equal to the first two throws in the prior frame,
+and the second bonus throw is of course unused.</p>
+<p>Just as above I define this as a test case, and make sure the case is initially unsatisfiable. There the
+test involves 3 throws, so the test-case quantifies over 3 <code>Frame.ApplyThrowOp</code> instances; the first operation's
+post frame is equal to the second operation's prior frame, and the second operation's post frame is equal
+to the third operation's post frame.</p>
+<p>File "test-case.frame-ops.validation.spare-application.smt2":
+<div class="highlight"><pre><span></span><code>(assert (forall ((op1 Frame.ApplyThrowOp) (op2 Frame.ApplyThrowOp) (op3 Frame.ApplyThrowOp))
+  (=&gt;
+    (and
+      (frame.apply-throw.valid op1)
+      (frame.apply-throw.valid op2)
+      (frame.apply-throw.valid op3)
+      (= empty-frame (prior_frame op1))
+      (= (post_frame op1) (prior_frame op2))
+      (= (post_frame op2) (prior_frame op3))
+      (not (= strike-throw (throw op1)))
+      (= #b1111111111 (bvor (pins (throw op1)) (pins (throw op2)))))
+    (and
+      (not (frame.is-incomplete (post_frame op3)))
+      (= #b1111111111 (bvor (pins (throw_1 (post_frame op3))) (pins (throw_2 (post_frame op3)))))
+      (not (incomplete (bonus_1 (post_frame op3))))
+      (not (unused (bonus_1 (post_frame op3))))
+      (unused (bonus_2 (post_frame op3)))))))
+
+(check-sat)
+</code></pre></div></p>
+<p>The test-case indeed is unsatisfiable. I need to add a clause to <code>frame.apply-throw-op.valid</code> that constraints the case
+of the first bonus throw being incomplete. If the first bonus throw is incomplete in the prior frame, then the
+operation throw is equal to the first bonus throw in the post frame. The first two throws in the prior frame will be
+equal to the same fields in the post frame.</p>
+<p>File "frame-ops.smt2":
+<div class="highlight"><pre><span></span><code>      (and
+        (incomplete (bonus_1 (prior_frame op)))
+        (= (bonus_1 (post_frame op)) (throw op))
+        (= (throw_1 (prior_frame op)) (throw_1 (post_frame op)))
+        (= (throw_2 (prior_frame op)) (throw_2 (post_frame op)))
+        (= (bonus_2 (prior_frame op)) (bonus_2 (post_frame op))))
+</code></pre></div></p>
+<p>A this point, where the validation conditions at the <code>Throw</code> and <code>Frame</code> level have already been specified, encoding
+and testing the pre and post operation conditions at this level is actually pretty easy. Once I add this clause to
+<code>frame.apply-throw-op.valid</code> the new test-case is satisfiable, and I'm now ready to head on to the final set
+of state transitions, which are all part of what happens when the first throw is a strike.</p>
+<h4 id="first-throw-is-a-strike">First throw is a strike</h4>
+<p>The next state transition I'm tackling is <code>Initial --&gt; Strike</code>. This is the transition when the first throw to an
+empty frame is a strike. The post conditions are:</p>
+<ul>
+<li>the second throw is unused</li>
+<li>both the first and second bonus throws are incomplete</li>
+</ul>
+<p>Let's start with a test-case assertion proving that <code>frame.apply-throw-op.valid</code> enforces these conditions on
+a throw application operation.</p>
+<p>File "test-case.frame.validation.strike-invariants.smt2":
+<div class="highlight"><pre><span></span><code>(assert (forall ((op1 Frame.ApplyThrowOp))
+  (=&gt;
+    (and
+      (= empty-frame (prior_frame op1))
+      (= strike-throw (throw op1)))
+    (and
+      (not (frame.is-incomplete (post_frame op3)))
+      (unused (throw_2 (post_frame op3)))
+      (incomplete (bonus_1 (post_frame op3)))
+      (incomplete (bonus_2 (post_frame op3)))))))
+
+(check-sat)
+</code></pre></div></p>
+<p>Indeed this test-case is initially unsatisfiable. I need to update <code>frame.apply-throw-op.valid</code> to support the
+first throw being a strike.</p>
+<p>In fact I already have a clause that covers what happens for first throws, but it assumes the first throw
+is not a strike. Similarly to what I did when defining the <code>FirstThrow --&gt; Spare</code> transition, I need to add a
+couple subclauses to the existing clause: one to define the post conditions when the first throw is <em>not</em> a strike
+(the existing post conditions will end up here), and another to define the post conditions when the first throw is
+a strike.</p>
+<p>File "frame-ops.smt2":
+<div class="highlight"><pre><span></span><code>      (and
+        (incomplete (throw_1 (prior_frame op)))
+        (= (throw_1 (post_frame op)) (throw op))
+        (=&gt;
+          (not (= strike-throw (throw op)))
+          (and
+            (incomplete (throw_2 (post_frame op)))
+            (incomplete (bonus_1 (post_frame op)))
+            (unused (bonus_2 (post_frame op)))))
+        (=&gt;
+          (= strike-throw (throw op))
+          (and
+            (unused (throw_2 (post_frame op)))
+            (incomplete (bonus_1 (post_frame op)))
+            (incomplete (bonus_2 (post_frame op))))))
+</code></pre></div></p>
+<p>Once the clause has been updated, the new test-case is satisfiable.</p>
+<blockquote>
+<p>Note: again I have left the condition common to both subclauses copied to both branches. It's clearer
+to me what I'm trying to say and doesn't affect performance at all. The repeat condition is
+<code>(incomplete (bonus_1 (post_frame op)))</code>.</p>
+</blockquote>
+<h5 id="recording-a-strikes-first-and-second-bonus-throw">Recording a strike's first and second bonus throw</h5>
+<p>I hope it is getting tediously obvious how to proceed to encode the <code>Strike --&gt; FirstStrikeBonus</code> and
+<code>FirstStrikeBonus --&gt; SecondStrikeBonus</code> transitions. First I define a test-case proving all valid instances
+have the expected post-conditions, and then I update the <code>frame.apply-throw-op.valid</code> predicate to make
+the test-cases satisfiable.</p>
+<p>I'm defining both transitions at once, because I expect the validation code to be simple.</p>
+<p>File "test-case.frame.validation.strike-invariants.smt2":
+<div class="highlight"><pre><span></span><code>(assert (forall ((op1 Frame.ApplyThrowOp) (op2 Frame.ApplyThrowOp))
+  (=&gt;
+    (and
+      (frame.apply-throw.valid op1)
+      (frame.apply-throw.valid op2)
+      (= empty-frame (prior_frame op1))
+      (= (post_frame op1) (prior_frame op2))
+      (= strike-throw (throw op1)))
+    (and
+      (not (frame.is-incomplete (post_frame op3)))
+      (unused (throw_2 (post_frame op3)))
+      (not (incomplete (bonus_1 (post_frame op3))))
+      (not (unused (bonus_1 (post_frame op3))))
+      (incomplete (bonus_2 (post_frame op3)))))))
+
+(check-sat)
+
+(assert (forall ((op1 Frame.ApplyThrowOp) (op2 Frame.ApplyThrowOp) (op3 Frame.ApplyThrowOp))
+  (=&gt;
+    (and
+      (frame.apply-throw.valid op1)
+      (frame.apply-throw.valid op2)
+      (frame.apply-throw.valid op3)
+      (= empty-frame (prior_frame op1))
+      (= (post_frame op1) (prior_frame op2))
+      (= (post_frame op2) (prior_frame op3))
+      (= strike-throw (throw op1)))
+    (and
+      (not (frame.is-incomplete (post_frame op3)))
+      (unused (throw_2 (post_frame op3)))
+      (not (incomplete (bonus_1 (post_frame op3))))
+      (not (unused (bonus_1 (post_frame op3))))
+      (not (incomplete (bonus_2 (post_frame op3))))
+      (not (unused (bonus_2 (post_frame op3))))))))
+
+(check-sat)
+</code></pre></div></p>
+<p>A little surprising: the first assertion already works! This is pretty much identical to the <code>Spare --&gt; FirstSpareBonus</code>
+transition. The exact same pre-condition clause applies to both a spare and a strike, so there is no new clauses
+needed to cover the transition. It just works.</p>
+<p>I do need to add the following in order to cover the <code>FirstStrikeBonus --&gt; SecondStrikeBonus</code> transition, in which
+the second bonus throw gets recorded.</p>
+<p>File "frame-ops.smt2":
+<div class="highlight"><pre><span></span><code>(and
+        (incomplete (bonus_2 (prior_frame op)))
+        (= (bonus_2 (post_frame op)) (throw op))
+        (= (throw_1 (prior_frame op)) (throw_1 (post_frame op)))
+        (= (throw_2 (prior_frame op)) (throw_2 (post_frame op)))
+        (= (bonus_1 (prior_frame op)) (bonus_1 (post_frame op))))
+</code></pre></div></p>
+<p>Once this clause is added to <code>frame.apply-throw-op.valid</code>, the final transition test-case is satisfiable.</p>
+<p>We are done encoding the full state transition model for <code>Frame.ApplyThrowOp</code>. We have a complete logical model
+for applying a throw to a single frame.</p>
+<h3 id="representing-a-game-and-a-game-in-progress">Representing a Game and a Game in progress</h3>
+<p>A game is comprised of 10 frames. There's a variety of way to model this, but considering we want a <em>finitely
+valued</em> model, the simplest one is to define a single field for each frame inside a <code>Game</code> datatype.</p>
+<p>File "game.smt2":
+<div class="highlight"><pre><span></span><code>(declare-datatype Game (
+  (game
+    (frame_1 Frame)
+    (frame_2 Frame)
+    (frame_3 Frame)
+    (frame_4 Frame)
+    (frame_5 Frame)
+    (frame_6 Frame)
+    (frame_7 Frame)
+    (frame_8 Frame)
+    (frame_9 Frame)
+    (frame_10 Frame))))
+</code></pre></div></p>
+<p>Cons of using a explicit set of member fields for the constituent frames:</p>
+<ul>
+<li>there's no implicit ordering to the frames<ul>
+<li>I will have to explicitly define the "next" relationship between individual frames</li>
+</ul>
+</li>
+<li>it's not practical to write generalized rules that apply to all frames within a game<ul>
+<li>I will have to copy the same rules multiple times, one for each frame I am applying it to</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Note: there is a very good solution to the problem of repetative code caused by having a individual
+field for each frame: use <code>cpp</code> preprocessor macros to auto-repeat code templates <sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. Beyond the
+scope of this work, but definitely you'll want this in your toolbox if you set out to define
+any real-world OSM.</p>
+</blockquote>
+<h4 id="validating-game-state">Validating game state</h4>
+<p>We defie predicate <code>game.valid</code>, which evaluates to <code>true</code> for any <code>Game</code> the encodes a valid bowling state, and
+<code>false</code> for any <code>Game</code> that isn't.</p>
+<h5 id="the-empty-game">The empty game</h5>
+<p>The empty game is the state of a game at the very beginning, before any throws have been made. This is just
+a <code>Game</code> comprised completely of <code>empty-frame</code> values for each frame.</p>
+<p>File "game.smt2":
+<div class="highlight"><pre><span></span><code>(define-const empty-game Game
+  (game
+    empty-frame      ; frame_1
+    empty-frame      ; frame_2
+    empty-frame      ; frame_3
+    empty-frame      ; frame_4
+    empty-frame      ; frame_5
+    empty-frame      ; frame_6
+    empty-frame      ; frame_7
+    empty-frame      ; frame_8
+    empty-frame      ; frame_9
+    empty-frame))    ; frame_10
+</code></pre></div></p>
+<p>We expect this game to be valid. I'm going to make the first verison of <code>game.valid</code> and a test-case which proves at least
+the <code>empty-game</code> is valid.</p>
+<p>File "test-case.game.validation.empty-game-is-valid.smt2":
+<div class="highlight"><pre><span></span><code>(assert (! (game.valid empty-game)
+:named test-case.game.validation.empty-game-is-valid))
+</code></pre></div></p>
+<p>My first pass at <code>game.valid</code> just requires that a game's frames are each valid. This is sufficient to get my first
+test-case to be satisfiable.</p>
+<p>File "game.smt2":
+<div class="highlight"><pre><span></span><code>(define-fun game.valid ((g Game)) Bool
+  (and
+    (frame.valid (frame_1 g))
+    (frame.valid (frame_2 g))
+    (frame.valid (frame_3 g))
+    (frame.valid (frame_4 g))
+    (frame.valid (frame_5 g))
+    (frame.valid (frame_6 g))
+    (frame.valid (frame_7 g))
+    (frame.valid (frame_8 g))
+    (frame.valid (frame_9 g))
+    (frame.valid (frame_10 g))))
+</code></pre></div></p>
+<p>Pretty simple, and the test-case is now satisfiable.</p>
+<h5 id="frames-are-completed-sequentially">Frames are completed sequentially</h5>
+<p>Frames are completed "sequentially" in a game of bowling. This means that we must have some kind of test to determine
+which frame is the "current" one. I start by using the <code>frame.is-incomplete</code> function already defined to determine
+whether or not a frame can accept a throw. I'm already thinking that I update the game validation predicate to
+specify the condition that an incomplete frame cannot be followed by a completed one within a game.</p>
+<p>But before I commit to updating the model, I should have a test-case that proves what I am trying to encode is actually
+true. Here's my test-case proving that frames are competed sequentially within a game. Note that, because there is no
+implicit relationship between frames, I have to explicitly state the relationship in a multi-part test-case. I'm using
+the TAN pattern to assert that there are no valid game's in which a later frame is completed before an earlier one.</p>
+<p>File "test-case.game.validation.frames-valid-and-sequential.smt2":
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((g Game))
+  (and
+    (game.valid g)
+    (or
+      (and
+        (frame.is-incomplete (frame_1 g))
+        (not (= empty-frame (frame_2 g))))
+      (and
+        (frame.is-incomplete (frame_2 g))
+        (not (= empty-frame (frame_3 g))))
+      ...
+</code></pre></div></p>
+<p>I already don't like this. I suspect I'm going to run into problems when I start considering mark
+frames (strikes or spares). In either case, I am going to need to apply a throw to a <em>later</em> frame than the
+mark frame in order to determine the bonus applied to the mark frame. Requiring a frame be complete before a
+single throw can be applied to the next frame contravenes the logic I need to use.</p>
+<p>I realilze that what I want is a function that tells me whether or not a throw can be applied to the frame
+as a normal throw, not as a bonus throw. That is, I need a function that tells me whether or not the
+first two throws are incomplete, and use that instead of <code>frame.is-incomplete</code>. (In fact, I'm not sure I
+need <code>frame.is-incomplete</code> at all.) </p>
+<p>I am going to define a new function <code>frame.incomplete-normal-throws</code> which indicates whether or not a frame's
+first two throws are incomplete. This is the <em>real</em> test I need to encode this test-case.</p>
+<p>File "game.smt2":
+<div class="highlight"><pre><span></span><code>(define-fun frame.incomplete-normal-throws ((f Frame)) Bool
+  (or
+    (incomplete (throw_1 f))
+    (incomplete (throw_2 f))))
+</code></pre></div></p>
+<p>And now I can take another stab at the test-case.</p>
+<p>File "test-case.game.validation.frames-valid-and-sequential.smt2":
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((g Game))
+  (and
+    (game.valid g)
+    (or
+      (and
+        (frame.incomplete-normal-throws (frame_1 g))
+        (not (= empty-frame (frame_2 g))))
+      (and
+        (frame.incomplete-normal-throws (frame_2 g))
+        (not (= empty-frame (frame_3 g))))
+      (and
+        (frame.incomplete-normal-throws (frame_3 g))
+        (not (= empty-frame (frame_4 g))))
+      (and
+        (frame.incomplete-normal-throws (frame_4 g))
+        (not (= empty-frame (frame_5 g))))
+      (and
+        (frame.incomplete-normal-throws (frame_5 g))
+        (not (= empty-frame (frame_6 g))))
+      (and
+        (frame.incomplete-normal-throws (frame_6 g))
+        (not (= empty-frame (frame_7 g))))
+      (and
+        (frame.incomplete-normal-throws (frame_7 g))
+        (not (= empty-frame (frame_8 g))))
+      (and
+        (frame.incomplete-normal-throws (frame_8 g))
+        (not (= empty-frame (frame_9 g))))
+      (and
+        (frame.incomplete-normal-throws (frame_9 g))
+        (not (= empty-frame (frame_10 g))))))
+)) :named test-case.game.validation.sequential-frame-completion ))
+</code></pre></div></p>
+<p>This test-case is unsatisfiable at first. I need to update <code>game.valid</code> to make it pass. What I need is basically the
+same test that the test-case is doing, only stated in the positive form. I'm break <code>game.valid</code> into
+sub-predicates to organize this all better.</p>
+<p>File "game.smt2":
+<div class="highlight"><pre><span></span><code>(define-fun game.valid.member-frames-valid ((g Game)) Bool
+  (and
+    (frame.valid (frame_1 g))
+    (frame.valid (frame_2 g))
+    (frame.valid (frame_3 g))
+    (frame.valid (frame_4 g))
+    (frame.valid (frame_5 g))
+    (frame.valid (frame_6 g))
+    (frame.valid (frame_7 g))
+    (frame.valid (frame_8 g))
+    (frame.valid (frame_9 g))
+    (frame.valid (frame_10 g))))
+
+(define-fun game.valid.sequential-frames ((g Game)) Bool
+  (and
+    (=&gt; (frame.incomplete-normal-throws (frame_1 g)) (= empty-frame (frame_2 g)))
+    (=&gt; (frame.incomplete-normal-throws (frame_2 g)) (= empty-frame (frame_3 g)))
+    (=&gt; (frame.incomplete-normal-throws (frame_3 g)) (= empty-frame (frame_4 g)))
+    (=&gt; (frame.incomplete-normal-throws (frame_4 g)) (= empty-frame (frame_5 g)))
+    (=&gt; (frame.incomplete-normal-throws (frame_5 g)) (= empty-frame (frame_6 g)))
+    (=&gt; (frame.incomplete-normal-throws (frame_6 g)) (= empty-frame (frame_7 g)))
+    (=&gt; (frame.incomplete-normal-throws (frame_7 g)) (= empty-frame (frame_8 g)))
+    (=&gt; (frame.incomplete-normal-throws (frame_8 g)) (= empty-frame (frame_9 g)))
+    (=&gt; (frame.incomplete-normal-throws (frame_9 g)) (= empty-frame (frame_10 g)))))
+
+(define-fun game.valid ((g Game)) Bool
+  (and
+    (game.valid.member-frames-valid g)
+    (game.valid.seequential-frames g)))
+</code></pre></div></p>
+<p>And once I do that refactoring the test-case now is satisfiable.</p>
+<h5 id="entanglement-of-mark-first-bonus-frame-x-to-first-throw-of-frame-x1">Entanglement of mark first bonus frame X to first throw of frame X+1</h5>
+<p>The first bonus throw of any mark frame needs to be equal to the first throw of the very next frame. Obviously this
+rule applies only to frames 1-9. There is no subsequent to the 10th frame. The TAN test-case is easy to express,
+though again we must make a clause for each frame since there is no implicit "subsequent" relationship between
+frame fields.</p>
+<p>This is going ot be a lot easier to write if I define new functions <code>frame.is-strike</code> and <code>frame.is-spare</code>.</p>
+<p>File "frame.smt2"
+<div class="highlight"><pre><span></span><code>(define-fun frame.is-strike ((f Frame)) Bool
+  (= #b1111111111 (pins (throw_1 f))))
+
+(define-fun frame.is-spare ((f Frame)) Bool
+  (and
+    (not (= #b1111111111 (pins (throw_1 f))))
+    (= #b1111111111 (bvor (pins (throw_1 f)) (pins (throw_2 f))))))
+</code></pre></div></p>
+<p>File "test-case.game.validation.mark-frame-entanglement.smt2":
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((g Game))
+  (and
+    (game.valid g)
+    (or
+      (and (frame.is-strike (frame_1 g)) (not (= (bonus_1 (frame_1 g)) (throw_1 (frame_2 g)))))
+      (and (frame.is-strike (frame_2 g)) (not (= (bonus_1 (frame_2 g)) (throw_1 (frame_3 g)))))
+      (and (frame.is-strike (frame_3 g)) (not (= (bonus_1 (frame_3 g)) (throw_1 (frame_4 g)))))
+      (and (frame.is-strike (frame_4 g)) (not (= (bonus_1 (frame_4 g)) (throw_1 (frame_5 g)))))
+      (and (frame.is-strike (frame_5 g)) (not (= (bonus_1 (frame_5 g)) (throw_1 (frame_6 g)))))
+      (and (frame.is-strike (frame_6 g)) (not (= (bonus_1 (frame_6 g)) (throw_1 (frame_7 g)))))
+      (and (frame.is-strike (frame_7 g)) (not (= (bonus_1 (frame_7 g)) (throw_1 (frame_8 g)))))
+      (and (frame.is-strike (frame_8 g)) (not (= (bonus_1 (frame_8 g)) (throw_1 (frame_9 g)))))
+      (and (frame.is-strike (frame_9 g)) (not (= (bonus_1 (frame_9 g)) (throw_1 (frame_10 g)))))))
+)) :named test-case.game.validation.strike-frame-first-bonus-throw))
+
+(assert (! (not (exists ((g Game))
+  (and
+    (game.valid g)
+    (or
+      (and (frame.is-spare (frame_1 g)) (not (= (bonus_1 (frame_1 g)) (throw_1 (frame_2 g)))))
+      (and (frame.is-spare (frame_2 g)) (not (= (bonus_1 (frame_2 g)) (throw_1 (frame_3 g)))))
+      (and (frame.is-spare (frame_3 g)) (not (= (bonus_1 (frame_3 g)) (throw_1 (frame_4 g)))))
+      (and (frame.is-spare (frame_4 g)) (not (= (bonus_1 (frame_4 g)) (throw_1 (frame_5 g)))))
+      (and (frame.is-spare (frame_5 g)) (not (= (bonus_1 (frame_5 g)) (throw_1 (frame_6 g)))))
+      (and (frame.is-spare (frame_6 g)) (not (= (bonus_1 (frame_6 g)) (throw_1 (frame_7 g)))))
+      (and (frame.is-spare (frame_7 g)) (not (= (bonus_1 (frame_7 g)) (throw_1 (frame_8 g)))))
+      (and (frame.is-spare (frame_8 g)) (not (= (bonus_1 (frame_8 g)) (throw_1 (frame_9 g)))))
+      (and (frame.is-spare (frame_9 g)) (not (= (bonus_1 (frame_9 g)) (throw_1 (frame_10 g)))))))
+)) :named test-case.game.validation.spare-frame-first-bonus-throw))
+</code></pre></div></p>
+<p>This test-case is not satisfiable, so I need to update <code>game.valid</code> to make it so. The simle rule to
+encode: IF the frame is a mark frame, THEN the first bonus throw must be equal to the first normal throw
+of the next frame.</p>
+<p>File "game.smt2":
+<div class="highlight"><pre><span></span><code>(define-fun game.valid.mark-frames-first-bonus-consistent-with-next-frame ((g Game)) Bool
+  (and
+    (=&gt;
+      (= #b1111111111 (bvor (pins (throw_1 (frame_1 g))) (pins (throw_2 (frame_1 g)))))
+      (= (bonus_1 (frame_1 g)) (throw_1 (frame_2 g))))
+    (=&gt;
+      (= #b1111111111 (bvor (pins (throw_1 (frame_2 g))) (pins (throw_2 (frame_2 g)))))
+      (= (bonus_1 (frame_2 g)) (throw_1 (frame_3 g))))
+    (=&gt;
+      (= #b1111111111 (bvor (pins (throw_1 (frame_3 g))) (pins (throw_2 (frame_3 g)))))
+      (= (bonus_1 (frame_3 g)) (throw_1 (frame_4 g))))
+    (=&gt;
+      (= #b1111111111 (bvor (pins (throw_1 (frame_4 g))) (pins (throw_2 (frame_4 g)))))
+      (= (bonus_1 (frame_4 g)) (throw_1 (frame_5 g))))
+    (=&gt;
+      (= #b1111111111 (bvor (pins (throw_1 (frame_5 g))) (pins (throw_2 (frame_5 g)))))
+      (= (bonus_1 (frame_5 g)) (throw_1 (frame_6 g))))
+    (=&gt;
+      (= #b1111111111 (bvor (pins (throw_1 (frame_6 g))) (pins (throw_2 (frame_6 g)))))
+      (= (bonus_1 (frame_6 g)) (throw_1 (frame_7 g))))
+    (=&gt;
+      (= #b1111111111 (bvor (pins (throw_1 (frame_7 g))) (pins (throw_2 (frame_7 g)))))
+      (= (bonus_1 (frame_7 g)) (throw_1 (frame_8 g))))
+    (=&gt;
+      (= #b1111111111 (bvor (pins (throw_1 (frame_8 g))) (pins (throw_2 (frame_8 g)))))
+      (= (bonus_1 (frame_8 g)) (throw_1 (frame_9 g))))
+    (=&gt;
+      (= #b1111111111 (bvor (pins (throw_1 (frame_9 g))) (pins (throw_2 (frame_9 g)))))
+      (= (bonus_1 (frame_9 g)) (throw_1 (frame_10 g))))))
+
+(define-fun game.valid ((g Game)) Bool
+  (and
+    (game.valid.member-frames-valid g)
+    (game.valid.seequential-frames g)
+    (game.valid.mark-frames-first-bonus-consistent-with-next-frame g)))
+</code></pre></div></p>
+<p>And now the test-case is satisfiable. Excellent.</p>
+<h5 id="entanglement-of-strike-second-bonus-frame-to-second-next-throw">Entanglement of strike second bonus frame to second-next throw</h5>
+<p>I need to do the exact same thing now with the second bonus throw in strike frames. My first attempt at defining
+the rule in English: if the frame is a strike frame, then the second bonus throw must be equal to the
+second normal throw of the subsequent frame.</p>
+<p>But I know right away that's not right. In the case where a strike is followed by another strike, then there will be
+no second normal throw in the second frame -- the second normal throw in a strike frame is always unused.</p>
+<p>Here's the second attempt, which I'm stating in two parts:</p>
+<ul>
+<li>IF the frame is a strike frame AND the next frame is not a strike, THEN the second bonus throw must be equal to
+  the second normal throw of the next frame</li>
+<li>IF the frame is a strike frame AND the next frame is also a strike, THEN the second bonus throw must be equal to
+  the first bonus throw of the next frame</li>
+</ul>
+<p>The next part here is that this rule and the previous one entangling the first bonus throw must <em>both</em> be met when there
+are two strikes in a row. This means that if there are two strikes in a row, then the first frame's second bonus is
+equal to the second's first bonus throw, which in turn will be equal to the <em>third</em> frame's first normal throw (in frames
+1-8). This is exactly what we want, and is usually represented as the most complicated part of scoring a game of bowling.
+But we just defined things so we encoded the strike-then-strike case without even thinking about it.</p>
+<p>I had two "IF... THEN..." (implicative) statements above, so I'm going to define two separate test-cases to make
+sure each one is being covered.</p>
+<p>File "test-case.game.validation.mark-frame-entanglement.smt2":
+<div class="highlight"><pre><span></span><code>(assert (! (not (exists ((g Game))
+  (and
+    (game.valid g)
+    (or
+      (and
+        (frame.is-strike (frame_1 g))
+        (not (frame.is-strike (frame_2 g)))
+        (not (= (bonus_2 (frame_1 g)) (throw_2 (frame_2 g)))))
+      (and
+        (frame.is-strike (frame_2 g))
+        (not (frame.is-strike (frame_3 g)))
+        (not (= (bonus_2 (frame_2 g)) (throw_2 (frame_3 g)))))
+      (and
+        (frame.is-strike (frame_3 g))
+        (not (frame.is-strike (frame_4 g)))
+        (not (= (bonus_2 (frame_3 g)) (throw_2 (frame_4 g)))))
+      (and
+        (frame.is-strike (frame_4 g))
+        (not (frame.is-strike (frame_5 g)))
+        (not (= (bonus_2 (frame_4 g)) (throw_2 (frame_5 g)))))
+      (and
+        (frame.is-strike (frame_5 g))
+        (not (frame.is-strike (frame_6 g)))
+        (not (= (bonus_2 (frame_5 g)) (throw_2 (frame_6 g)))))
+      (and
+        (frame.is-strike (frame_6 g))
+        (not (frame.is-strike (frame_7 g)))
+        (not (= (bonus_2 (frame_6 g)) (throw_2 (frame_7 g)))))
+      (and
+        (frame.is-strike (frame_7 g))
+        (not (frame.is-strike (frame_8 g)))
+        (not (= (bonus_2 (frame_7 g)) (throw_2 (frame_8 g)))))
+      (and
+        (frame.is-strike (frame_8 g))
+        (not (frame.is-strike (frame_9 g)))
+        (not (= (bonus_2 (frame_8 g)) (throw_2 (frame_9 g)))))
+      (and
+        (frame.is-strike (frame_9 g))
+        (not (frame.is-strike (frame_10 g)))
+        (not (= (bonus_2 (frame_9 g)) (throw_2 (frame_10 g)))))))
+)) :named test-case.game.validation.strike-then-not-strike-frame-second-bonus-throw))
+
+(assert (! (not (exists ((g Game))
+  (and
+    (game.valid g)
+    (or
+      (and (frame.is-strike (frame_1 g)) (frame.is-strike (frame_2 g))  (not (= (bonus_2 (frame_1 g)) (bonus_1 (frame_2 g)))))
+      (and (frame.is-strike (frame_2 g)) (frame.is-strike (frame_3 g))  (not (= (bonus_2 (frame_2 g)) (bonus_1 (frame_3 g)))))
+      (and (frame.is-strike (frame_3 g)) (frame.is-strike (frame_4 g))  (not (= (bonus_2 (frame_3 g)) (bonus_1 (frame_4 g)))))
+      (and (frame.is-strike (frame_4 g)) (frame.is-strike (frame_5 g))  (not (= (bonus_2 (frame_4 g)) (bonus_1 (frame_5 g)))))
+      (and (frame.is-strike (frame_5 g)) (frame.is-strike (frame_6 g))  (not (= (bonus_2 (frame_5 g)) (bonus_1 (frame_6 g)))))
+      (and (frame.is-strike (frame_6 g)) (frame.is-strike (frame_7 g))  (not (= (bonus_2 (frame_6 g)) (bonus_1 (frame_7 g)))))
+      (and (frame.is-strike (frame_7 g)) (frame.is-strike (frame_8 g))  (not (= (bonus_2 (frame_7 g)) (bonus_1 (frame_8 g)))))
+      (and (frame.is-strike (frame_8 g)) (frame.is-strike (frame_9 g))  (not (= (bonus_2 (frame_8 g)) (bonus_1 (frame_9 g)))))
+      (and (frame.is-strike (frame_9 g)) (frame.is-strike (frame_10 g)) (not (= (bonus_2 (frame_9 g)) (bonus_1 (frame_10 g)))))))
+)) :named test-case.game.validation.strike-then-strike-frame-second-bonus-throw))
+</code></pre></div></p>
+<p>It's tedious to write, but pretty simple to reason how to define sub-predicates for <code>game.valid</code> to make
+sure both these test-cases are satisfied.</p>
+<p>File "game.smt2":
+<div class="highlight"><pre><span></span><code>(define-fun game.valid.strike-then-strike-bonus-2-consistency ((g Game)) Bool
+  (and
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_1 g))))
+        (= #b1111111111 (pins (throw_1 (frame_2 g)))))
+      (= (bonus_2 (frame_1 g)) (bonus_1 (frame_2 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_2 g))))
+        (= #b1111111111 (pins (throw_1 (frame_3 g)))))
+      (= (bonus_2 (frame_2 g)) (bonus_1 (frame_3 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_3 g))))
+        (= #b1111111111 (pins (throw_1 (frame_4 g)))))
+      (= (bonus_2 (frame_3 g)) (bonus_1 (frame_4 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_4 g))))
+        (= #b1111111111 (pins (throw_1 (frame_5 g)))))
+      (= (bonus_2 (frame_4 g)) (bonus_1 (frame_5 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_5 g))))
+        (= #b1111111111 (pins (throw_1 (frame_6 g)))))
+      (= (bonus_2 (frame_5 g)) (bonus_1 (frame_6 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_6 g))))
+        (= #b1111111111 (pins (throw_1 (frame_7 g)))))
+      (= (bonus_2 (frame_6 g)) (bonus_1 (frame_7 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_7 g))))
+        (= #b1111111111 (pins (throw_1 (frame_8 g)))))
+      (= (bonus_2 (frame_7 g)) (bonus_1 (frame_8 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_8 g))))
+        (= #b1111111111 (pins (throw_1 (frame_9 g)))))
+      (= (bonus_2 (frame_8 g)) (bonus_1 (frame_9 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_9 g))))
+        (= #b1111111111 (pins (throw_1 (frame_10 g)))))
+      (= (bonus_2 (frame_9 g)) (bonus_1 (frame_10 g))))))
+
+(define-fun game.valid.strike-then-not-strike-bonus-2-consistency ((g Game)) Bool
+  (and
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_1 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_2 g))))))
+      (= (bonus_2 (frame_1 g)) (throw_2 (frame_2 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_2 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_3 g))))))
+      (= (bonus_2 (frame_2 g)) (throw_2 (frame_3 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_3 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_4 g))))))
+      (= (bonus_2 (frame_3 g)) (throw_2 (frame_4 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_4 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_5 g))))))
+      (= (bonus_2 (frame_4 g)) (throw_2 (frame_5 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_5 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_6 g))))))
+      (= (bonus_2 (frame_5 g)) (throw_2 (frame_6 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_6 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_7 g))))))
+      (= (bonus_2 (frame_6 g)) (throw_2 (frame_7 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_7 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_8 g))))))
+      (= (bonus_2 (frame_7 g)) (throw_2 (frame_8 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_8 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_9 g))))))
+      (= (bonus_2 (frame_8 g)) (throw_2 (frame_9 g))))
+    (=&gt;
+      (and
+        (= #b1111111111 (pins (throw_1 (frame_9 g))))
+        (not (= #b1111111111 (pins (throw_1 (frame_10 g))))))
+      (= (bonus_2 (frame_9 g)) (throw_2 (frame_10 g))))))
+</code></pre></div></p>
+<p>And indeed both test-cases are satisfiable once I add these sub-predicates into <code>game.valid</code>:</p>
+<p>File "game.smt2":
+<div class="highlight"><pre><span></span><code>(define-fun game.valid ((g Game)) Bool
+  (and
+    (game.valid.member-frames-valid g)
+    (game.valid.sequential-frames g)
+    (game.valid.mark-frames-first-bonus-consistent-with-next-frame g)
+    (game.valid.strike-then-strike-bonus-2-consistency  g)
+    (game.valid.strike-then-not-strike-bonus-2-consistency g)))
+</code></pre></div></p>
+<h4 id="incrementally-accumulating-throws-in-a-game">Incrementally accumulating throws in a game</h4>
+<p>Applying a throw to a game is a game-altering operation. The game is in one prior state, I apply a given throw,
+and the resultant game is in another state. In an OSM, we represent state changes with an operation datatype.
+The operation datatype for applying a throw to a game includes a prior game, and post game, and the throw being
+applied.</p>
+<p>File "game-ops.smt2":
+<div class="highlight"><pre><span></span><code>(declare-datatype Game.ApplyThrowOp (
+  (game.apply-throw-op
+    (prior_game Game)
+    (post_game Game)
+    (throw Throw))))
+</code></pre></div></p>
+<p>I know a couple things which must be true about a valid throw application:</p>
+<ul>
+<li>the prior game, post game, and throw must all be valid</li>
+<li>the throw must not be incomplete or unused (learned this one the hard way when defining how to apply a throw
+  to a frame)</li>
+<li>Similary, the game itself must be incomplete -- you can't apply a throw to a completed game</li>
+</ul>
+<p>I'll define sub-predicates for each of these conditions, and also a helper function to tell whether or not a game is
+complete.</p>
+<p>File "game.smt2"
+<div class="highlight"><pre><span></span><code>(define-fun game.is-incomplete ((g Game)) Bool
+  (frame.is-incomplete (frame_10 g)))
+</code></pre></div></p>
+<p>File "game-ops.smt2"
+<div class="highlight"><pre><span></span><code>(define-fun game.apply-throw-op.valid.members-valid ((op Game.ApplyThrowOp)) Bool
+  (and
+    (game.valid (prior_game op))
+    (game.valid (post_game op))
+    (throw.valid (throw op))))
+
+(define-fun game.apply-throw-op.valid.completion-consistency ((op Game.ApplyThrowOp)) Bool
+  (and
+    (game.is-incomplete (prior_game op))
+    (not (incomplete (throw op)))
+    (not (unused (throw op)))))
+</code></pre></div></p>
+<p>I'm too close to the end to make a test-case for these simple pre-conditions. I know exactly how I want to
+encode applying a throw to a game. I'm going to break my "test first" discipline and encode the throw application
+validation logic first, and then start defining test-cases to make sure it works.</p>
+<p>To apply a throw to a game, I need to apply the throw to the "current" frame -- the first frame for which the
+<code>frame.frame.incomplete-normal-throws</code> is true. The resultant <code>Game</code> has all <em>other</em> frames equal in the pre and post
+game states. The only frame which is changed is the one to which the throw was applied.</p>
+<p>Here's my sketch for the sub-predicate that applies a throw to the first frame, if the first frame is the "current"
+one:
+<div class="highlight"><pre><span></span><code>(define-fun game.apply-throw-op.valid.first-applicable-frame-updated ((op Game.ApplyThrowOp)) Bool
+  (and
+    (frame.incomplete-normal-throws (frame_1 (prior_game op)))          ;; current frame is frame_1
+    (exists ((frame_op Frame.ApplyThrowOp))
+      (and
+        (frame.apply-throw.valid frame_op)
+        (= (prior_frame frame_op) (frame_1 (prior_game op)))
+        (= (post_frame frame_op)  (frame_1 (post_game op)))
+        (= (throw frame_op) (throw op))))
+    (= (frame_2 (prior_game op))  (frame_2 (post_game op)))
+    (= (frame_3 (prior_game op))  (frame_3 (post_game op)))
+    (= (frame_4 (prior_game op))  (frame_4 (post_game op)))
+    (= (frame_5 (prior_game op))  (frame_5 (post_game op)))
+    (= (frame_6 (prior_game op))  (frame_6 (post_game op)))
+    (= (frame_7 (prior_game op))  (frame_7 (post_game op)))
+    (= (frame_8 (prior_game op))  (frame_8 (post_game op)))
+    (= (frame_9 (prior_game op))  (frame_9 (post_game op)))
+    (= (frame_10 (prior_game op)) (frame_10 (post_game op))))
+</code></pre></div></p>
+<ul>
+<li>pre-condition: the first frame has incomplete normal throws</li>
+<li>frames 2-10 are the same in the pre and post game states</li>
+<li>there exists a valid <code>Frame.ApplyThrowOp</code> where the prior frame is the prior game's first frame, and the
+  post frame is the post game's first frame</li>
+</ul>
+<p>I just need a giant version of this predicate with a separate sub-clause for each frame.
+<div class="highlight"><pre><span></span><code>(define-fun game.apply-throw-op.valid.first-applicable-frame-updated ((op Game.ApplyThrowOp)) Bool
+  (or
+    (and
+      (frame.incomplete-normal-throws (frame_1 (prior_game op)))          ;; current frame is frame_1
+      ...)
+
+    (and
+      (not (frame.incomplete-normal-throws (frame_1 (prior_game op))))
+      (frame.incomplete-normal-throws (frame_2 (prior_game op)))          ;; current frame is frame_2
+      ...)
+
+    (and
+      (not (frame.incomplete-normal-throws (frame_2 (prior_game op))))
+      (frame.incomplete-normal-throws (frame_3 (prior_game op)))          ;; current frame is frame_3
+      ...)
+
+    ... and so on through frame 10
+))
+</code></pre></div></p>
+<p>The final version of <code>game.apply-throw-op.valid</code>:
+<div class="highlight"><pre><span></span><code>(define-fun game.apply-throw-op.valid ((op Game.ApplyThrowOp)) Bool
+  (and
+    (game.apply-throw-op.valid.members-valid op)
+    (game.apply-throw-op.valid.completion-consistency op)
+    (game.apply-throw-op.valid.first-applicable-frame-updated op)))
+</code></pre></div></p>
+<p>You can see in the source code several test-cases proving exhaustively that when each frame 1-10 goes through
+each of the state transitions in the frame state diagram above, the resultant full game state passes all validation
+rules. The full test-suite is verbose and exhaustive, and not really worth repeating here.</p>
+<p>The important point is that the bwling OSM is now provably consistent and complete. Any implementation of bowling
+can be positively tested against this model. Any inconsistency with this OSM proves the implementation is not
+in conformance with the USBC standard.</p>
+<h2 id="footnotes">Footnotes</h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>In general you can't create a proof production system that can prove any given software implementation conforms
+  to any given
+  logical definition. The only way to verify an implementation conforms with a definition is through exhaustive case analysis -- trying
+  each and every possible input and verifying the output conforms with the logical definition. Any logical definition with an infinite domain obvious can't be verified completely. What we <em>can</em> do is prove that the implementation conforms to a logical
+  definition across a finite domain, which can be arbitrarily large. So really the best we can do for inifinitely large domains is
+  show that an implementation <em>apparently doesn't conflict</em> with a logical definition, meaning that we can't find any finite portion
+  of the domain where the implementation doesn't conform to the definition.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>The standard uses the term <em>delivery</em>, and the Bobs' apparently replace this with the term <em>throw</em>. This
+  article uses the Bobs' term <em>throw</em> throughout, but the correct term from the standard is <em>delivery</em>.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>The USBC standard describes the bonuses associated with mark frames (strikes and spares) in the 10th frame as "awarded". The
+  logical model developed in this article extends this concept to all frames: each mark frame in frames 1-9 are "awarded" additional
+  bonus throws, and these throws are synonymous with the standard deliveries in subsequent frames. The murky evolution of bowling
+  through history suggests there were early versions of the game that were played exactly this way: "bonus" throws were executed
+  seperately within each frame. I imagine the "bonus" throws for marks in those archaic versions of the game were eventually merged
+  with subsequent normal throws in the modern version of the game, perhaps to reduce the significant effort associated with
+  manually setting up pins in formation.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>The <a href="https://cvc5.github.io/">CVC5 solver</a> includes a theory of <a href="https://github.com/cvc5/cvc5/blob/main/examples/api/smtlib/finite_field.smt2">finite fields</a>,
+  which is exactly what we need. This theory supports a finite integer range covering exactly 0-9 as a datatype. However this theory
+  and the supporting smtlib2 functions are specific to CVC5. I choose to stick to standardized theories available to make the article as widely applicable as possible.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>This is similar to unit testing or property testing the bowling definition functions. But rather that "executing" the functions
+  and examining that the outputs match expectations in specific cases, we define the properties we expect the function to have and
+  ask a theorem prover to prove the property assertions are true. We don't care what proof techniques the prover employs, we just need to
+  know the assertions are true.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>This is one of the superpowers of <code>cpp</code> -- there are whole C++ frameworks and generalized programming
+  techniques based on preprocessor macros and on-the-fly code generation. Though it is beyond the scope of this
+  repo, I encourage the curious to check out <a href="https://hirrolot.gitbook.io/metalang99"><code>metalang99</code></a>, a functional macro "language" for standard C-language preprocessors. Using <code>metalang99</code> you write the code once, and get the
+  preprocessor to duplicate during preprocessor expansion. All the power of functional looping and recursion,
+  which we've been studiously avoiding in our smtlib2 formulas, is available to you for <em>generating</em> loop-free
+  and recursion-free formulas.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../assets/mkdocs_puml/puml.js"></script>
+      
+        <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+      
+        <script src="../assets/mkdocs_puml/interaction.js"></script>
+      
+    
+  </body>
+</html>

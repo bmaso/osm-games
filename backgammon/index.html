@@ -1,0 +1,645 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://bmaso.github.io/osm-games/backgammon/index.html">
+      
+      
+        <link rel="prev" href="../bowling/index.html">
+      
+      
+        <link rel="next" href="../spades/index.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Backgammon OSM - OSM Games</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/mkdocs_puml/puml.css">
+    
+      <link rel="stylesheet" href="../assets/mkdocs_puml/interaction.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#backgammon-osm-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OSM Games" class="md-header__button md-logo" aria-label="OSM Games" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OSM Games
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Backgammon OSM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OSM Games" class="md-nav__button md-logo" aria-label="OSM Games" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OSM Games
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bowling/OSM-Episode.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    An Equational Thinking Episode
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osm-specs-in-smtlib2.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OSM Specs in smtlib2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connect4/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connect Four OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bowling/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bowling OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Backgammon OSM
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="index.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Backgammon OSM
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wbgf-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      WBGF Rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-datatypes-and-validation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain Datatypes and Validation Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Domain Datatypes and Validation Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#domain-datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain Datatypes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation Functions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spades/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spades OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wbgf-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      WBGF Rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-datatypes-and-validation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain Datatypes and Validation Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Domain Datatypes and Validation Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#domain-datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain Datatypes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation Functions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="backgammon-osm-model">Backgammon OSM Model</h1>
+<p><strong>THIS IS AN INCOMPLETE WORK IN PROGRESS</strong></p>
+<p><a href="https://en.wikipedia.org/wiki/Backgammon">Backgammon</a> is the most popular of a family of game known as <em>"tables games"</em> whose history goes back at least 1,700 years. The <a href="https://wbgf.info/">World
+Backgammon Federation</a> oversees international tournaments today, and its <a href="https://wbgf.info/tournament-rules/">definition</a> of backgammon can be taken as "standard" for the
+purposes of authoring an OSM model.</p>
+<p>The OSM model in this module follows the general OSM model structure described in the
+<a href="../index.html">repo introduction</a>. A sequence of <em>operations</em> models game play. Each operation instance relates
+a <em>prior game</em> state to an <em>post game</em> state, along with operation input.</p>
+<p>The post state of one operation is the prior state of the subsequent operation. The game process can be
+considered a DAG of game states, more specifically a linked list, with the operation instances as directed
+vectors linking one game state to the next, which are nodes in the DAG. The "head" of this structure is
+the initial game state in each game process -- the "new board" with pieces arranged as required by the official
+rules. The final element of each game is a terminal state, in which one of the two players has
+"borne off their 15 pieces from the inner table" in the argot of backgammon enthusiasts, ie in which one
+of two players has won.</p>
+<p>This model employs the <code>smtlib2</code> language to define the model datatypes and logical rules defining a valid game process.</p>
+<h2 id="wbgf-rules">WBGF Rules</h2>
+<p>The WBGF rules follow the description of the game rules clearly described in <a href="https://en.wikipedia.org/wiki/Backgammon#Rules">Wikipedia's Backgammon article's Rules section</a>. The variant defined in this module incudes these options to the game:</p>
+<ol>
+<li>
+<p><em>Physical restrictions on game play elided.</em> Obviously this is a mathematical description of the
+  game process, so physical requirements of the game are not addressed. The size of the game board,
+  composition and behavior of dice, use of a "Baffle Box" (a dice-rolling device), Game Clocks, and
+  other physical/temporal aspects of human game play aren't addressed.</p>
+</li>
+<li>
+<p><em>Doubling cube.</em> this module includes <em>beavering</em> and <em>racooning</em>, which are optional aspects of
+  the doubling cube. (See <a href="https://en.wikipedia.org/wiki/Backgammon#Doubling_cube">Wikipedia's description</a>.)</p>
+</li>
+</ol>
+<p>This module defines beavering and racooning as game operations. Prior to rolling, a player who has the right
+   to double may choose to double, which is an applied game operation (because it changes the state of
+   the game). In the resultant game state the opposing player is obligated to perform one of 3 operations before "normal" game play recommences with the original doubling player's dice roll:
+   - Accept the doubling, after which the original doubling player would recommence game play with a dice roll
+   - Foreit the game, after which the game is over an the original doubling player is the winner
+   - Beaver (redouble), after which the game enters a substate during which one of two operations must follow:
+     - The original doubling player recommences game play with a dice roll
+     - The original doubling player raccoons (doubles again), after which the same player would recommence
+       game play with a dice roll</p>
+<p>DESCRIBE RACOONING</p>
+<p>All operations except the forfeiture eventually lead to the original doubling player recommencing game
+   play in a state in which only a dice roll operation can be applied, and in which the game state has
+   been updated by</p>
+<ul>
+<li>a change in the doubling value, which will be raised by 1, 2 (beaver), or 3 (racoon) powers of 2 vs
+     the state prior to the original doubling</li>
+<li>
+<p>a change in the ownership of the doubling cube to the opposing player</p>
+</li>
+<li>
+<p><em>Acceptance of guaranteed outcome.</em> This module does not support the WBGF rule that allows players to
+   agree on match result (single game, gammon, or backgammon). The WBGF rule <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> states that players may
+   terminate a game and declare the result if it is impossible for any other outcome to occur given the
+   state of the game. Note however that the inclusion of this operation leads to exponentially greater
+   possible outcomes of a game all with the same result, which can greatly impede an SMT solver's ability
+   to generate game states when asked to do so (ie test-cases). <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+</li>
+<li>
+<p><em>Scorekeeping.</em> WBDF rules encourage and can require players to report match scores, declare game
+   options, and make other informative declarations prior to game commencement. This module does not
+   implement these obligations, as they are really outside the scope of
+   actual game play.</p>
+</li>
+<li>
+<p><em>"Incorrect match length" rule.</em> Interpretation of the WBGF "Incorrect match length" rule as stated in
+   the official rules is an indecidable proposition (in the Godel sense), as there is no reference to what
+   "match length" is or what a "correct" match length would be throughout the entire rule corpus. This
+   module makes no attempt to impose an iterpretation.</p>
+</li>
+<li>
+<p><em>Dice Rolls</em> and <em>Checker Movements.</em> The WBGF rules concerning die rolls and checker moves have a lot of corner conditions and special
+   cases. Checker on the bar must re-enter the board before checkers on the board can be moved. If a die roll cannot be applied, the die roll
+   is forfeit. If both die rolls <em>can</em> be played, the player is obligated to play both. But if only one die roll or the other can be played,
+   but not both, then the player is obligated to player the <em>higher</em> die roll. And doubles count 4 times, so the same rules about if a
+   roll can be played then it must applies to up to 4x when double are rolled, which can lead to 0, 1, 2, 3 or 4 die rolls being forfeit
+   or played in a single turn. If a player wins by using just 1 of 2 die rolls, tehnically one of the die rolls is "forfeit", because
+   it can't be played. Truly, it's complicated to describe.</p>
+</li>
+</ul>
+<p>Rather than try to write a single logical equation describing all valid turns of 2 die on all possible valid boards, I have opted to
+   describe <em>8</em> different operations: 
+   1. Non-doubles, forfeit both die values
+   1. Non-doubles, forfeit one dice value
+   1. Non-doubles, play both die values
+   1. Doubles, foreit all 4 die values
+   1. Doubles, forfeit 3 of 4 die values
+   1. Doubles, forfeit 2 of 4 die values
+   1. Doubles, forfeit 1 of 4 die values
+   1. Doubles, play all 4 die values</p>
+<h2 id="domain-datatypes-and-validation-functions">Domain Datatypes and Validation Functions</h2>
+<h3 id="domain-datatypes">Domain Datatypes</h3>
+<p>The <code>Board</code> datatype serves as the game state. A <code>Board</code> is comprised of: 24 <code>Point</code> values, a <code>Bar</code> value, an integer doubling value,
+a doubling cube ownership indicator, and a field indicating doubling substate (whether beavering or raccooning is available). The
+doubling value is stored in the game state as a log base 2 value -- so that the game's cube value is 2 raised to the doubling value. 0 means the
+cube value is 1, 1 --&gt; 2, 2 --&gt; 4, 3 --&gt; 8, and so on.</p>
+<p>A <code>Point</code> consists of a <code>Color</code> value and an integer count of pieces, representing a count of pieces of one player or the other.
+The <code>Color</code> sort has 3 values: <code>{ Red, Black, Neutral }</code>, where <code>Neutral</code> serves as a special indicator that a <code>Point</code> is unoccupied by
+either player. <code>Color</code> values are also used to indicate wich player's turn is next.</p>
+<p>A <code>Bar</code> consists of just 2 integers: a <code>Red</code> count and a <code>Black</code> count, indicating the number of pieces of each player occupying the game bar.</p>
+<h3 id="validation-functions">Validation Functions</h3>
+<hr />
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>See <a href="https://wbgf.info/tournament-rules/">WBGF Rules</a> section 4.5 "Completion"&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>I'd be really impressed with a contributed PR encoding this rule!&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../assets/mkdocs_puml/puml.js"></script>
+      
+        <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+      
+        <script src="../assets/mkdocs_puml/interaction.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,913 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://bmaso.github.io/osm-games/bowling/index.html">
+      
+      
+        <link rel="prev" href="../connect4/index.html">
+      
+      
+        <link rel="next" href="../backgammon/index.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Bowling OSM - OSM Games</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/mkdocs_puml/puml.css">
+    
+      <link rel="stylesheet" href="../assets/mkdocs_puml/interaction.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bowling-osm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OSM Games" class="md-header__button md-logo" aria-label="OSM Games" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OSM Games
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bowling OSM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OSM Games" class="md-nav__button md-logo" aria-label="OSM Games" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OSM Games
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OSM-Episode.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    An Equational Thinking Episode
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osm-specs-in-smtlib2.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OSM Specs in smtlib2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connect4/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connect Four OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Bowling OSM
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="index.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Bowling OSM
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Throw
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A Throw">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bitvectors-to-represent-pins-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      BitVectors to represent pins combinations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicit-definition-of-all-known-split-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Explicit definition of all known split combinations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#definition-of-a-single-valid-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Definition of a single valid throw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Frame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operation-to-apply-a-single-throw-to-a-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operation to Apply a Single Throw to a Frame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Game
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-a-single-throw-to-a-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      Applying a Single Throw to a Game
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backgammon/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Backgammon OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spades/index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spades OSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Throw
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A Throw">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bitvectors-to-represent-pins-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      BitVectors to represent pins combinations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicit-definition-of-all-known-split-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Explicit definition of all known split combinations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#definition-of-a-single-valid-throw" class="md-nav__link">
+    <span class="md-ellipsis">
+      Definition of a single valid throw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Frame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operation-to-apply-a-single-throw-to-a-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operation to Apply a Single Throw to a Frame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Game
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-a-single-throw-to-a-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      Applying a Single Throw to a Game
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="bowling-osm">Bowling OSM</h1>
+<p>The governing body for bowling in the US is the United States Bowling Congress (<a href="https://bowl.com">USBC</a>). For
+international play, game play is regulated by the International Bowling Federation (<a href="https://bowling.sport">IBF</a>).
+The defition of scoring and game play defined by both organizations are are equivalent. I will reference
+the USBC's <a href="assets/ScoreHowto.2024-11-11.pdf">standard for scoring a game of bowling</a> as the "standard" implemented
+in this project.</p>
+<p>In a game of bowling a single player rolls a ball down a flat surface multiple times, repeatedly trying to knock
+down a set of 10 pins set up in a triangular configuration. The player's rolls, known as "throws", are grouped into
+frames. The scoring description is notable for having several odd corner-cases and a quirky game termination, where
+the tenth and final frame is described as having a different set of throws as the initial 9 frames.</p>
+<p>Most of the oddness of the scoring algorithm arises from the game scorecard, which is a tool for human recording and
+scoring. This is reminiscent of the confusion that arises from visualizations humans use for arithetic long division
+and multi-digit multiplication, where number positioning and alignment on a piece of paper are paramount to algorithmic
+success.</p>
+<p>The essence of the scoring algorithm is actually pretty easy to understand, even if not easy to record cleanly on
+a single piece of paper. The scorecard design is meant to standardize the method of scoring while keeping the amount
+of paper needed for a human to keep score to a minimum.</p>
+<p>This is a simpler description of how bowling score works:</p>
+<ul>
+<li>Each frame is scored separately</li>
+<li>The total game score is the sum of 10 sequential frame scores</li>
+<li>In each frame the player is given up to two normal throws to knock down 10 pins</li>
+<li>If the player knocks down all 10 pins in one throw (a "strike"), the player is awarded two bonus throws and fresh
+  set of 10 pins</li>
+<li>in this case the second normal throw in the frame is unused</li>
+<li>if the player knocks down all 10 bonus pins on his first bonus throw, the player gets another fresh set of 10
+    pins for his second bonus throw</li>
+<li>If the player instead knocks down all 10 pins in 2 throws (a "spare"), the player is awarded a single bonus throw
+  and a fresh set of 10 pins</li>
+<li>The bonus throws for each frame are identical to the normal throws of subsequent frames</li>
+<li>For example, if all 10 pins are knocked down in the first throw of frame 1, then the first normal throw of
+    frame 2 is also the first bonus throw of frame 1</li>
+<li>An illegal throw is known as a "foul", and is recorded and scored as if zero pins were knocked down in that throw</li>
+<li>It is also a common tradition to record when a first normal throw creates a "split"; that is, if the pins left standing
+  after the first throw are in specific configurations. This does not affect the score total, but is recorded on the game
+  scorecard.</li>
+</ul>
+<blockquote>
+<p>Note that the 10th frame has no subsequent frames. Any bonus throws in the tenth frame are not identical to normal throws
+in subsequent frames because there are no subsequent frames.</p>
+</blockquote>
+<h2 id="a-throw">A Throw</h2>
+<p>There are two normal throws within each frame. In the case of a strike the second throw will be unused. Otherwise both
+throws are used. Prior to a throw taking place, we can call the throw "incomplete", meaning it has yet to happen. I define several convenience constants for foul, unused, and incomplete throws.</p>
+<h3 id="bitvectors-to-represent-pins-combinations">BitVectors to represent pins combinations</h3>
+<p>We avoid using <code>integer</code> to record the throw result. A finite-valued type is preferable to an infinitely-valued type, because
+we will be quantifying over the pins knocked down to define special rules for strikes and spares. Smtlib2 conveniently
+defines finite-valued <code>bitvector</code> types [^1]. We represent a set of standing pins by a 10-bit bitvector: leading pin is
+numbered <code>0</code>, the second rank of pins are numbered {1, 2} from left to right, the third rank of pins are numbered
+<code>{3, 4, 5}</code> from left to right, and so on. A false value represents a pin that is knocked down, and a true value is
+a standing pin. (Standard bowling uses a 1-based numbering scheme, but <code>smtlib2</code> bitvectors are 0-based.)</p>
+<p>A "strike" is all 10 pin knocked down: <code>#b0000000000</code>. (<code>#b</code><em><code>nnnnn...</code></em> is a static representation of a bitvector)</p>
+<h3 id="explicit-definition-of-all-known-split-combinations">Explicit definition of all known split combinations</h3>
+<p>The USBC and IBF definitions of a "split" are rule-based, and can be succinctly defined as</p>
+<blockquote>
+<p>A setup of pins remaining standing after the first delivery, where the headpin is down and at least two
+pins remain standing, with one or more intermediate pins down, creating a gap.”</p>
+</blockquote>
+<p>The most onerous "7-10" split in our representation would be <code>#b0000001001</code>.</p>
+<p>We define a function <code>is-split-pins</code> from an explicit list of split constants, which is the most efficient implementation
+for SMT solvers to reason with.</p>
+<div class="highlight"><pre><span></span><code>(define-fun is-split-pins ((pins (_ BitVector 10))) Bool
+  (or
+    (= #b0000001001 pins)
+    (= #b0001001001 pins)
+    ... ))
+</code></pre></div>
+<h3 id="definition-of-a-single-valid-throw">Definition of a single <em>valid</em> throw</h3>
+<p>Here's is the unconstrained definition of a <code>Throw</code>:</p>
+<div class="highlight"><pre><span></span><code>(declare-datatype Throw (
+  (throw
+    (pins (_ BitVector 10))
+    (foul Bool)
+    (unused Bool)
+    (incomplete Bool))))
+
+(define-const foul-throw Throw
+  (throw #b0000000000 true false false))
+
+(define-const unused-throw Throw
+  (throw #b0000000000 false true false))
+
+(define-const incomplete-throw Throw
+  (throw #b0000000000 false false true))
+</code></pre></div>
+<p>A <em>valid</em> throw is going to conform to one of these three rules:</p>
+<ul>
+<li>it is one of {<code>foul-throw</code>, or <code>unused-throw</code>, <code>incomplete-throw</code>}</li>
+<li>it has none of the <code>foul</code>, <code>unused</code> or <code>incomplete</code> flags set</li>
+</ul>
+<div class="highlight"><pre><span></span><code>(define-fun throw.valid ((t Throw)) Bool
+  (or
+    (= foul-throw t)
+    (= unused-throw t)
+    (= incomplete-throw t)
+    (and
+      (not (foul t))
+      (not (unused t))
+      (not (incomplete t)))))
+</code></pre></div>
+<h2 id="a-frame">A Frame</h2>
+<p>A frame consists of two normal throws and two bonus throws. Each frame goes through its own state sequence.</p>
+<p>In a frame's initial state, all throws are incomplete. As individual valid throws are added in to a frame, the frame will proceed through one of three workflow paths:</p>
+<ul>
+<li><strong>a strike frame</strong>. The frame's workflow terminates with the first normal throw a strike, the second normal throw
+  unused, and both bonus throws used (ie, not unused)</li>
+<li><strong>a spare frame</strong>. The frame's workflow terminates with both normal throws used and with all pins knocked down, the
+  first bonus throw not unused and the second bonus throw unused.</li>
+<li><strong>a scratch frame</strong>. The frame's workflow terminates with both noraml throws used and with not all pins knocked down,
+  and both bonus throws unused.</li>
+</ul>
+<div class='puml-container'><div class="puml light" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="640px" preserveAspectRatio="xMidYMid meet" style="width:500px;height:640px;background:#FFFFFF;" version="1.1" viewBox="0 0 500 640" width="500px" zoomAndPan="magnify" class="diagram"><defs/><g><ellipse cx="192.22" cy="16" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/><g id="Initial"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.7393" x="162.85" y="87"/><line style="stroke:#181818;stroke-width:0.5;" x1="162.85" x2="221.5893" y1="113.2969" y2="113.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="38.7393" x="172.85" y="104.9951">Initial</text></g><g id="Strike"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.7422" x="62.85" y="214"/><line style="stroke:#181818;stroke-width:0.5;" x1="62.85" x2="123.5922" y1="240.2969" y2="240.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.7422" x="72.85" y="231.9951">Strike</text></g><g id="FirstStrikeBonus"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="134.4336" x="7" y="341"/><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="141.4336" y1="367.2969" y2="367.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114.4336" x="17" y="358.9951">FirstStrikeBonus</text></g><g id="SecondStrikeBonus"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="155.4746" x="11.48" y="501"/><line style="stroke:#181818;stroke-width:0.5;" x1="11.48" x2="166.9546" y1="527.2969" y2="527.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="135.4746" x="21.48" y="518.9951">SecondStrikeBonus</text></g><ellipse cx="288.22" cy="623" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/><ellipse cx="288.22" cy="623" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/><g id="FirstThrow"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="93.6777" x="241.38" y="214"/><line style="stroke:#181818;stroke-width:0.5;" x1="241.38" x2="335.0577" y1="240.2969" y2="240.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.6777" x="251.38" y="231.9951">FirstThrow</text></g><g id="Spare"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.7217" x="257.86" y="341"/><line style="stroke:#181818;stroke-width:0.5;" x1="257.86" x2="318.5817" y1="367.2969" y2="367.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.7217" x="267.86" y="358.9951">Spare</text></g><g id="FirstSpareBonus"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="134.4131" x="221.01" y="501"/><line style="stroke:#181818;stroke-width:0.5;" x1="221.01" x2="355.4231" y1="527.2969" y2="527.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114.4131" x="231.01" y="518.9951">FirstSpareBonus</text></g><g id="Scratch"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="72.9785" x="420.73" y="421"/><line style="stroke:#181818;stroke-width:0.5;" x1="420.73" x2="493.7085" y1="447.2969" y2="447.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52.9785" x="430.73" y="438.9951">Scratch</text></g><g class="link" data-entity-1="*start*" data-entity-2="Initial" data-source-line="2" data-uid="lnk4" id="link_*start*_Initial"><path d="M192.22,26.36 C192.22,40.29 192.22,60.95 192.22,80.65" fill="none" id="*start*-to-Initial" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="192.22,86.65,196.22,77.65,192.22,81.65,188.22,77.65,192.22,86.65" style="stroke:#181818;stroke-width:1;"/></g><g class="link" data-entity-1="Initial" data-entity-2="Strike" data-source-line="3" data-uid="lnk6" id="link_Initial_Strike"><path d="M162.62,129.24 C147.86,138.62 130.74,151.6 119.22,167 C108.91,180.77 103.9247,193.2503 99.9647,207.8103" fill="none" id="Initial-to-Strike" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="98.39,213.6,104.6118,205.9653,99.7022,208.7753,96.8922,203.8657,98.39,213.6" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105.4028" x="120.22" y="180.0669">First throw = 10</text></g><g class="link" data-entity-1="Strike" data-entity-2="FirstStrikeBonus" data-source-line="4" data-uid="lnk8" id="link_Strike_FirstStrikeBonus"><path d="M89.51,264.4 C86.16,286.42 82.1606,312.728 78.8206,334.728" fill="none" id="Strike-to-FirstStrikeBonus" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="77.92,340.66,83.2256,332.3624,78.6705,335.7166,75.3162,331.1616,77.92,340.66" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="158.1455" x="86.22" y="307.0669">First bonus throw added</text></g><g class="link" data-entity-1="FirstStrikeBonus" data-entity-2="SecondStrikeBonus" data-source-line="5" data-uid="lnk10" id="link_FirstStrikeBonus_SecondStrikeBonus"><path d="M76.53,391.34 C79.35,421.03 83.5129,464.9569 86.3329,494.6569" fill="none" id="FirstStrikeBonus-to-SecondStrikeBonus" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="86.9,500.63,90.0314,491.2922,86.4274,495.6524,82.0672,492.0484,86.9,500.63" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="177.6836" x="85.22" y="450.5669">Second bonus throw added</text></g><g class="link" data-entity-1="SecondStrikeBonus" data-entity-2="*end*" data-source-line="6" data-uid="lnk12" id="link_SecondStrikeBonus_*end*"><path d="M140.46,551.46 C187.68,574.01 248.605,603.0959 273.165,614.8159" fill="none" id="SecondStrikeBonus-to-*end*" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="278.58,617.4,272.1801,609.9139,274.0675,615.2466,268.7347,617.134,278.58,617.4" style="stroke:#181818;stroke-width:1;"/></g><g class="link" data-entity-1="Initial" data-entity-2="FirstThrow" data-source-line="8" data-uid="lnk14" id="link_Initial_FirstThrow"><path d="M211.3,137.42 C218.5,146.67 226.76,157.3 234.22,167 C246.11,182.47 255.7533,195.1301 266.1633,208.8501" fill="none" id="Initial-to-FirstThrow" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="269.79,213.63,267.5365,204.0424,266.7677,209.6468,261.1634,208.878,269.79,213.63" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105.4028" x="246.22" y="180.0669">First throw &lt; 10</text></g><g class="link" data-entity-1="FirstThrow" data-entity-2="Spare" data-source-line="9" data-uid="lnk16" id="link_FirstThrow_Spare"><path d="M288.22,264.4 C288.22,286.42 288.22,312.66 288.22,334.66" fill="none" id="FirstThrow-to-Spare" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="288.22,340.66,292.22,331.66,288.22,335.66,284.22,331.66,288.22,340.66" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64.854" x="289.22" y="307.0669">Sum = 10</text></g><g class="link" data-entity-1="Spare" data-entity-2="FirstSpareBonus" data-source-line="10" data-uid="lnk18" id="link_Spare_FirstSpareBonus"><path d="M281.09,391.24 C278.72,400.47 276.39,411.14 275.22,421 C272.6,443.07 272.6,448.93 275.22,471 C276.39,480.86 277.2278,485.7185 279.5978,494.9485" fill="none" id="Spare-to-FirstSpareBonus" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="281.09,500.76,282.726,491.048,279.8465,495.9171,274.9773,493.0376,281.09,500.76" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="126.3755" x="276.22" y="450.5669">Bonus throw added</text></g><g class="link" data-entity-1="FirstSpareBonus" data-entity-2="*end*" data-source-line="11" data-uid="lnk19" id="link_FirstSpareBonus_*end*"><path d="M288.22,551.46 C288.22,571.04 288.22,591.49 288.22,605.8" fill="none" id="FirstSpareBonus-to-*end*" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="288.22,611.8,292.22,602.8,288.22,606.8,284.22,602.8,288.22,611.8" style="stroke:#181818;stroke-width:1;"/></g><g class="link" data-entity-1="FirstThrow" data-entity-2="Scratch" data-source-line="13" data-uid="lnk21" id="link_FirstThrow_Scratch"><path d="M327.36,264.38 C339.33,272.89 352.02,283.07 362.22,294 C398.99,333.4 426.9638,383.6399 442.8438,415.2099" fill="none" id="FirstThrow-to-Scratch" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="445.54,420.57,445.0691,410.7324,443.2932,416.1033,437.9223,414.3273,445.54,420.57" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64.854" x="376.22" y="307.0669">Sum &lt; 10</text></g><g class="link" data-entity-1="Scratch" data-entity-2="*end*" data-source-line="14" data-uid="lnk22" id="link_Scratch_*end*"><path d="M439.77,471.24 C423.59,493.06 398.28,525.52 373.22,551 C347.46,577.18 317.6356,600.2408 301.7056,612.0808" fill="none" id="Scratch-to-*end*" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="296.89,615.66,306.4994,613.5016,300.903,612.6774,301.7272,607.0809,296.89,615.66" style="stroke:#181818;stroke-width:1;"/></g></g></svg></div><div class="puml dark" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="640px" preserveAspectRatio="xMidYMid meet" style="width:500px;height:640px;background:#1B1B1B;" version="1.1" viewBox="0 0 500 640" width="500px" zoomAndPan="magnify" class="diagram"><defs/><g><rect fill="#1B1B1B" height="640" style="stroke:none;stroke-width:1;" width="500" x="0" y="0"/><ellipse cx="192.22" cy="16" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/><g id="Initial"><rect fill="#313139" height="50" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="58.7393" x="162.85" y="87"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="162.85" x2="221.5893" y1="113.2969" y2="113.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="38.7393" x="172.85" y="104.9951">Initial</text></g><g id="Strike"><rect fill="#313139" height="50" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="60.7422" x="62.85" y="214"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="62.85" x2="123.5922" y1="240.2969" y2="240.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.7422" x="72.85" y="231.9951">Strike</text></g><g id="FirstStrikeBonus"><rect fill="#313139" height="50" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="134.4336" x="7" y="341"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="7" x2="141.4336" y1="367.2969" y2="367.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114.4336" x="17" y="358.9951">FirstStrikeBonus</text></g><g id="SecondStrikeBonus"><rect fill="#313139" height="50" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="155.4746" x="11.48" y="501"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="11.48" x2="166.9546" y1="527.2969" y2="527.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="135.4746" x="21.48" y="518.9951">SecondStrikeBonus</text></g><ellipse cx="288.22" cy="623" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/><ellipse cx="288.22" cy="623" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/><g id="FirstThrow"><rect fill="#313139" height="50" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="93.6777" x="241.38" y="214"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="241.38" x2="335.0577" y1="240.2969" y2="240.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.6777" x="251.38" y="231.9951">FirstThrow</text></g><g id="Spare"><rect fill="#313139" height="50" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="60.7217" x="257.86" y="341"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="257.86" x2="318.5817" y1="367.2969" y2="367.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40.7217" x="267.86" y="358.9951">Spare</text></g><g id="FirstSpareBonus"><rect fill="#313139" height="50" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="134.4131" x="221.01" y="501"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="221.01" x2="355.4231" y1="527.2969" y2="527.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114.4131" x="231.01" y="518.9951">FirstSpareBonus</text></g><g id="Scratch"><rect fill="#313139" height="50" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="72.9785" x="420.73" y="421"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="420.73" x2="493.7085" y1="447.2969" y2="447.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52.9785" x="430.73" y="438.9951">Scratch</text></g><g class="link" data-entity-1="*start*" data-entity-2="Initial" data-source-line="2" data-uid="lnk4" id="link_*start*_Initial"><path d="M192.22,26.36 C192.22,40.29 192.22,60.95 192.22,80.65" fill="none" id="*start*-to-Initial" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="192.22,86.65,196.22,77.65,192.22,81.65,188.22,77.65,192.22,86.65" style="stroke:#E7E7E7;stroke-width:1;"/></g><g class="link" data-entity-1="Initial" data-entity-2="Strike" data-source-line="3" data-uid="lnk6" id="link_Initial_Strike"><path d="M162.62,129.24 C147.86,138.62 130.74,151.6 119.22,167 C108.91,180.77 103.9247,193.2503 99.9647,207.8103" fill="none" id="Initial-to-Strike" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="98.39,213.6,104.6118,205.9653,99.7022,208.7753,96.8922,203.8657,98.39,213.6" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105.4028" x="120.22" y="180.0669">First throw = 10</text></g><g class="link" data-entity-1="Strike" data-entity-2="FirstStrikeBonus" data-source-line="4" data-uid="lnk8" id="link_Strike_FirstStrikeBonus"><path d="M89.51,264.4 C86.16,286.42 82.1606,312.728 78.8206,334.728" fill="none" id="Strike-to-FirstStrikeBonus" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="77.92,340.66,83.2256,332.3624,78.6705,335.7166,75.3162,331.1616,77.92,340.66" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="158.1455" x="86.22" y="307.0669">First bonus throw added</text></g><g class="link" data-entity-1="FirstStrikeBonus" data-entity-2="SecondStrikeBonus" data-source-line="5" data-uid="lnk10" id="link_FirstStrikeBonus_SecondStrikeBonus"><path d="M76.53,391.34 C79.35,421.03 83.5129,464.9569 86.3329,494.6569" fill="none" id="FirstStrikeBonus-to-SecondStrikeBonus" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="86.9,500.63,90.0314,491.2922,86.4274,495.6524,82.0672,492.0484,86.9,500.63" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="177.6836" x="85.22" y="450.5669">Second bonus throw added</text></g><g class="link" data-entity-1="SecondStrikeBonus" data-entity-2="*end*" data-source-line="6" data-uid="lnk12" id="link_SecondStrikeBonus_*end*"><path d="M140.46,551.46 C187.68,574.01 248.605,603.0959 273.165,614.8159" fill="none" id="SecondStrikeBonus-to-*end*" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="278.58,617.4,272.1801,609.9139,274.0675,615.2466,268.7347,617.134,278.58,617.4" style="stroke:#E7E7E7;stroke-width:1;"/></g><g class="link" data-entity-1="Initial" data-entity-2="FirstThrow" data-source-line="8" data-uid="lnk14" id="link_Initial_FirstThrow"><path d="M211.3,137.42 C218.5,146.67 226.76,157.3 234.22,167 C246.11,182.47 255.7533,195.1301 266.1633,208.8501" fill="none" id="Initial-to-FirstThrow" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="269.79,213.63,267.5365,204.0424,266.7677,209.6468,261.1634,208.878,269.79,213.63" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105.4028" x="246.22" y="180.0669">First throw &lt; 10</text></g><g class="link" data-entity-1="FirstThrow" data-entity-2="Spare" data-source-line="9" data-uid="lnk16" id="link_FirstThrow_Spare"><path d="M288.22,264.4 C288.22,286.42 288.22,312.66 288.22,334.66" fill="none" id="FirstThrow-to-Spare" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="288.22,340.66,292.22,331.66,288.22,335.66,284.22,331.66,288.22,340.66" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64.854" x="289.22" y="307.0669">Sum = 10</text></g><g class="link" data-entity-1="Spare" data-entity-2="FirstSpareBonus" data-source-line="10" data-uid="lnk18" id="link_Spare_FirstSpareBonus"><path d="M281.09,391.24 C278.72,400.47 276.39,411.14 275.22,421 C272.6,443.07 272.6,448.93 275.22,471 C276.39,480.86 277.2278,485.7185 279.5978,494.9485" fill="none" id="Spare-to-FirstSpareBonus" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="281.09,500.76,282.726,491.048,279.8465,495.9171,274.9773,493.0376,281.09,500.76" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="126.3755" x="276.22" y="450.5669">Bonus throw added</text></g><g class="link" data-entity-1="FirstSpareBonus" data-entity-2="*end*" data-source-line="11" data-uid="lnk19" id="link_FirstSpareBonus_*end*"><path d="M288.22,551.46 C288.22,571.04 288.22,591.49 288.22,605.8" fill="none" id="FirstSpareBonus-to-*end*" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="288.22,611.8,292.22,602.8,288.22,606.8,284.22,602.8,288.22,611.8" style="stroke:#E7E7E7;stroke-width:1;"/></g><g class="link" data-entity-1="FirstThrow" data-entity-2="Scratch" data-source-line="13" data-uid="lnk21" id="link_FirstThrow_Scratch"><path d="M327.36,264.38 C339.33,272.89 352.02,283.07 362.22,294 C398.99,333.4 426.9638,383.6399 442.8438,415.2099" fill="none" id="FirstThrow-to-Scratch" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="445.54,420.57,445.0691,410.7324,443.2932,416.1033,437.9223,414.3273,445.54,420.57" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64.854" x="376.22" y="307.0669">Sum &lt; 10</text></g><g class="link" data-entity-1="Scratch" data-entity-2="*end*" data-source-line="14" data-uid="lnk22" id="link_Scratch_*end*"><path d="M439.77,471.24 C423.59,493.06 398.28,525.52 373.22,551 C347.46,577.18 317.6356,600.2408 301.7056,612.0808" fill="none" id="Scratch-to-*end*" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="296.89,615.66,306.4994,613.5016,300.903,612.6774,301.7272,607.0809,296.89,615.66" style="stroke:#E7E7E7;stroke-width:1;"/></g></g></svg></div></div>
+
+<p>The <code>Frame</code> datatype includes:
+* two normal throw members
+* two bonus throw members</p>
+<p>I've also defined a convenience constant for an "empty" frame: a frame with no throws applied at all</p>
+<div class="highlight"><pre><span></span><code>(declare-datatype Frame (
+  (frame
+    (throw_1 Throw)
+    (throw_2 Throw)
+    (bonus_1 Throw)
+    (bonus_2 Throw)))
+
+(define-const empty-frame Frame
+  (frame
+    incomplete-throw      ; throw_1
+    incomplete-throw      ; throw_2
+    incomplete-throw      ; bonus_1
+    incomplete-throw))    ; bonus_2
+</code></pre></div>
+<p>There are a lot of validation rules for a frame. I have included a written description of the rules in the
+source code to help explain what the <code>smtlib2</code> logic implements.</p>
+<div class="highlight"><pre><span></span><code>;;;;
+;; Validation rules for frames:
+;; - the member throws must be valid
+;; - the pins knocked down by throws must be consistent
+;;   - the same pin can&#39;t be knocked down in the first and second normal throws
+;;   - unless the first bonus throw is a strike, the same pin can&#39;t be knocked down in the
+;;     first and second bonus throw
+;; - one of the following rules must be met, which ensure consistency for scratch, strike, and spare frames
+;;   - all 4 throws in the frame are incomplete
+;;   - throw 1 is a strike and throw 2 is unused; both bonus throws are not unused
+;;   - throw 1 is a not strike and throw 2 is incomplete; bonus 1 and bonus 2 are also incomplete
+;;   - throw 1 is not a strike, throw 2 is not incomplete and together throw 1 and throw 2 form a spare; bonus 1
+;;     is not unused and bonus 2 is unused
+;;   - throw 1 is not a strike and together throw 1 and throw 2 form a scratch (not a spare); bonus 1
+;;     and bonus 2 are both unused 
+;; - the throws must be in-order -- later throws cannot be completed before earlier throws within the same frame
+;;   - if second regular throw is complete then the first regular throw is also complete
+;;   - if the first bonus throw is complete the the second regular throw is also complete
+;;   - if the second bonus throw is complete then either
+;;     - the first regular throw is complete and not a strike
+;;     - OR the first regular throw is a strike and the first bonus throw is also complete
+;;;;
+</code></pre></div>
+<blockquote>
+<p>Note that where it says a throw is "not unused" above this means the throw is not incomplete and not unused.</p>
+</blockquote>
+<p>All these validation rules are individually encoded in helper validation functions, which are all either directly
+or indirectly referenced by <code>frame.valid</code>:</p>
+<div class="highlight"><pre><span></span><code>(define-fun frame.valid ((f Frame)) Bool
+  (and
+    (frame.valid.member-throws-valid f)
+    (frame.valid.throw-pins-consistency f)
+    (frame.valid.throw-mark-consistency f)
+    (frame.valid.throws-in-order f)))
+</code></pre></div>
+<p>The state diagram above implies there are at least 8 distinct valid states a single frame can be in. This one validation
+function will be <code>true</code> if a frame is in any one of these 8 states and the frame doesn't conflict with any of the
+state's rules. Otherwise it will be false.</p>
+<p>Note that the frame's validation includes ensuring the frame's throws are completed in order. It would be invalid
+for a bonus throw to be completed before one of the normal throws, for example.</p>
+<h2 id="operation-to-apply-a-single-throw-to-a-frame">Operation to Apply a Single Throw to a Frame</h2>
+<p>The frame workflow diagram above illustrates how a frame may proceed from initially empty state to completed state through
+the application of different types of throws to the frame. For example, if you apply a strike to an empty frame, the frame
+proceeds to what's labeled the "Strike" state.</p>
+<p>The <code>Frame.ApplyThrowOp</code> operation datatype represents the transition of a frame from one state to another in this diagram.
+An operation value is comprised of three values:
+* <strong><code>throw</code></strong> the throw being applied to the frame
+* <strong><code>prior_frame</code></strong> the frame prior to the throw application
+* <strong><code>post_frame</code></strong> the frame after the throw application</p>
+<div class="highlight"><pre><span></span><code>(declare-datatype Frame.ApplyThrowOp (
+  (frame.apply-throw-op
+    (prior_frame Frame)
+    (post_frame Frame)
+    (throw Throw))))
+</code></pre></div>
+<p>The frame operation validation function ensures that the prior and post frames are related to each other strictly in
+accordance with the bowling scoring algorithm. The comments in the <code>frame-ops.smt2</code> describe the frame operation
+validation rules encoded by the validation function:</p>
+<div class="highlight"><pre><span></span><code>;;;;
+;; In order to be a _valid_ frame throw application, the following rules must be satisfied:
+;; - the prior frame must be valid
+;; - the post frame must be valid
+;; - the throw must be valid a not incomplete and not unused
+;; - and one of these rules must be satisfied
+;;   - prior frame throw_1 is incomplete and
+;;     - post frame throw_1 is equal to the operation&#39;s throw
+;;     - it is necessary to initialize throw_2 and the bonus throws in the post frame
+;;       - if post frame is not a strike, post frame throw_2 and bonus_1 are incomplete, and bonus_2 is unused
+;;       - if post frame is a strike, post frame bonus_1 and bonus_2 are incomplete, and throw_2 is unused
+;;   - prior frame throw_1 is not incomplete, prior frame throw_2 is incomplete and
+;;     - post frame throw_2 is equal to the operation&#39;s throw and
+;;     - post frame throw_1 and prior frame throw_1 are equal
+;;     - it is necessary to initialize the bonus throws in the post frame
+;;       - if post frame is a spare, post frame bonus_1 is incomplete
+;;       - if post frame is not a space, bonus_1 is unused
+;;   - prior frame throw_1 and throw_2 are not incomplete, and bonus_1 is incomplete
+;;     - post frame throw_1 and throw_2 are equals to prior the same prior frame fields
+;;     - post frame bonus_1 is equal to the operation&#39;s throw
+;;     - post frame bonus_2 is equal to prior frame&#39;s bonus_2 field
+;;   - prior frame throw_1, throw_2 and bonus_1 are not incomplete, and bonus_2 is incomplete
+;;     - post frame throw_1, throw_2, and bonus_1 are equal to prior the same prior frame fields
+;;     - post frame bonus_2 is equal to the operation&#39;s throw
+;;
+;; You cannot create a valid frame throw application operation with prior and post frames in any other states.
+;;;;
+</code></pre></div>
+<p>The task of entangling one frame's bonus throws with subsequent frames' normal throws is done by game validation rules.</p>
+<h2 id="a-game">A Game</h2>
+<p>A game is comprised of 10 frames. There are also functions for computing a game's score and deducing
+whether or not the game is incomplete. We also define a convenience constant representing an empty game:</p>
+<div class="highlight"><pre><span></span><code>(declare-datatype Game (
+  (game
+    (frame_1 Frame)
+    (frame_2 Frame)
+    (frame_3 Frame)
+    (frame_4 Frame)
+    (frame_5 Frame)
+    (frame_6 Frame)
+    (frame_7 Frame)
+    (frame_8 Frame)
+    (frame_9 Frame)
+    (frame_10 Frame)))
+
+(define-const empty-game Game
+  (game
+    empty-frame      ; frame_1
+    empty-frame      ; frame_2
+    empty-frame      ; frame_3
+    empty-frame      ; frame_4
+    empty-frame      ; frame_5
+    empty-frame      ; frame_6
+    empty-frame      ; frame_7
+    empty-frame      ; frame_8
+    empty-frame      ; frame_9
+    empty-frame))    ; frame_10
+</code></pre></div>
+<blockquote>
+<p>Note that I've opted to use an expicit set of fields, one for each frame, instead of an array or list. Using an array
+with an integer index key I felt like might require using quantifiers (<code>forall</code> or <code>exists</code>) over the infinite <code>Int</code>
+datatype. We avoid quantifying over infinite types whenever possible, because SMT solvers don't perform well
+when quantifying over infinite types. A list implies recursion, something SMT solvers also aren't great at (at
+least not as of the time I am writing this monograph).</p>
+<p>There's a downside to this: voluminous detailing of inter-frame relationships. There's no implied
+successor/succeeding relationship between the individual frame fields. So when detailing the relationships between
+frames you have to explicitly list out these relationships. See note below in the next section regarding the
+function to apply a throw to a game, which requires an explicit listing of inter-frame relationships in
+an operation validation function.</p>
+</blockquote>
+<p>The game validation function "entangles" the states of the individual frames. This is where the bonus throws from
+prior frames are defined to be equal to the normal throws of subsequent frames. The general rules entangling a frame
+with the subsequent frame are relatively simple to state:</p>
+<ul>
+<li>if a frame is a mark (strike or spare), then the frame's first bonus throw is equal to the subsequent frame's first normal
+  throw</li>
+<li>furthermore, if the frame is a strike AND the next frame is NOT a strike, then the frame's second bonus throw is
+  equal to the subsequent frame's second normal throw</li>
+<li>furthermore, if the frame is a strike AND the next frame is ALSO a strike, then the frame's second bonus throw is
+  equal to the subsequent frame's first bonus throw</li>
+</ul>
+<p>We must explicitly define this relationship between each game's frames 1 and 2, and also between each game's frames 2 and 3,
+and so on, all the way to frames 9 and 10. Frame 10 has no further entanglements, because there is no frame after frame 10.</p>
+<p>Notice how subsequent frame states are automatically entangled by the logic. For example, if a frame is a spare then
+the <code>bonus_1</code> of the frame must be equal to <code>throw_1</code> of the subsequent frame. This is how normal frame throws are
+distributed to previous "mark" frames (strikes or spares) as bonuses.</p>
+<p>If two frames in a row are strikes, then the first frame's bonus_2 is equal to the second frame's bonus_1, which in turn
+is equal to the <em>next</em> frame's throw_1 (by application of the same rules).</p>
+<p>The <code>game.valid</code> function encode these rules by referencing helper validation functions. Check out <code>game.smt2</code> to see
+the individual rule validation functions.</p>
+<h2 id="applying-a-single-throw-to-a-game">Applying a Single Throw to a Game</h2>
+<p>A game's state sequence is pretty simple: a game begins in the "empty" state, where all frames are incomplete. Throws
+are applied to the game, which in turn applies the throws to each individual frame, in sequence until each frame
+is no longer incomplete. The game concludes when there are no more incomplete frames -- when frame 10 is complete,
+the game is done.</p>
+<p>A <code>Game.ApplyThrowOp</code> datatype represents the application of a single throw to a game. The datatype includes a
+prior game state, a post game state, and the throw being applied to the game. A valid throw application requires
+a valid <code>Frame.ApplyThrowOp</code>, which defines the application of the throw to the first incomplete frame in the
+game.</p>
+<p>I define how to apply the throw to the first incomplete frame using a large disjunction ("or"):</p>
+<ul>
+<li>if frame 1 is incomplete, apply the throw to frame 1.</li>
+<li>That is: Frame 1 in the prior game state is the prior frame of a <code>Frame.ApplyThrowOp</code>, and frame 1 in the
+    post game state is equal to the post game of the same <code>Frame.ApplyThrowOp</code>. Frames 2-10 in the prior game state
+    or equal to frames 2-10 in the post game state.</li>
+<li>if frame 1 is complete and frame 2 is incomplete, apply the throw to frame 2.</li>
+<li>See logic above -- use similar logic to apply the throw to frame 2 using a <code>Frame.ApplyThrowOp</code>. Frame 1 and frames
+    3-10 in the prior game state are equal to frames 1 and 3-10 in the post game state.</li>
+<li>if frame 2 is complete and frame 3 is incomplete, apply the throw to frame 3 similarly</li>
+<li>if frame 3 is complete and frame 4 is incomplete, apply the throw to frame 4 similarly</li>
+<li>etc.</li>
+</ul>
+<p>There alsoa validation rule that guarantees game frames are completed in order. Frame 2 can't be complete if frame 1
+isn't complete. Frame 3 can't be complete if frame 2 isn't complete. And so on.</p>
+<hr />
+<p>[^1] SMT solver's include are S<strong>A</strong>T solvers (boolean network solvers). SMT solvers inherit very efficient boolean and
+    bitvector heuristics, as well as convenient syntax for representing bitvector values.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../assets/mkdocs_puml/puml.js"></script>
+      
+        <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+      
+        <script src="../assets/mkdocs_puml/interaction.js"></script>
+      
+    
+  </body>
+</html>
