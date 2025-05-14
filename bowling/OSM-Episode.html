@@ -1080,7 +1080,7 @@ failures of the software they produced (described below).</p>
 implemented internally by a set of inter-reliant Java classes. Most of the narrative concerns incremental development
 of the Java classes. The reader follows the internal intricacies and nitty-gritty of the Bobs' domain and problem space
 exploration with interest, but after all is said and done the reader cannot ratify or deny the assertion "a conforming
-implementation of the bowling score algorithm has been produced".</p>
+implementation of the bowling score algorithm has been produced". <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
 <p>As with most produced software, there's no way to determine whether the final product actually fulfills its
 specification, because the specification is imprecise, collectively assumed, or perhaps never really existed in the
 first place. There's no way to verify that such software conforms with the standard it is intended to
@@ -1101,7 +1101,7 @@ narrative expresses this state:</p>
 the target algorithm, and incrementally developed a Java implementation with individual test cases proven to meet the
 standard.</p>
 <p>In this article I will develop a definition of "bowling". That is, a definition of the standard against which any integer
-sequence reduce function can be applied to verify the function agrees with the standard <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. I will use the smtlib2
+sequence reduce function can be applied to verify the function agrees with the standard <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. I will use the smtlib2
 language and follow the techniques I describe in the companion article <a href="../osm-specs-in-smtlib2.html"><em>"OSM specs in smtlib2"</em></a>.</p>
 <h3 id="the-bowling-score-card-standard">The Bowling Score Card Standard</h3>
 <p>The governing body for bowling in the US is the United States Bowling Congress (<a href="https://bowl.com">USBC</a>). This
@@ -1110,7 +1110,7 @@ matches the Bobs' internal understanding of the game, with some key differences:
 <ol>
 <li>
 <p>The official version does not support the concept of an <em>incomplete</em> game. A game consists of all necessary
-  throws <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> to complete 10 frames: up to 2 throws plus up to two bonus throws forms a frame. The bonus throws for frame
+  throws <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> to complete 10 frames: up to 2 throws plus up to two bonus throws forms a frame. The bonus throws for frame
   <code>N</code> are synonymous with the normal throws of the <code>N+1</code>-th frame. Legal games can be produced from as few as 12 throws
   (12 consecutive strikes), and as many as 21 throws (any sequence of 21 throws that includes no strikes).</p>
 </li>
@@ -1182,7 +1182,7 @@ previous frames plus the points scored in the current frame) rather than the poi
 This is a convention, arising from the fact that game used to be scored manually. The final game score is the
 same whether we score each frame individually and sum at the end or accumulate as the game progresses.</p>
 <p>There are areas towards the top of each frame's square for representing the 1 or 2 normal throws that are part of each
-frame. Each frame's score also includes the value of 0, 1 or 2 additional bonus throws <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. The standard score card
+frame. Each frame's score also includes the value of 0, 1 or 2 additional bonus throws <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>. The standard score card
 does not represent the bonus throws, as the bonus throws in one frame are synonymous with the normal throws of the
 subsequent frame. This is true for all frames except the 10th. The 10th frame has no subsequent, so the 10th frame
 does have extra space to represent its bonus throws.</p>
@@ -1193,7 +1193,7 @@ kind of representation, but the model is actually a bit simpler. We will define 
 <h3 id="representing-a-throw">Representing a Throw</h3>
 <p>Let's begin with the simplest concept: a single throw. Primarily we would want to represent a set of pins knocked down. We
 could either represent this as an integer value (the total number of pins knocked down), or a bitvector of width 10 representing the
-standing-up/knocked-down state of each individual pin <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>.</p>
+standing-up/knocked-down state of each individual pin <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>.</p>
 <p>There is a very good reason to choose bitvector over integer: SMT solvers don't deal wonderfully with inifinite value ranges, and
 integer is an infinitely-valued type, while bitvector is not. SMT solvers are great at deducing from first principals, but they aren't great
 at exploring bespoke value ranges, such as "the infinite set of integers, where the values between 0-10 are treated differently than
@@ -1215,7 +1215,7 @@ values: <code>#b0011001011</code> -- this is a 10-bit wide bitvector with values
 a bunch of bitvector operators available: <code>bvand</code>, <code>bvor</code>, and other bit-by-bit operators; <code>bv2nat</code> to convert a bitvector to a binary
 numeric value; <code>zero-extend</code> and <code>extract</code> round out the operators we will need to convert a bitvector to a count of fallen pins.</p>
 </blockquote>
-<p>There are 2 functions I know I'm going to be writing, and I will want to start throwing down test-cases <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> that rely on  the behavior of these
+<p>There are 2 functions I know I'm going to be writing, and I will want to start throwing down test-cases <sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup> that rely on  the behavior of these
 functions soon.</p>
 <ul>
 <li><code>throw.points</code>: a function computing the point score of any throw. This is just the count of "1" bits in the bitvector.</li>
@@ -2251,7 +2251,7 @@ valued</em> model, the simplest one is to define a single field for each frame i
 </ul>
 <blockquote>
 <p>Note: there is a very good solution to the problem of repetative code caused by having a individual
-field for each frame: use <code>cpp</code> preprocessor macros to auto-repeat code templates <sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. Beyond the
+field for each frame: use <code>cpp</code> preprocessor macros to auto-repeat code templates <sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>. Beyond the
 scope of this work, but definitely you'll want this in your toolbox if you set out to define
 any real-world OSM.</p>
 </blockquote>
@@ -2789,45 +2789,58 @@ in conformance with the USBC standard.</p>
 <hr />
 <ol>
 <li id="fn:1">
+<p>I'm not trying to throw shade on Martin &amp; Koss by pointing out they missed their <em>stated</em> goal while demonstrating the powerful
+  tools and techniques of TDD. In fact history has several exalted examples of books and works that introduce powerful intellectual tools to
+  the world while <em>technically</em> missing the original goals of the work. Artistotle himself introduced the essential operators of boolean
+  logic and set theory to the world in his <a href="https://en.wikipedia.org/wiki/Organon"><em>Organon</em></a>: the AND, OR, NOT operators an the
+  existential and universal quanitifiers all were introduced to the world in his collected treatise. But Aristotle actually failed at his 
+  <em>indended</em> purpose, which was to rigorously define the exact logical meaning of Koine Greek words and phrases. (Turns out spoken language
+  is fundamentally incongruent with logic.) And <a href="https://en.wikipedia.org/wiki/Bonaventura_Cavalieri">Cavalieri</a> intended to equate
+  classical geometry with then-nescent "sum of infinity" techniques in his 1627 work "Geometria indivisibilibus", which he technically
+  failed to do. But he did succeed in introducing the world to the validity of techniques subsummed in what we call integral calculus
+  today, most notably <a href="https://en.wikipedia.org/wiki/Cavalieri%27s_principle">Cavalieri's principle</a>. TDD is a foundational practice
+  in modern software development and maintenance, and Martin &amp; Koss's Episode earns credit for helping popularizing it.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
 <p>In general you can't create a proof production system that can prove any given software implementation conforms
   to any given
   logical definition. The only way to verify an implementation conforms with a definition is through exhaustive case analysis -- trying
   each and every possible input and verifying the output conforms with the logical definition. Any logical definition with an infinite domain obvious can't be verified completely. What we <em>can</em> do is prove that the implementation conforms to a logical
   definition across a finite domain, which can be arbitrarily large. So really the best we can do for inifinitely large domains is
   show that an implementation <em>apparently doesn't conflict</em> with a logical definition, meaning that we can't find any finite portion
-  of the domain where the implementation doesn't conform to the definition.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:2">
-<p>The standard uses the term <em>delivery</em>, and the Bobs' apparently replace this with the term <em>throw</em>. This
-  article uses the Bobs' term <em>throw</em> throughout, but the correct term from the standard is <em>delivery</em>.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+  of the domain where the implementation doesn't conform to the definition.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:3">
+<p>The standard uses the term <em>delivery</em>, and the Bobs' apparently replace this with the term <em>throw</em>. This
+  article uses the Bobs' term <em>throw</em> throughout, but the correct term from the standard is <em>delivery</em>.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
 <p>The USBC standard describes the bonuses associated with mark frames (strikes and spares) in the 10th frame as "awarded". The
   logical model developed in this article extends this concept to all frames: each mark frame in frames 1-9 are "awarded" additional
   bonus throws, and these throws are synonymous with the standard deliveries in subsequent frames. The murky evolution of bowling
   through history suggests there were early versions of the game that were played exactly this way: "bonus" throws were executed
   seperately within each frame. I imagine the "bonus" throws for marks in those archaic versions of the game were eventually merged
   with subsequent normal throws in the modern version of the game, perhaps to reduce the significant effort associated with
-  manually setting up pins in formation.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-<li id="fn:4">
-<p>The <a href="https://cvc5.github.io/">CVC5 solver</a> includes a theory of <a href="https://github.com/cvc5/cvc5/blob/main/examples/api/smtlib/finite_field.smt2">finite fields</a>,
-  which is exactly what we need. This theory supports a finite integer range covering exactly 0-9 as a datatype. However this theory
-  and the supporting smtlib2 functions are specific to CVC5. I choose to stick to standardized theories available to make the article as widely applicable as possible.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+  manually setting up pins in formation.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:5">
+<p>The <a href="https://cvc5.github.io/">CVC5 solver</a> includes a theory of <a href="https://github.com/cvc5/cvc5/blob/main/examples/api/smtlib/finite_field.smt2">finite fields</a>,
+  which is exactly what we need. This theory supports a finite integer range covering exactly 0-9 as a datatype. However this theory
+  and the supporting smtlib2 functions are specific to CVC5. I choose to stick to standardized theories available to make the article as widely applicable as possible.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
 <p>This is similar to unit testing or property testing the bowling definition functions. But rather that "executing" the functions
   and examining that the outputs match expectations in specific cases, we define the properties we expect the function to have and
   ask a theorem prover to prove the property assertions are true. We don't care what proof techniques the prover employs, we just need to
-  know the assertions are true.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+  know the assertions are true.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
-<li id="fn:6">
+<li id="fn:7">
 <p>This is one of the superpowers of <code>cpp</code> -- there are whole C++ frameworks and generalized programming
   techniques based on preprocessor macros and on-the-fly code generation. Though it is beyond the scope of this
   repo, I encourage the curious to check out <a href="https://hirrolot.gitbook.io/metalang99"><code>metalang99</code></a>, a functional macro "language" for standard C-language preprocessors. Using <code>metalang99</code> you write the code once, and get the
   preprocessor to duplicate during preprocessor expansion. All the power of functional looping and recursion,
   which we've been studiously avoiding in our smtlib2 formulas, is available to you for <em>generating</em> loop-free
-  and recursion-free formulas.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+  and recursion-free formulas.&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
