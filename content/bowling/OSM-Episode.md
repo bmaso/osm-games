@@ -34,7 +34,7 @@ Instead of a provably correct result, what the Bobs produced is software that se
 implemented internally by a set of inter-reliant Java classes. Most of the narrative concerns incremental development
 of the Java classes. The reader follows the internal intricacies and nitty-gritty of the Bobs' domain and problem space
 exploration with interest, but after all is said and done the reader cannot ratify or deny the assertion "a conforming
-implementation of the bowling score algorithm has been produced".
+implementation of the bowling score algorithm has been produced". [^1]
 
 As with most produced software, there's no way to determine whether the final product actually fulfills its
 specification, because the specification is imprecise, collectively assumed, or perhaps never really existed in the
@@ -62,8 +62,8 @@ the target algorithm, and incrementally developed a Java implementation with ind
 standard.
 
 In this article I will develop a definition of "bowling". That is, a definition of the standard against which any integer
-sequence reduce function can be applied to verify the function agrees with the standard [^1]. I will use the smtlib2
-language and follow the techniques I describe in the companion article [_"OSM specs in smtlib2"_](../../osm-specs-in-smtlib2.html).
+sequence reduce function can be applied to verify the function agrees with the standard [^2]. I will use the smtlib2
+language and follow the techniques I describe in the companion article [_"OSM specs in smtlib2"_](../osm-specs-in-smtlib2.html).
 
 ### The Bowling Score Card Standard
 
@@ -72,7 +72,7 @@ organization publishes [a standard for scoring a game of bowling](./assets/Score
 matches the Bobs' internal understanding of the game, with some key differences:
 
 1. The official version does not support the concept of an _incomplete_ game. A game consists of all necessary
-  throws [^2] to complete 10 frames: up to 2 throws plus up to two bonus throws forms a frame. The bonus throws for frame
+  throws [^3] to complete 10 frames: up to 2 throws plus up to two bonus throws forms a frame. The bonus throws for frame
   `N` are synonymous with the normal throws of the `N+1`-th frame. Legal games can be produced from as few as 12 throws
   (12 consecutive strikes), and as many as 21 throws (any sequence of 21 throws that includes no strikes).
 
@@ -153,7 +153,7 @@ This is a convention, arising from the fact that game used to be scored manually
 same whether we score each frame individually and sum at the end or accumulate as the game progresses.
 
 There are areas towards the top of each frame's square for representing the 1 or 2 normal throws that are part of each
-frame. Each frame's score also includes the value of 0, 1 or 2 additional bonus throws [^3]. The standard score card
+frame. Each frame's score also includes the value of 0, 1 or 2 additional bonus throws [^4]. The standard score card
 does not represent the bonus throws, as the bonus throws in one frame are synonymous with the normal throws of the
 subsequent frame. This is true for all frames except the 10th. The 10th frame has no subsequent, so the 10th frame
 does have extra space to represent its bonus throws.
@@ -167,7 +167,7 @@ kind of representation, but the model is actually a bit simpler. We will define 
 
 Let's begin with the simplest concept: a single throw. Primarily we would want to represent a set of pins knocked down. We
 could either represent this as an integer value (the total number of pins knocked down), or a bitvector of width 10 representing the
-standing-up/knocked-down state of each individual pin [^4].
+standing-up/knocked-down state of each individual pin [^5].
 
 There is a very good reason to choose bitvector over integer: SMT solvers don't deal wonderfully with inifinite value ranges, and
 integer is an infinitely-valued type, while bitvector is not. SMT solvers are great at deducing from first principals, but they aren't great
@@ -194,7 +194,7 @@ File "throw.smt2"
 > a bunch of bitvector operators available: `bvand`, `bvor`, and other bit-by-bit operators; `bv2nat` to convert a bitvector to a binary
 > numeric value; `zero-extend` and `extract` round out the operators we will need to convert a bitvector to a count of fallen pins.
 
-There are 2 functions I know I'm going to be writing, and I will want to start throwing down test-cases [^5] that rely on  the behavior of these
+There are 2 functions I know I'm going to be writing, and I will want to start throwing down test-cases [^6] that rely on  the behavior of these
 functions soon.
 
 - `throw.points`: a function computing the point score of any throw. This is just the count of "1" bits in the bitvector.
@@ -1442,7 +1442,7 @@ Cons of using a explicit set of member fields for the constituent frames:
     - I will have to copy the same rules multiple times, one for each frame I am applying it to
 
 > Note: there is a very good solution to the problem of repetative code caused by having a individual
-> field for each frame: use `cpp` preprocessor macros to auto-repeat code templates [^6]. Beyond the
+> field for each frame: use `cpp` preprocessor macros to auto-repeat code templates [^7]. Beyond the
 > scope of this work, but definitely you'll want this in your toolbox if you set out to define
 > any real-world OSM.
 
@@ -2049,7 +2049,19 @@ in conformance with the USBC standard.
 
 ## Footnotes
 
-[^1]: In general you can't create a proof production system that can prove any given software implementation conforms
+[^1]: I'm not trying to throw shade on Martin & Koss by pointing out they missed their _stated_ goal while demonstrating the powerful
+  tools and techniques of TDD. In fact history has several exalted examples of books and works that introduce powerful intellectual tools to
+  the world while _technically_ missing the original goals of the work. Artistotle himself introduced the essential operators of boolean
+  logic and set theory to the world in his [_Organon_](https://en.wikipedia.org/wiki/Organon): the AND, OR, NOT operators an the
+  existential and universal quanitifiers all were introduced to the world in his collected treatise. But Aristotle actually failed at his 
+  _indended_ purpose, which was to rigorously define the exact logical meaning of Koine Greek words and phrases. (Turns out spoken language
+  is fundamentally incongruent with logic.) And [Cavalieri](https://en.wikipedia.org/wiki/Bonaventura_Cavalieri) intended to equate
+  classical geometry with then-nescent "sum of infinity" techniques in his 1627 work "Geometria indivisibilibus", which he technically
+  failed to do. But he did succeed in introducing the world to the validity of techniques subsummed in what we call integral calculus
+  today, most notably [Cavalieri's principle](https://en.wikipedia.org/wiki/Cavalieri%27s_principle). TDD is a foundational practice
+  in modern software development and maintenance, and Martin & Koss's Episode earns credit for helping popularizing it.
+
+[^2]: In general you can't create a proof production system that can prove any given software implementation conforms
   to any given
   logical definition. The only way to verify an implementation conforms with a definition is through exhaustive case analysis -- trying
   each and every possible input and verifying the output conforms with the logical definition. Any logical definition with an infinite domain obvious can't be verified completely. What we _can_ do is prove that the implementation conforms to a logical
@@ -2057,10 +2069,10 @@ in conformance with the USBC standard.
   show that an implementation _apparently doesn't conflict_ with a logical definition, meaning that we can't find any finite portion
   of the domain where the implementation doesn't conform to the definition.
 
-[^2]: The standard uses the term _delivery_, and the Bobs' apparently replace this with the term _throw_. This
+[^3]: The standard uses the term _delivery_, and the Bobs' apparently replace this with the term _throw_. This
   article uses the Bobs' term _throw_ throughout, but the correct term from the standard is _delivery_.
 
-[^3]: The USBC standard describes the bonuses associated with mark frames (strikes and spares) in the 10th frame as "awarded". The
+[^4]: The USBC standard describes the bonuses associated with mark frames (strikes and spares) in the 10th frame as "awarded". The
   logical model developed in this article extends this concept to all frames: each mark frame in frames 1-9 are "awarded" additional
   bonus throws, and these throws are synonymous with the standard deliveries in subsequent frames. The murky evolution of bowling
   through history suggests there were early versions of the game that were played exactly this way: "bonus" throws were executed
@@ -2068,16 +2080,16 @@ in conformance with the USBC standard.
   with subsequent normal throws in the modern version of the game, perhaps to reduce the significant effort associated with
   manually setting up pins in formation.
 
-[^4]: The [CVC5 solver](https://cvc5.github.io/) includes a theory of [finite fields](https://github.com/cvc5/cvc5/blob/main/examples/api/smtlib/finite_field.smt2),
+[^5]: The [CVC5 solver](https://cvc5.github.io/) includes a theory of [finite fields](https://github.com/cvc5/cvc5/blob/main/examples/api/smtlib/finite_field.smt2),
   which is exactly what we need. This theory supports a finite integer range covering exactly 0-9 as a datatype. However this theory
   and the supporting smtlib2 functions are specific to CVC5. I choose to stick to standardized theories available to make the article as widely applicable as possible.
 
-[^5]: This is similar to unit testing or property testing the bowling definition functions. But rather that "executing" the functions
+[^6]: This is similar to unit testing or property testing the bowling definition functions. But rather that "executing" the functions
   and examining that the outputs match expectations in specific cases, we define the properties we expect the function to have and
   ask a theorem prover to prove the property assertions are true. We don't care what proof techniques the prover employs, we just need to
   know the assertions are true.
 
-[^6]: This is one of the superpowers of `cpp` -- there are whole C++ frameworks and generalized programming
+[^7]: This is one of the superpowers of `cpp` -- there are whole C++ frameworks and generalized programming
   techniques based on preprocessor macros and on-the-fly code generation. Though it is beyond the scope of this
   repo, I encourage the curious to check out [`metalang99`](https://hirrolot.gitbook.io/metalang99), a functional macro "language" for standard C-language preprocessors. Using `metalang99` you write the code once, and get the
   preprocessor to duplicate during preprocessor expansion. All the power of functional looping and recursion,

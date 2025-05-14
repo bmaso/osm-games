@@ -29,7 +29,7 @@ A `Board` is comprised of:
 
 ### Operation-states
 
-```plantuml
+```puml
 @startuml
 state "Game Play" as play
 [*] --> play : Choose first player
@@ -66,6 +66,7 @@ infinite types, such as Integer.
 Consider the rule that there are no "floating" checkers on a Connect Four table. That is, when a player "drops" a piece
 into a column, under the force of gravity the piece falls to the lowest position. The way a software engineer would code
 this logic would be in a for-comprehension (a for loop), or recursively:
+
 1. Starting with the highest row test whether or not the _next lowest_ position has `neutral` color, which indicates it
    is unoccupied.
 1. If the next lowest row is _not_ occupied, then decrement the "current row" value, and start again with step 1.
@@ -77,18 +78,19 @@ this logic would be in a for-comprehension (a for loop), or recursively:
 But SMTLIB2 solvers don't reason recursively, and there is no for-loop construct in SMTLLIB2. Instead we have the
 _universal quantifier_ logical statement. This statement verifies a predicate is true for _all_ members of a type. One
 could try writing the "no floating checkers" rule like so:
+
 * for all valid game boards _b_, and all table (row, column) coordinates (_r_, _c_):
-  * IF the position at (_r_, _c_) in _b_'s table is occupied, THEN _r_ must be 1 OR the position at (_r_-1, _c_) is also occupied
+    * IF the position at (_r_, _c_) in _b_'s table is occupied, THEN _r_ must be 1 OR the position at (_r_-1, _c_) is also occupied
 
 This production perfectly states the rule that no "floating" checkers exist in any valid game board.
 
 **However**, SMT solvers can't prove statements like this. The issue is that the domain of the quanitifier is infinite. The domain
 is all possible combinations of a game board and integer coordinate pairs. The size of this domain is (Board x Integer x Integer),
 which is infinite. An SMT solver is not going to be able to prove this statement is true across the infinite domain of all
-possibl boards and integers.
+possible boards and integers.
 
 Of course we aren't really interested in _all_ integers. We're really only interested in row indexes 1-6 and column indexes 1-7. But
-SMT solvers don't know that, so they try to prove the quanitifier across _all_ (Ineger x Integer) pairs and across all posible board
+SMT solvers don't know that, so they try to prove the quanitifier across _all_ (Integer x Integer) pairs and across all posible board
 combinations. The set of all possible boards is finite, but the set of all (Integer x Integer) pairs is infinite.
 
 Instead of yielding a `sat` response when asked to prove this quanitifier, the best a solver can yield is `unknown`, meaning that
@@ -120,6 +122,7 @@ a real-world project I'd lean on preprocessor macros to lighten the coding load.
 ## Example Initial Game Sequence
 
 Here's the definition of the initial sequence of a game.
+
 * The game begins in the `board.empty` state
 * The result of the first operation application, `build.1`, is the result of picking the `red` player as the first player
 

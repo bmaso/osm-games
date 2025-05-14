@@ -154,14 +154,3 @@ The [spades OSM example](./spades) defines the game of spades as a system of equ
   systems simply never included theorem provers at all. Modern SMT solvers and modern computers finally have the "heft" to solve
   the kinds of problems necessary to prove system behavior conformance.
 
-[^2]: I'm not trying to throw shade on Martin & Koss by pointing out they missed their _stated_ goal while demonstrating the powerful
-  tools and techniques of TDD. In fact history has several exalted examples of books and works that introduce powerful intellectual tools to
-  the world while _technically_ missing the original goals of the work. Artistotle himself introduced the essential operators of boolean
-  logic and set theory to the world in his [_Organon_](https://en.wikipedia.org/wiki/Organon): the AND, OR, NOT operators an the
-  existential and universal quanitifiers all were introduced to the world in his collected treatise. But Aristotle actually failed at his 
-  _indended_ purpose, which was to rigorously define the exact logical meaning of Koine Greek words and phrases. (Turns out spoken language
-  is fundamentally incongruent with logic.) And [Cavalieri](https://en.wikipedia.org/wiki/Bonaventura_Cavalieri) intended to equate
-  classical geometry with then-nescent "sum of infinity" techniques in his 1627 work "Geometria indivisibilibus", which he technically
-  failed to do. But he did succeed in introducing the world to the validity of techniques subsummed in what we call integral calculus
-  today, most notably [Cavalieri's principle](https://en.wikipedia.org/wiki/Cavalieri%27s_principle). TDD is a foundational practice
-  in modern software development and maintenance, and Martin & Koss's Episode earns credit for helping popularizing it.
