@@ -555,13 +555,8 @@ define adjacency sufficient to determine when 4 pieces have been place in a row.
 * a <code>winner</code> color value. This value remains <code>neutral</code> until a winner is declared.</p>
 <p>(See <a href="formula/main/board.smt2">formula/main/board.smt2</a>.)</p>
 <h3 id="operation-states">Operation-states</h3>
-<div class="highlight"><pre><span></span><code>@startuml
-state &quot;Game Play&quot; as play
-[*] --&gt; play : Choose first player
-play --&gt; play : Players take turns placing checkers
-play --&gt; [*] : Winner declared
-@enduml
-</code></pre></div>
+<div class='puml-container'><div class="puml light" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="258px" preserveAspectRatio="xMidYMid meet" style="width:387px;height:258px;background:#FFFFFF;" version="1.1" viewBox="0 0 387 258" width="387px" zoomAndPan="magnify" class="diagram"><defs/><g><g id="play"><rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="95.3252" x="7" y="103"/><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="102.3252" y1="129.2969" y2="129.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75.3252" x="17" y="120.9951">Game Play</text></g><ellipse cx="54.66" cy="16" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/><ellipse cx="54.66" cy="241" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/><ellipse cx="54.66" cy="241" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/><g class="link" data-entity-1="*start*" data-entity-2="play" data-source-line="3" data-uid="lnk3" id="link_*start*_play"><path d="M54.66,26.38 C54.66,43.11 54.66,72.59 54.66,96.63" fill="none" id="*start*-to-play" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="54.66,102.63,58.66,93.63,54.66,97.63,50.66,93.63,54.66,102.63" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="122.5288" x="55.66" y="69.0669">Choose first player</text></g><g class="link" data-entity-1="play" data-entity-2="play" data-source-line="4" data-uid="lnk4" id="link_play_play"><path d="M102.65,116.15 C121.54,115.56 137.33,119.5 137.33,128 C137.33,136.5 127.5371,140.6273 108.6471,140.0373" fill="none" id="play-to-play" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="102.65,139.85,111.5207,144.129,107.6476,140.0061,111.7705,136.1329,102.65,139.85" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="231.2959" x="143.33" y="132.5669">Players take turns placing checkers</text></g><g class="link" data-entity-1="play" data-entity-2="*end*" data-source-line="5" data-uid="lnk6" id="link_play_*end*"><path d="M54.66,153.36 C54.66,177.23 54.66,206.46 54.66,223.71" fill="none" id="play-to-*end*" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="54.66,229.71,58.66,220.71,54.66,224.71,50.66,220.71,54.66,229.71" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="106.9897" x="55.66" y="196.0669">Winner declared</text></g></g></svg></div><div class="puml dark" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="258px" preserveAspectRatio="xMidYMid meet" style="width:387px;height:258px;background:#1B1B1B;" version="1.1" viewBox="0 0 387 258" width="387px" zoomAndPan="magnify" class="diagram"><defs/><g><rect fill="#1B1B1B" height="258" style="stroke:none;stroke-width:1;" width="387" x="0" y="0"/><g id="play"><rect fill="#313139" height="50" rx="12.5" ry="12.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="95.3252" x="7" y="103"/><line style="stroke:#E7E7E7;stroke-width:0.5;" x1="7" x2="102.3252" y1="129.2969" y2="129.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75.3252" x="17" y="120.9951">Game Play</text></g><ellipse cx="54.66" cy="16" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/><ellipse cx="54.66" cy="241" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/><ellipse cx="54.66" cy="241" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/><g class="link" data-entity-1="*start*" data-entity-2="play" data-source-line="3" data-uid="lnk3" id="link_*start*_play"><path d="M54.66,26.38 C54.66,43.11 54.66,72.59 54.66,96.63" fill="none" id="*start*-to-play" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="54.66,102.63,58.66,93.63,54.66,97.63,50.66,93.63,54.66,102.63" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="122.5288" x="55.66" y="69.0669">Choose first player</text></g><g class="link" data-entity-1="play" data-entity-2="play" data-source-line="4" data-uid="lnk4" id="link_play_play"><path d="M102.65,116.15 C121.54,115.56 137.33,119.5 137.33,128 C137.33,136.5 127.5371,140.6273 108.6471,140.0373" fill="none" id="play-to-play" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="102.65,139.85,111.5207,144.129,107.6476,140.0061,111.7705,136.1329,102.65,139.85" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="231.2959" x="143.33" y="132.5669">Players take turns placing checkers</text></g><g class="link" data-entity-1="play" data-entity-2="*end*" data-source-line="5" data-uid="lnk6" id="link_play_*end*"><path d="M54.66,153.36 C54.66,177.23 54.66,206.46 54.66,223.71" fill="none" id="play-to-*end*" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="54.66,229.71,58.66,220.71,54.66,224.71,50.66,220.71,54.66,229.71" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="106.9897" x="55.66" y="196.0669">Winner declared</text></g></g></svg></div></div>
+
 <p>All operations are encoded in <a href="formula/main/board-ops.smt2">./formula/main/board-ops.smt2</a>.</p>
 <p>There is one operation for <strong>choosing a first player</strong> (the <code>board-ops.choose-first-player</code> function). This operation application is the
 first of a valid game sequence, and is the only time this operation is applied during the valid game sequence.</p>
@@ -587,25 +582,31 @@ number the rows 1-6 the columns 1-7? There's a good reason not to: simply becaus
 infinite types, such as Integer.</p>
 <p>Consider the rule that there are no "floating" checkers on a Connect Four table. That is, when a player "drops" a piece
 into a column, under the force of gravity the piece falls to the lowest position. The way a software engineer would code
-this logic would be in a for-comprehension (a for loop), or recursively:
-1. Starting with the highest row test whether or not the <em>next lowest</em> position has <code>neutral</code> color, which indicates it
-   is unoccupied.
-1. If the next lowest row is <em>not</em> occupied, then decrement the "current row" value, and start again with step 1.
-1. If the next lowest row <em>is</em> occupied, then the current row is the lowest position that is unoccupied -- this is
-   there the piece should go.</p>
+this logic would be in a for-comprehension (a for loop), or recursively:</p>
+<ol>
+<li>Starting with the highest row test whether or not the <em>next lowest</em> position has <code>neutral</code> color, which indicates it
+   is unoccupied.</li>
+<li>If the next lowest row is <em>not</em> occupied, then decrement the "current row" value, and start again with step 1.</li>
+<li>If the next lowest row <em>is</em> occupied, then the current row is the lowest position that is unoccupied -- this is
+   there the piece should go.</li>
+</ol>
 <p>(I'm deliberately eliding the condition where the whole column is occupied for the sake of brevity.)</p>
 <p>But SMTLIB2 solvers don't reason recursively, and there is no for-loop construct in SMTLLIB2. Instead we have the
 <em>universal quantifier</em> logical statement. This statement verifies a predicate is true for <em>all</em> members of a type. One
-could try writing the "no floating checkers" rule like so:
-* for all valid game boards <em>b</em>, and all table (row, column) coordinates (<em>r</em>, <em>c</em>):
-  * IF the position at (<em>r</em>, <em>c</em>) in <em>b</em>'s table is occupied, THEN <em>r</em> must be 1 OR the position at (<em>r</em>-1, <em>c</em>) is also occupied</p>
+could try writing the "no floating checkers" rule like so:</p>
+<ul>
+<li>for all valid game boards <em>b</em>, and all table (row, column) coordinates (<em>r</em>, <em>c</em>):<ul>
+<li>IF the position at (<em>r</em>, <em>c</em>) in <em>b</em>'s table is occupied, THEN <em>r</em> must be 1 OR the position at (<em>r</em>-1, <em>c</em>) is also occupied</li>
+</ul>
+</li>
+</ul>
 <p>This production perfectly states the rule that no "floating" checkers exist in any valid game board.</p>
 <p><strong>However</strong>, SMT solvers can't prove statements like this. The issue is that the domain of the quanitifier is infinite. The domain
 is all possible combinations of a game board and integer coordinate pairs. The size of this domain is (Board x Integer x Integer),
 which is infinite. An SMT solver is not going to be able to prove this statement is true across the infinite domain of all
-possibl boards and integers.</p>
+possible boards and integers.</p>
 <p>Of course we aren't really interested in <em>all</em> integers. We're really only interested in row indexes 1-6 and column indexes 1-7. But
-SMT solvers don't know that, so they try to prove the quanitifier across <em>all</em> (Ineger x Integer) pairs and across all posible board
+SMT solvers don't know that, so they try to prove the quanitifier across <em>all</em> (Integer x Integer) pairs and across all posible board
 combinations. The set of all possible boards is finite, but the set of all (Integer x Integer) pairs is infinite.</p>
 <p>Instead of yielding a <code>sat</code> response when asked to prove this quanitifier, the best a solver can yield is <code>unknown</code>, meaning that
 the domain is just too big for the SMT solver to cover exhaustively.</p>
@@ -628,9 +629,11 @@ would be to generate these arrays using pre-processor macros. (This is how C and
 that are wasteful or unnecessary to generate at runtime.) I've explicitly listed the arrays to keep the project simple, but in
 a real-world project I'd lean on preprocessor macros to lighten the coding load.</p>
 <h2 id="example-initial-game-sequence">Example Initial Game Sequence</h2>
-<p>Here's the definition of the initial sequence of a game.
-* The game begins in the <code>board.empty</code> state
-* The result of the first operation application, <code>build.1</code>, is the result of picking the <code>red</code> player as the first player</p>
+<p>Here's the definition of the initial sequence of a game.</p>
+<ul>
+<li>The game begins in the <code>board.empty</code> state</li>
+<li>The result of the first operation application, <code>build.1</code>, is the result of picking the <code>red</code> player as the first player</li>
+</ul>
 <div class="highlight"><pre><span></span><code>#include &quot;board-ops.smt2&quot;
 #include &quot;board.smt2&quot;
 #include &quot;color.smt2&quot;
