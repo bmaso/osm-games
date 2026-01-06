@@ -120,7 +120,7 @@ by Robert Martin and Robert Koss, which has introduced generations of profession
 since its publication some 20 years prior to the words you are reading now were written. As influential and entertaining as that piece
 is, it's of some significance to recognize that the version of "bowling" that Martin & Koss develop during the "Episode" is in fact
 _not in conformance with any standard version of "bowling"_. The reputational popularity of  Martin & Koss's episode, coupled with the
-fact that it technically fails at its actual stated goal of scoring "a standard bowling card" [^2], makes the game of bowling a great
+fact that it technically fails at its actual stated goal of scoring "a standard bowling card", makes the game of bowling a great
 focus for the OSM demonstration [_An Equational Thinking Episode_](./bowling/OSM-Episode.md).
 
 The [Connect Four OSM example](./connect4) is meant to be a gentle and yet non-trivial example of a game OSM. Connect Four is a
