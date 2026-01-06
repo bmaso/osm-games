@@ -716,8 +716,8 @@ logic we would write this as:</p>
 &gt; sat
 </code></pre></div>
 <p>I haven't declared any unbound constants or functions here. I've just made a universal assertion, which indeed is true. The SMT
-solver has found a model consistent with this assertion: the empty model. The SMT solver known all the fundamenta theories of
-arithmetic and algebra, and is able to verify this assertion from the first principals that it knows.</p>
+solver has found a model consistent with this assertion: the empty model. The SMT solver knows all the fundamental theories of
+arithmetic and algebra, and is able to verify this assertion from first principals.</p>
 <h3 id="interrogating-the-model">Interrogating the Model</h3>
 <p>Once you have successfully generated a model using the <code>check-sat</code> directive, you can then use the <code>get-value</code> directive to
 print out the value of expressions. <code>get-value</code> actually can be used to print out <em>any</em> computable expression. It's the equivalent
