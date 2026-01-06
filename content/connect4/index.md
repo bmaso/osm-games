@@ -20,6 +20,7 @@ define adjacency sufficient to determine when 4 pieces have been place in a row.
 The `color` value of each coordinate is `red`, `black`, or `neutral`. (See [formula/main/color.smt2](formula/main/color.smt2).)
 
 A `Board` is comprised of:
+
 * a 6x7 array of `Coordinate` to `Color` values, called the `table`
 * a `current-player` color value. During the initial game ceremony of choosing a first player, the `current_player` value
   is `neutral`. Once a player is chosen, then the player color alternates between `Red` and `Black` each turn.
@@ -124,7 +125,7 @@ a real-world project I'd lean on preprocessor macros to lighten the coding load.
 Here's the definition of the initial sequence of a game.
 
 * The game begins in the `board.empty` state
-* The result of the first operation application, `build.1`, is the result of picking the `red` player as the first player
+* The result of the first operation application, `board.1`, is the result of picking the `red` player as the first player
 
 ```
 #include "board-ops.smt2"
@@ -171,3 +172,8 @@ Here's the definition of the initial sequence of a game.
 
 (check-sat)
 ```
+
+This script is a query for verification that this exact sequence of 3 operations (_red player chosen to go first_, _play red col 3 row a_, _play black col 3 row b_) is _valid_ per the Connect Four rules.
+
+If you run this script through a Z3 smt solver, the response will be `sat`, proving that this sequence is valid
+and conforms to all the Connect Four rules.

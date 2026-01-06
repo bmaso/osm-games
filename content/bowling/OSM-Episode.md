@@ -10,7 +10,7 @@
 
 In 2000 Robert "Uncle Bob" Martin published [_The Bowling Game: An example of test-first pair programming_](https://sites.google.com/site/unclebobconsultingllc/uncle-bob-consulting-llc/articles/the-bowling-game-an-example-of-test-first-pair-programming?authuser=0),
 memorializing a TDD pair-programming session between Bob Koss and Bob Martin, during which the Bobs endeavor to
-implement a set of Java classes were that combine to score a game of bowling.
+implement a set of Java classes that combine to score a game of bowling.
 
 Distinctly missing from the narrative: any actual definition of "the game of bowling". Here's Bob Martin's description
 of what they set out to build, which is the best indication of what they were trying to accomplish:
