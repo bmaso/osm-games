@@ -98,8 +98,8 @@ logic we would write this as:
 ```
 
 I haven't declared any unbound constants or functions here. I've just made a universal assertion, which indeed is true. The SMT
-solver has found a model consistent with this assertion: the empty model. The SMT solver known all the fundamenta theories of
-arithmetic and algebra, and is able to verify this assertion from the first principals that it knows.
+solver has found a model consistent with this assertion: the empty model. The SMT solver knows all the fundamental theories of
+arithmetic and algebra, and is able to verify this assertion from first principals.
 
 ### Interrogating the Model
 
